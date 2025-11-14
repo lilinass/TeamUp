@@ -70,6 +70,14 @@ a:hover{opacity:.92}
 }
 .search__input:focus{outline:none;box-shadow:var(--focus);border-color:#2b3346}
 
+.auth-buttons {
+  margin-left: auto;   /* pousse le bloc complètement à droite */
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+
 /* ====== Hero ====== */
 .hero{position:relative;isolation:isolate}
 .hero__bg{
