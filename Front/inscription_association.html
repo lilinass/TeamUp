@@ -1,264 +1,306 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TT Global — Inscrire mon association</title>
-  <meta name="description" content="Inscrire votre association sur la plateforme TT Global." />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Koordy — Inscrire mon association</title>
+    <meta
+      name="description"
+      content="Inscrire votre association sur la plateforme Koordy."
+    />
 
-  <style>
-    /* ========= Design tokens TT Global ========= */
-    :root{
-      --bg:#0b0c0f;
-      --panel:#111319;
-      --elev:#171a21;
-      --text:#e6e7eb;
-      --muted:#9aa3b2;
-      --brand:#6cf;
-      --brand-2:#a8ff60;
-      --line:#232736;
-      --focus:0 0 0 3px rgba(102,204,255,.35);
-      --radius:18px;
-      --shadow:0 18px 40px rgba(0,0,0,.55);
-      --container:min(1100px,92vw);
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
-
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background: radial-gradient(1000px 600px at 10% 0, rgba(108,204,255,.04), transparent 55%),
-                  radial-gradient(900px 500px at 90% -10%, rgba(168,255,96,.05), transparent 60%),
-                  #05060a;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    img{max-width:100%;height:auto;display:block;}
-    a{text-decoration:none;color:inherit;}
-
-    .container{width:var(--container);margin-inline:auto;}
-
-    /* ========= Header ========= */
-    .header-wrap{
-      background:linear-gradient(180deg,#0f141f,#080a10);
-      border-bottom:1px solid #151926;
-      padding:16px 0 12px;
-    }
-    .site-header{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:10px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .brand__logo{
-      width:40px;
-      height:40px;
-    }
-    .brand__name{
-      font-weight:700;
-      letter-spacing:.3px;
-      font-size:1.05rem;
-    }
-
-    /* ========= Hero / Intro ========= */
-    main{
-      padding:40px 0 70px;
-      background:linear-gradient(180deg,#05060a 0,#05060a 38%,#05060a 100%);
-    }
-
-    .hero{
-      text-align:center;
-      margin-bottom:40px;
-    }
-    .hero__title{
-      font-size:2.3rem;
-      margin:10px 0 6px;
-    }
-    .hero__text{
-      margin:0;
-      color:var(--muted);
-      font-size:1rem;
-    }
-
-    /* Steps */
-    .steps{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin:26px 0 0;
-    }
-    .step{
-      width:70px;
-      height:6px;
-      border-radius:999px;
-      background:#262a37;
-      opacity:.7;
-    }
-    .step.is-active{
-      background:var(--brand);
-      box-shadow:0 0 0 1px rgba(102,204,255,.35);
-      opacity:1;
-    }
-
-    /* ========= Section cartes ========= */
-    .choice-section{
-      margin-top:40px;
-    }
-    .choices{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:22px;
-    }
-    .choice-card{
-      background:var(--elev);
-      border-radius:var(--radius);
-      border:1px solid #202636;
-      box-shadow:var(--shadow);
-      padding:20px 22px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      position:relative;
-      overflow:hidden;
-      cursor:pointer;
-      transition:.18s transform,.18s box-shadow,.18s border-color,.18s background;
-    }
-    .choice-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 20px 50px rgba(0,0,0,.7);
-      border-color:var(--brand);
-      background:#191d26;
-    }
-
-    .choice-illustration{
-      height:120px;
-      border-radius:14px;
-      background:
-        radial-gradient(circle at 80% 20%, rgba(108,204,255,.48), transparent 55%),
-        radial-gradient(circle at 0 100%, rgba(168,255,96,.28), transparent 55%),
-        linear-gradient(135deg,#101320,#080a10);
-      display:flex;
-      align-items:flex-end;
-      justify-content:flex-start;
-      padding:12px 16px;
-      color:rgba(230,231,235,.9);
-      font-size:.9rem;
-    }
-
-    .choice-illustration--search{
-      justify-content:flex-end;
-    }
-
-    .choice-title{
-      font-size:1.25rem;
-      margin:0;
-    }
-    .choice-text{
-      margin:0;
-      font-size:.98rem;
-      color:var(--muted);
-    }
-
-    .choice-arrow{
-      position:absolute;
-      inset-block:auto 18px;
-      inset-inline:auto 18px;
-      font-size:1.3rem;
-      color:var(--muted);
-    }
-
-    .choice-card:hover .choice-arrow{
-      color:var(--brand);
-    }
-
-    /* ========= Responsive ========= */
-    @media(max-width:880px){
-      .choices{
-        grid-template-columns:1fr;
+    <style>
+      /* ========= Design tokens Koordy ========= */
+      :root {
+        --bg: #0b0c0f;
+        --panel: #111319;
+        --elev: #171a21;
+        --text: #e6e7eb;
+        --muted: #9aa3b2;
+        --brand: #6cf;
+        --brand-2: #a8ff60;
+        --line: #232736;
+        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+        --radius: 18px;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        --container: min(1100px, 92vw);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       }
-    }
 
-    @media(max-width:600px){
-      main{padding-top:28px;}
-      .hero__title{font-size:1.9rem;}
-    }
-  </style>
-</head>
-<body>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background: radial-gradient(
+            1000px 600px at 10% 0,
+            rgba(108, 204, 255, 0.04),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 90% -10%,
+            rgba(168, 255, 96, 0.05),
+            transparent 60%
+          ),
+          #05060a;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
 
-  <!-- Header -->
-  <div class="header-wrap">
-    <header class="container site-header">
-      <a href="#" class="brand" aria-label="Retour à l’accueil TT Global">
-        <!-- adapte le src à ton logo réel -->
-        <img src="Images/Logo v2.png" alt="TT Global" class="brand__logo">
-        <span class="brand__name">TT Global</span>
-      </a>
-    </header>
-  </div>
+      .container {
+        width: var(--container);
+        margin-inline: auto;
+      }
 
-  <main>
-    <section class="container hero">
-      <h1 class="hero__title">Inscrire mon association</h1>
-      <p class="hero__text">
-        Vous êtes sur le point de créer votre espace TT Global pour votre association sportive.<br>
-        Est-ce bien ce que vous cherchez à faire ?
-      </p>
+      /* ========= Header ========= */
+      .header-wrap {
+        background: linear-gradient(180deg, #0f141f, #080a10);
+        border-bottom: 1px solid #151926;
+        padding: 16px 0 12px;
+      }
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand__logo {
+        width: 40px;
+        height: 40px;
+      }
+      .brand__name {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        font-size: 1.05rem;
+      }
 
-      <!-- steps -->
-      <div class="steps" aria-label="Étapes d’inscription">
-        <span class="step is-active"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-        
-      </div>
-    </section>
+      /* ========= Hero / Intro ========= */
+      main {
+        padding: 40px 0 70px;
+        background: linear-gradient(
+          180deg,
+          #05060a 0,
+          #05060a 38%,
+          #05060a 100%
+        );
+      }
 
-    <!-- Choix -->
-    <section class="container choice-section">
-      <div class="choices">
-        <!-- Carte 1 -->
-        <article class="choice-card">
-          <div class="choice-illustration">
-            <span>Nouvelle plateforme<br>pour votre club</span>
-          </div>
-          <div>
-            <h2 class="choice-title">Créer une nouvelle plateforme</h2>
-            <p class="choice-text">
-              Démarrez la création d’un espace TT Global dédié à votre association.
-              Inscription 100&nbsp;% gratuite.
-            </p>
-          </div>
-          <span class="choice-arrow">›</span>
-        </article>
+      .hero {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .hero__title {
+        font-size: 2.3rem;
+        margin: 10px 0 6px;
+      }
+      .hero__text {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
 
-        <!-- Carte 2 -->
-        <article class="choice-card">
-          <div class="choice-illustration choice-illustration--search">
-            <span>Déjà sur TT Global ?</span>
-          </div>
-          <div>
-            <h2 class="choice-title">Rechercher mon association</h2>
-            <p class="choice-text">
-              Votre association utilise déjà TT Global ? Recherchez-la puis accédez
-              à sa plateforme existante.
-            </p>
-          </div>
-          <span class="choice-arrow">›</span>
-        </article>
-      </div>
-    </section>
-  </main>
+      /* Steps */
+      .steps {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 26px 0 0;
+      }
+      .step {
+        width: 70px;
+        height: 6px;
+        border-radius: 999px;
+        background: #262a37;
+        opacity: 0.7;
+      }
+      .step.is-active {
+        background: var(--brand);
+        box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
+        opacity: 1;
+      }
 
-</body>
+      /* ========= Section cartes ========= */
+      .choice-section {
+        margin-top: 40px;
+      }
+      .choices {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .choice-card {
+        background: var(--elev);
+        border-radius: var(--radius);
+        border: 1px solid #202636;
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: 0.18s transform, 0.18s box-shadow, 0.18s border-color,
+          0.18s background;
+      }
+      .choice-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        border-color: var(--brand);
+        background: #191d26;
+      }
+
+      .choice-illustration {
+        height: 120px;
+        border-radius: 14px;
+        background: radial-gradient(
+            circle at 80% 20%,
+            rgba(108, 204, 255, 0.48),
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 0 100%,
+            rgba(168, 255, 96, 0.28),
+            transparent 55%
+          ),
+          linear-gradient(135deg, #101320, #080a10);
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding: 12px 16px;
+        color: rgba(230, 231, 235, 0.9);
+        font-size: 0.9rem;
+      }
+
+      .choice-illustration--search {
+        justify-content: flex-end;
+      }
+
+      .choice-title {
+        font-size: 1.25rem;
+        margin: 0;
+      }
+      .choice-text {
+        margin: 0;
+        font-size: 0.98rem;
+        color: var(--muted);
+      }
+
+      .choice-arrow {
+        position: absolute;
+        inset-block: auto 18px;
+        inset-inline: auto 18px;
+        font-size: 1.3rem;
+        color: var(--muted);
+      }
+
+      .choice-card:hover .choice-arrow {
+        color: var(--brand);
+      }
+
+      /* ========= Responsive ========= */
+      @media (max-width: 880px) {
+        .choices {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        main {
+          padding-top: 28px;
+        }
+        .hero__title {
+          font-size: 1.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header-wrap">
+      <header class="container site-header">
+        <a href="#" class="brand" aria-label="Retour à l’accueil Koordy">
+          <!-- adapte le src à ton logo réel -->
+          <img src="Images/Logo v2.png" alt="Koordy" class="brand__logo" />
+          <span class="brand__name">Koordy</span>
+        </a>
+      </header>
+    </div>
+
+    <main>
+      <section class="container hero">
+        <h1 class="hero__title">Inscrire mon association</h1>
+        <p class="hero__text">
+          Vous êtes sur le point de créer votre espace Koordy pour votre
+          association sportive.<br />
+          Est-ce bien ce que vous cherchez à faire ?
+        </p>
+
+        <!-- steps -->
+        <div class="steps" aria-label="Étapes d’inscription">
+          <span class="step is-active"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+        </div>
+      </section>
+
+      <!-- Choix -->
+      <section class="container choice-section">
+        <div class="choices">
+          <!-- Carte 1 -->
+          <article class="choice-card">
+            <div class="choice-illustration">
+              <span>Nouvelle plateforme<br />pour votre club</span>
+            </div>
+            <div>
+              <h2 class="choice-title">Créer une nouvelle plateforme</h2>
+              <p class="choice-text">
+                Démarrez la création d’un espace Koordy dédié à votre
+                association. Inscription 100&nbsp;% gratuite.
+              </p>
+            </div>
+            <span class="choice-arrow">›</span>
+          </article>
+
+          <!-- Carte 2 -->
+          <article class="choice-card">
+            <div class="choice-illustration choice-illustration--search">
+              <span>Déjà sur Koordy ?</span>
+            </div>
+            <div>
+              <h2 class="choice-title">Rechercher mon association</h2>
+              <p class="choice-text">
+                Votre association utilise déjà Koordy ? Recherchez-la puis
+                accédez à sa plateforme existante.
+              </p>
+            </div>
+            <span class="choice-arrow">›</span>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

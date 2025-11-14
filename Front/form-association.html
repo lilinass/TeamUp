@@ -1,314 +1,349 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TT Global — Votre association</title>
-  <meta name="description" content="Formulaire d’inscription de votre association." />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Koordy — Votre association</title>
+    <meta
+      name="description"
+      content="Formulaire d’inscription de votre association."
+    />
 
-  <style>
-    /* ========= Design tokens ========= */
-    :root{
-      --bg:#0b0c0f;            /* fond sombre */
-      --panel:#111319;         /* panneaux */
-      --elev:#171a21;          /* cartes */
-      --text:#e6e7eb;          /* texte principal */
-      --muted:#9aa3b2;         /* texte secondaire */
-      --brand:#6cf;            /* accent bleu-cyan */
-      --brand-2:#a8ff60;       /* accent secondaire */
-      --line:#232736;
-      --danger:#ff6b6b;
-      --success:#4cd964;
-      --focus: 0 0 0 3px rgba(102,204,255,.35);
-      --radius:16px;
-      --radius-sm:10px;
-      --shadow:0 8px 24px rgba(0,0,0,.35);
-      --shadow-sm:0 6px 18px rgba(0,0,0,.25);
-      --container: min(900px, 92vw);
-      --gap: 24px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
+    <style>
+      /* ========= Design tokens ========= */
+      :root {
+        --bg: #0b0c0f; /* fond sombre */
+        --panel: #111319; /* panneaux */
+        --elev: #171a21; /* cartes */
+        --text: #e6e7eb; /* texte principal */
+        --muted: #9aa3b2; /* texte secondaire */
+        --brand: #6cf; /* accent bleu-cyan */
+        --brand-2: #a8ff60; /* accent secondaire */
+        --line: #232736;
+        --danger: #ff6b6b;
+        --success: #4cd964;
+        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+        --radius: 16px;
+        --radius-sm: 10px;
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.25);
+        --container: min(900px, 92vw);
+        --gap: 24px;
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      }
 
-    /* ========= Reset léger ========= */
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:linear-gradient(180deg,#08090c, #0b0c0f 20%, #0b0c0f 100%);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    img{max-width:100%;height:auto;display:block;}
-    a{color:inherit;text-decoration:none;}
+      /* ========= Reset léger ========= */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background: linear-gradient(180deg, #08090c, #0b0c0f 20%, #0b0c0f 100%);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
 
-    .container{
-      width:var(--container);
-      margin-inline:auto;
-    }
+      .container {
+        width: var(--container);
+        margin-inline: auto;
+      }
 
-    /* ========= Header ========= */
-    .form-header-wrap{
-      background:linear-gradient(90deg,#111319,#1b2635);
-      border-bottom:1px solid #202636;
-      padding:14px 0;
-    }
-    .form-header{
-      display: flex;
-  align-items: center;
-  justify-content: flex-start;  /* essentiel pour aligner à gauche */
-  gap: 10px;
-    }
-    .form-logo{
-      width:36px;
-      height:auto;
-      margin-right: auto
-    }
-    .form-brand{
-      font-weight:700;
-      letter-spacing:.3px;
-    }
+      /* ========= Header ========= */
+      .form-header-wrap {
+        background: linear-gradient(90deg, #111319, #1b2635);
+        border-bottom: 1px solid #202636;
+        padding: 14px 0;
+      }
+      .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* essentiel pour aligner à gauche */
+        gap: 10px;
+      }
+      .form-logo {
+        width: 36px;
+        height: auto;
+        margin-right: auto;
+      }
+      .form-brand {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
 
-    /* ========= Section centrale ========= */
-    main{
-      padding:36px 0 60px;
-    }
+      /* ========= Section centrale ========= */
+      main {
+        padding: 36px 0 60px;
+      }
 
-    .form-title{
-      text-align:center;
-      font-size:1.9rem;
-      margin:10px 0 6px;
-    }
-    .form-subtitle{
-      text-align:center;
-      color:var(--muted);
-      margin:0 0 26px;
-      font-size:.98rem;
-    }
+      .form-title {
+        text-align: center;
+        font-size: 1.9rem;
+        margin: 10px 0 6px;
+      }
+      .form-subtitle {
+        text-align: center;
+        color: var(--muted);
+        margin: 0 0 26px;
+        font-size: 0.98rem;
+      }
 
-    /* ========= Steps (barre de progression) ========= */
-    .steps{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:32px;
-    }
-    .step{
-      width:60px;
-      height:6px;
-      background:#232736;
-      border-radius:999px;
-      opacity:.7;
-    }
-    .step.is-active{
-      background:var(--brand);
-      box-shadow:0 0 0 1px rgba(102,204,255,.35);
-      opacity:1;
-    }
+      /* ========= Steps (barre de progression) ========= */
+      .steps {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+      .step {
+        width: 60px;
+        height: 6px;
+        background: #232736;
+        border-radius: 999px;
+        opacity: 0.7;
+      }
+      .step.is-active {
+        background: var(--brand);
+        box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
+        opacity: 1;
+      }
 
-    /* ========= Formulaire ========= */
-    .card{
-      background:var(--elev);
-      border-radius:var(--radius);
-      border:1px solid #202636;
-      box-shadow:var(--shadow);
-      padding:24px 22px 26px;
-    }
+      /* ========= Formulaire ========= */
+      .card {
+        background: var(--elev);
+        border-radius: var(--radius);
+        border: 1px solid #202636;
+        box-shadow: var(--shadow);
+        padding: 24px 22px 26px;
+      }
 
-    .tt-form{
-      display:grid;
-      gap:18px;
-    }
+      .tt-form {
+        display: grid;
+        gap: 18px;
+      }
 
-    .tt-form label{
-      display:block;
-      font-size:.95rem;
-      margin-bottom:6px;
-    }
+      .tt-form label {
+        display: block;
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+      }
 
-    .tt-form small{
-      color:var(--muted);
-    }
+      .tt-form small {
+        color: var(--muted);
+      }
 
-    .tt-form input,
-    .tt-form select{
-      width:100%;
-      background:var(--panel);
-      color:var(--text);
-      border:1px solid #2b3346;
-      padding:11px 12px;
-      border-radius:12px;
-      font-size:1rem;
-    }
+      .tt-form input,
+      .tt-form select {
+        width: 100%;
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid #2b3346;
+        padding: 11px 12px;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
 
-    .tt-form input::placeholder{
-      color:#7c8696;
-    }
+      .tt-form input::placeholder {
+        color: #7c8696;
+      }
 
-    .tt-form input:focus,
-    .tt-form select:focus{
-      outline:none;
-      box-shadow:var(--focus);
-      border-color:var(--brand);
-    }
+      .tt-form input:focus,
+      .tt-form select:focus {
+        outline: none;
+        box-shadow: var(--focus);
+        border-color: var(--brand);
+      }
 
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
 
-    /* ========= Boutons ========= */
-    .form-actions{
-      margin-top:14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:center;
-    }
+      /* ========= Boutons ========= */
+      .form-actions {
+        margin-top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
 
-    .btn-primary{
-      background:linear-gradient(180deg,#2d9cf0,#0e6ccf);
-      border:1px solid #0e5fb4;
-      padding:14px;
-      width:100%;
-      border-radius:999px;
-      font-weight:600;
-      font-size:1.05rem;
-      cursor:pointer;
-      color:#fff;
-      text-align:center;
-    }
+      .btn-primary {
+        background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+        border: 1px solid #0e5fb4;
+        padding: 14px;
+        width: 100%;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;
+      }
 
-    .btn-primary:hover{
-      filter:brightness(1.06);
-    }
+      .btn-primary:hover {
+        filter: brightness(1.06);
+      }
 
-    .back-link{
-      font-size:.95rem;
-      color:var(--muted);
-      cursor:pointer;
-    }
-    .back-link:hover{
-      color:#fff;
-    }
+      .back-link {
+        font-size: 0.95rem;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
 
-    /* ========= Champs requis en erreur (optionnel) ========= */
-    .is-error{
-      border-color:var(--danger);
-      background:#2a1114;
-    }
+      /* ========= Champs requis en erreur (optionnel) ========= */
+      .is-error {
+        border-color: var(--danger);
+        background: #2a1114;
+      }
 
-    /* ========= Responsive ========= */
-    @media (max-width:720px){
-      main{padding:26px 0 40px;}
-      .card{padding:20px 16px 22px;}
-      .row{grid-template-columns:1fr;}
-    }
+      /* ========= Responsive ========= */
+      @media (max-width: 720px) {
+        main {
+          padding: 26px 0 40px;
+        }
+        .card {
+          padding: 20px 16px 22px;
+        }
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="form-header-wrap">
+      <header class="form-header container">
+        <div class="form-header-left">
+          <img src="Images/Logo v2.png" alt="Koordy" class="form-logo" />
+          <span class="form-brand">Koordy</span>
+        </div>
+      </header>
+    </div>
 
-    
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <div class="form-header-wrap">
-    <header class="form-header container">
-    <div class="form-header-left">
-    <img src="Images/Logo v2.png" alt="TT Global" class="form-logo">
-    <span class="form-brand">TT Global</span>
-  </div>
-</header>
+    <!-- Contenu principal -->
+    <main>
+      <section class="container">
+        <h1 class="form-title">Votre association</h1>
+        <p class="form-subtitle">
+          Renseignez les informations de votre structure pour démarrer sur
+          Koordy.
+        </p>
 
-  </div>
+        <!-- Steps -->
+        <div class="steps" aria-label="Étapes du formulaire">
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+        </div>
 
-  <!-- Contenu principal -->
-  <main>
-    <section class="container">
-      <h1 class="form-title">Votre association</h1>
-      <p class="form-subtitle">
-        Renseignez les informations de votre structure pour démarrer sur TT Global.
-      </p>
-
-      <!-- Steps -->
-      <div class="steps" aria-label="Étapes du formulaire">
-        <span class="step is-active"></span>
-        <span class="step is-active"></span>
-        <span class="step is-active"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-      </div>
-
-      <!-- Carte formulaire -->
-      <div class="card">
-        <form class="tt-form" action="#" method="post">
-          <div>
-            <label for="assoc-name">Nom de votre association <span aria-hidden="true">*</span></label>
-            <input id="assoc-name" name="assoc-name" type="text" required />
-          </div>
-
-          <div class="row">
+        <!-- Carte formulaire -->
+        <div class="card">
+          <form class="tt-form" action="#" method="post">
             <div>
-              <label for="structure-type">Type de structure <span aria-hidden="true">*</span></label>
-              <select id="structure-type" name="structure-type" required>
-                <option value="">--- Sélectionnez un type ---</option>
-                <option>Club</option>
-                <option>Association</option>
-                <option>Académie</option>
+              <label for="assoc-name"
+                >Nom de votre association
+                <span aria-hidden="true">*</span></label
+              >
+              <input id="assoc-name" name="assoc-name" type="text" required />
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="structure-type"
+                  >Type de structure <span aria-hidden="true">*</span></label
+                >
+                <select id="structure-type" name="structure-type" required>
+                  <option value="">--- Sélectionnez un type ---</option>
+                  <option>Club</option>
+                  <option>Association</option>
+                  <option>Académie</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="sport"
+                  >Sport <span aria-hidden="true">*</span></label
+                >
+                <select id="sport" name="sport" required>
+                  <option value="">--- Sélectionnez un sport ---</option>
+                  <option>Tennis de table</option>
+                  <option>Multi-sports</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="addr1"
+                >Adresse 1 <span aria-hidden="true">*</span></label
+              >
+              <input id="addr1" name="addr1" type="text" required />
+            </div>
+
+            <div>
+              <label for="addr2">Adresse 2</label>
+              <input id="addr2" name="addr2" type="text" />
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="zip"
+                  >Code postal <span aria-hidden="true">*</span></label
+                >
+                <input id="zip" name="zip" type="text" required />
+              </div>
+              <div>
+                <label for="city"
+                  >Ville <span aria-hidden="true">*</span></label
+                >
+                <input id="city" name="city" type="text" required />
+              </div>
+            </div>
+
+            <div>
+              <label for="country"
+                >Pays <span aria-hidden="true">*</span></label
+              >
+              <select id="country" name="country" required>
+                <option value="">--- Sélectionnez un pays ---</option>
+                <option>France</option>
+                <option>Belgique</option>
+                <option>Suisse</option>
                 <option>Autre</option>
               </select>
             </div>
 
-            <div>
-              <label for="sport">Sport <span aria-hidden="true">*</span></label>
-              <select id="sport" name="sport" required>
-                <option value="">--- Sélectionnez un sport ---</option>
-                <option>Tennis de table</option>
-                <option>Multi-sports</option>
-              </select>
+            <!-- Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Suivant</button>
+              <span class="back-link">← Retour</span>
             </div>
-          </div>
-
-          <div>
-            <label for="addr1">Adresse 1 <span aria-hidden="true">*</span></label>
-            <input id="addr1" name="addr1" type="text" required />
-          </div>
-
-          <div>
-            <label for="addr2">Adresse 2</label>
-            <input id="addr2" name="addr2" type="text" />
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="zip">Code postal <span aria-hidden="true">*</span></label>
-              <input id="zip" name="zip" type="text" required />
-            </div>
-            <div>
-              <label for="city">Ville <span aria-hidden="true">*</span></label>
-              <input id="city" name="city" type="text" required />
-            </div>
-          </div>
-
-          <div>
-            <label for="country">Pays <span aria-hidden="true">*</span></label>
-            <select id="country" name="country" required>
-              <option value="">--- Sélectionnez un pays ---</option>
-              <option>France</option>
-              <option>Belgique</option>
-              <option>Suisse</option>
-              <option>Autre</option>
-            </select>
-          </div>
-
-          <!-- Actions -->
-          <div class="form-actions">
-            <button type="submit" class="btn-primary">Suivant</button>
-            <span class="back-link">← Retour</span>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-</body>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

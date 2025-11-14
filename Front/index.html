@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TT Global — Tennis de Table</title>
+    <link rel="icon" type="image/png" href="/Front/Images/Logo v2.png" />
+    <title>Koordy</title>
     <meta
       name="description"
       content="Actus, classements, événements et vidéos tennis de table."
@@ -30,10 +31,10 @@
     <!-- Header -->
     <header class="site-header" role="banner">
       <div class="container site-header__inner">
-        <a class="brand" href="#" aria-label="TT Global, retour à l’accueil">
+        <a class="brand" href="#" aria-label="Koordy, retour à l’accueil">
           <!-- Logo minimal en SVG -->
           <img src="Images/Logo v2.png" alt="" />
-          <span class="brand__name">TT Global</span>
+          <span class="brand__name">Koordy</span>
         </a>
 
         <nav class="nav" aria-label="Navigation principale">
@@ -47,8 +48,14 @@
         </nav>
 
         <div class="auth-buttons">
-          <a href="#" class="btn btn--ghost btn--sm">Se connecter</a>
-          <a href="#" class="btn btn--primary btn--sm">S’inscrire</a>
+          <a href="/Front/login.html" class="btn btn--ghost btn--sm"
+            >Se connecter</a
+          >
+          <a
+            href="/Front/inscription.personnelle.html"
+            class="btn btn--primary btn--sm"
+            >S’inscrire</a
+          >
         </div>
       </div>
     </header>
@@ -57,15 +64,19 @@
     <section class="hero" role="region" aria-label="Événement à l’affiche">
       <div class="hero__bg" aria-hidden="true"></div>
       <div class="container hero__content">
-        <div class="hero__eyebrow">Événement à l’affiche</div>
-        <h1 class="hero__title">Masters de Paris 2025</h1>
+        <div class="hero__eyebrow">Vos association</div>
+        <h1 class="hero__title">organisation sans faille</h1>
         <p class="hero__desc">
           Les meilleurs mondiaux s’affrontent à l’Accor Arena. Intensité.
           Vitesse. Pure précision.
         </p>
         <div class="hero__actions">
-          <a href="#" class="btn btn--primary">Billetterie</a>
-          <a href="#" class="btn btn--ghost">Programme</a>
+          <a href="/Front/inscription.personnelle.html" class="btn btn--primary"
+            >J'inscris mon Asso !</a
+          >
+          <a href="/Front/login.html" class="btn btn--ghost"
+            >Je rejoins mon Asso !</a
+          >
         </div>
       </div>
     </section>
@@ -74,21 +85,24 @@
     <section class="kpis" aria-label="Chiffres clés">
       <div class="container kpis__grid">
         <div class="kpi">
-          <span class="kpi__value">32</span>
-          <span class="kpi__label">Pays</span>
+          <span class="kpi__label">Déjà</span>
+          <span class="kpi__value">20</span>
+          <span class="kpi__label">Asso nous font confiance</span>
         </div>
         <div class="kpi">
-          <span class="kpi__value">128</span>
-          <span class="kpi__label">Athlètes</span>
+          <span class="kpi__label">Plus de</span>
+          <span class="kpi__value">300</span>
+          <span class="kpi__label">Membres</span>
         </div>
         <div class="kpi">
-          <span class="kpi__value">4</span>
-          <span class="kpi__label">Jours</span>
+          <span class="kpi__label">Une solution</span>
+          <span class="kpi__value">100%</span>
+          <span class="kpi__label">Gratuite</span>
         </div>
-        <div class="kpi">
+        <!-- <div class="kpi">
           <span class="kpi__value">€25</span>
           <span class="kpi__label">À partir de</span>
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -329,7 +343,34 @@
             <p class="card__excerpt">Des échanges qui défient la gravité.</p>
           </div>
         </article>
+      <div class="container cards cards--videos">
+        <article class="card card--video">
+          <a
+            class="card__media"
+            href="#"
+            aria-label="Lire la vidéo: Top 10 rallies"
+          >
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Top 10 rallies — Shanghai</a>
+            </h3>
+            <p class="card__excerpt">Des échanges qui défient la gravité.</p>
+          </div>
+        </article>
 
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Mic’d up">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Mic’d up — à table avec les coachs</a>
+            </h3>
+            <p class="card__excerpt">Stratégie et ajustements en direct.</p>
+          </div>
+        </article>
         <article class="card card--video">
           <a class="card__media" href="#" aria-label="Lire la vidéo: Mic’d up">
             <div class="media media--16x9 media--play"></div>
@@ -355,7 +396,30 @@
         </article>
       </div>
     </section>
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Slow-mo">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Slow-mo — technicité au ralenti</a>
+            </h3>
+            <p class="card__excerpt">Le geste parfait, image par image.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
+    <!-- Sponsors -->
+    <section class="sponsors" aria-label="Partenaires">
+      <div class="container sponsors__strip">
+        <div class="sponsors__item" aria-label="Partenaire 1"></div>
+        <div class="sponsors__item" aria-label="Partenaire 2"></div>
+        <div class="sponsors__item" aria-label="Partenaire 3"></div>
+        <div class="sponsors__item" aria-label="Partenaire 4"></div>
+        <div class="sponsors__item" aria-label="Partenaire 5"></div>
+      </div>
+    </section>
     <!-- Sponsors -->
     <section class="sponsors" aria-label="Partenaires">
       <div class="container sponsors__strip">
@@ -377,7 +441,7 @@
               <circle cx="44" cy="28" r="8"></circle>
               <rect x="28" y="30" width="22" height="4" rx="2"></rect>
             </svg>
-            <span class="brand__name">TT Global</span>
+            <span class="brand__name">Koordy</span>
           </a>
           <p class="muted">
             La plateforme du tennis de table : résultats, infos, événements,
@@ -426,7 +490,7 @@
       </div>
 
       <div class="container site-footer__legal">
-        <p class="micro muted">© 2025 TT Global. Tous droits réservés.</p>
+        <p class="micro muted">© 2025 Koordy. Tous droits réservés.</p>
         <nav aria-label="Mentions légales">
           <a href="#">Mentions légales</a>
           <a href="#">Cookies</a>

@@ -1,344 +1,441 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TT Global — Choisi ton design</title>
-  <meta name="description" content="Choix du design de votre plateforme TT Global." />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Koordy — Choisi ton design</title>
+    <meta
+      name="description"
+      content="Choix du design de votre plateforme Koordy."
+    />
 
-  <style>
-    /* ========= Design tokens ========= */
-    :root{
-      --bg:#0b0c0f;
-      --panel:#111319;
-      --elev:#171a21;
-      --text:#e6e7eb;
-      --muted:#9aa3b2;
-      --brand:#6cf;
-      --brand-2:#a8ff60;
-      --line:#232736;
-      --focus:0 0 0 3px rgba(102,204,255,.35);
-      --radius:18px;
-      --shadow:0 18px 40px rgba(0,0,0,.55);
-      --container:min(900px,92vw);
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
+    <style>
+      /* ========= Design tokens ========= */
+      :root {
+        --bg: #0b0c0f;
+        --panel: #111319;
+        --elev: #171a21;
+        --text: #e6e7eb;
+        --muted: #9aa3b2;
+        --brand: #6cf;
+        --brand-2: #a8ff60;
+        --line: #232736;
+        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+        --radius: 18px;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        --container: min(900px, 92vw);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      }
 
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 10% 0, rgba(108,204,255,.07), transparent 55%),
-        radial-gradient(900px 500px at 90% -10%, rgba(168,255,96,.06), transparent 60%),
-        #05060a;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
-    img{max-width:100%;height:auto;display:block;}
-    a{text-decoration:none;color:inherit;}
-    .container{width:var(--container);margin-inline:auto;}
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background: radial-gradient(
+            900px 500px at 10% 0,
+            rgba(108, 204, 255, 0.07),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 90% -10%,
+            rgba(168, 255, 96, 0.06),
+            transparent 60%
+          ),
+          #05060a;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .container {
+        width: var(--container);
+        margin-inline: auto;
+      }
 
-    /* ========= Header ========= */
-    .form-header-wrap{
-      background:linear-gradient(180deg,#0f141f,#080a10);
-      border-bottom:1px solid #151926;
-      padding:16px 0 12px;
-    }
-    .form-header{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:10px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .brand__logo{
-      width:40px;
-      height:40px;
-    }
-    .brand__name{
-      font-weight:700;
-      letter-spacing:.3px;
-      font-size:1.05rem;
-    }
+      /* ========= Header ========= */
+      .form-header-wrap {
+        background: linear-gradient(180deg, #0f141f, #080a10);
+        border-bottom: 1px solid #151926;
+        padding: 16px 0 12px;
+      }
+      .form-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand__logo {
+        width: 40px;
+        height: 40px;
+      }
+      .brand__name {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        font-size: 1.05rem;
+      }
 
-    /* ========= Hero ========= */
-    main{padding:40px 0 70px;}
-    .hero{text-align:center;margin-bottom:34px;}
-    .hero__title{font-size:2.1rem;margin:10px 0 6px;}
-    .hero__text{margin:0;color:var(--muted);font-size:1rem;}
+      /* ========= Hero ========= */
+      main {
+        padding: 40px 0 70px;
+      }
+      .hero {
+        text-align: center;
+        margin-bottom: 34px;
+      }
+      .hero__title {
+        font-size: 2.1rem;
+        margin: 10px 0 6px;
+      }
+      .hero__text {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
 
-    /* Steps */
-    .steps{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin:24px 0 0;
-    }
-    .step{
-      width:70px;
-      height:6px;
-      border-radius:999px;
-      background:#262a37;
-      opacity:.7;
-    }
-    .step.is-active{
-      background:var(--brand);
-      box-shadow:0 0 0 1px rgba(102,204,255,.35);
-      opacity:1;
-    }
+      /* Steps */
+      .steps {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 24px 0 0;
+      }
+      .step {
+        width: 70px;
+        height: 6px;
+        border-radius: 999px;
+        background: #262a37;
+        opacity: 0.7;
+      }
+      .step.is-active {
+        background: var(--brand);
+        box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
+        opacity: 1;
+      }
 
-    /* ========= Card / Form ========= */
-    .card{
-      background:var(--elev);
-      border-radius:var(--radius);
-      border:1px solid #202636;
-      box-shadow:var(--shadow);
-      padding:24px 22px 26px;
-    }
+      /* ========= Card / Form ========= */
+      .card {
+        background: var(--elev);
+        border-radius: var(--radius);
+        border: 1px solid #202636;
+        box-shadow: var(--shadow);
+        padding: 24px 22px 26px;
+      }
 
-    .tt-form{
-      display:grid;
-      gap:18px;
-    }
+      .tt-form {
+        display: grid;
+        gap: 18px;
+      }
 
-    .tt-form label{
-      display:block;
-      font-size:.95rem;
-      margin-bottom:6px;
-    }
+      .tt-form label {
+        display: block;
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+      }
 
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
 
-    .tt-form input[type="text"],
-    .tt-form input[type="color"]{
-      width:100%;
-      background:var(--panel);
-      color:var(--text);
-      border:1px solid #2b3346;
-      padding:10px 12px;
-      border-radius:12px;
-      font-size:1rem;
-    }
+      .tt-form input[type="text"],
+      .tt-form input[type="color"] {
+        width: 100%;
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid #2b3346;
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
 
-    .tt-form input[type="text"]:focus{
-      outline:none;
-      box-shadow:var(--focus);
-      border-color:var(--brand);
-    }
+      .tt-form input[type="text"]:focus {
+        outline: none;
+        box-shadow: var(--focus);
+        border-color: var(--brand);
+      }
 
-    /* Couleur + hex côte à côte */
-    .color-field{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .color-field input[type="color"]{
-      width:46px;
-      padding:0;
-      border-radius:10px;
-      border:none;
-      background:transparent;
-      cursor:pointer;
-    }
-    .color-field input[type="text"]{
-      flex:1;
-    }
+      /* Couleur + hex côte à côte */
+      .color-field {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .color-field input[type="color"] {
+        width: 46px;
+        padding: 0;
+        border-radius: 10px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      .color-field input[type="text"] {
+        flex: 1;
+      }
 
-    /* Upload image */
-    .upload{
-      border-radius:16px;
-      border:1px dashed #2a3143;
-      background:#141823;
-      padding:18px 16px;
-      text-align:center;
-      cursor:pointer;
-      transition:.18s border-color,.18s background;
-    }
-    .upload:hover{
-      border-color:var(--brand);
-      background:#181c28;
-    }
-    .upload-title{
-      margin:0 0 4px;
-      font-size:1rem;
-    }
-    .upload-text{
-      margin:0;
-      font-size:.9rem;
-      color:var(--muted);
-    }
-    .upload input[type="file"]{
-      margin-top:12px;
-      font-size:.9rem;
-    }
+      /* Upload image */
+      .upload {
+        border-radius: 16px;
+        border: 1px dashed #2a3143;
+        background: #141823;
+        padding: 18px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.18s border-color, 0.18s background;
+      }
+      .upload:hover {
+        border-color: var(--brand);
+        background: #181c28;
+      }
+      .upload-title {
+        margin: 0 0 4px;
+        font-size: 1rem;
+      }
+      .upload-text {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .upload input[type="file"] {
+        margin-top: 12px;
+        font-size: 0.9rem;
+      }
 
-    /* Aperçu (optionnel) */
-    .preview{
-      margin-top:10px;
-      border-radius:12px;
-      border:1px solid #252b3a;
-      padding:10px;
-      display:none;
-    }
-    .preview img{
-      max-height:120px;
-      margin-inline:auto;
-    }
+      /* Aperçu (optionnel) */
+      .preview {
+        margin-top: 10px;
+        border-radius: 12px;
+        border: 1px solid #252b3a;
+        padding: 10px;
+        display: none;
+      }
+      .preview img {
+        max-height: 120px;
+        margin-inline: auto;
+      }
 
-    /* ========= Actions ========= */
-    .form-actions{
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      align-items:center;
-    }
-    .btn-primary{
-      background:linear-gradient(180deg,#2d9cf0,#0e6ccf);
-      border:1px solid #0e5fb4;
-      padding:14px;
-      width:100%;
-      border-radius:999px;
-      font-weight:600;
-      font-size:1.05rem;
-      cursor:pointer;
-      color:#fff;
-      text-align:center;
-    }
-    .btn-primary:hover{filter:brightness(1.06);}
-    .back-link{
-      font-size:.95rem;
-      color:var(--muted);
-      cursor:pointer;
-    }
-    .back-link:hover{color:#fff;}
+      /* ========= Actions ========= */
+      .form-actions {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn-primary {
+        background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+        border: 1px solid #0e5fb4;
+        padding: 14px;
+        width: 100%;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;
+      }
+      .btn-primary:hover {
+        filter: brightness(1.06);
+      }
+      .back-link {
+        font-size: 0.95rem;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
 
-    /* ========= Responsive ========= */
-    @media(max-width:720px){
-      main{padding:30px 0 50px;}
-      .card{padding:20px 16px 22px;}
-      .row{grid-template-columns:1fr;}
-      .hero__title{font-size:1.85rem;}
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <div class="form-header-wrap">
-    <header class="container form-header">
-      <a href="#" class="brand" aria-label="Retour à l’accueil TT Global">
-        <img src="Images/Logo v2.png" alt="TT Global" class="brand__logo">
-        <span class="brand__name">TT Global</span>
-      </a>
-    </header>
-  </div>
+      /* ========= Responsive ========= */
+      @media (max-width: 720px) {
+        main {
+          padding: 30px 0 50px;
+        }
+        .card {
+          padding: 20px 16px 22px;
+        }
+        .row {
+          grid-template-columns: 1fr;
+        }
+        .hero__title {
+          font-size: 1.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="form-header-wrap">
+      <header class="container form-header">
+        <a href="#" class="brand" aria-label="Retour à l’accueil Koordy">
+          <img src="Images/Logo v2.png" alt="Koordy" class="brand__logo" />
+          <span class="brand__name">Koordy</span>
+        </a>
+      </header>
+    </div>
 
-  <main>
-    <section class="container hero">
-      <h1 class="hero__title">Choisi ton design</h1>
-      <p class="hero__text">
-        Personnalisez les couleurs de votre plateforme et ajoutez votre logo ou une image de fond.
-      </p>
+    <main>
+      <section class="container hero">
+        <h1 class="hero__title">Choisi ton design</h1>
+        <p class="hero__text">
+          Personnalisez les couleurs de votre plateforme et ajoutez votre logo
+          ou une image de fond.
+        </p>
 
-      <!-- 3ᵉ page : 3 barrettes actives -->
-      <div class="steps" aria-label="Étapes d’inscription">
-        <span class="step is-active"></span>
-        <span class="step is-active"></span>
-        <span class="step is-active"></span>
-        <span class="step is-active"></span>
-        <span class="step"></span>
-      </div>
-    </section>
+        <!-- 3ᵉ page : 3 barrettes actives -->
+        <div class="steps" aria-label="Étapes d’inscription">
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step"></span>
+        </div>
+      </section>
 
-    <!-- Carte formulaire -->
-    <section class="container">
-      <div class="card">
-        <form class="tt-form" action="#" method="post" enctype="multipart/form-data">
-          <!-- Couleurs -->
-          <div class="row">
+      <!-- Carte formulaire -->
+      <section class="container">
+        <div class="card">
+          <form
+            class="tt-form"
+            action="#"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <!-- Couleurs -->
+            <div class="row">
+              <div>
+                <label for="primary-color">Couleur primaire *</label>
+                <div class="color-field">
+                  <input
+                    id="primary-color"
+                    name="primary-color"
+                    type="color"
+                    value="#6CCFFF"
+                  />
+                  <input
+                    id="primary-hex"
+                    name="primary-hex"
+                    type="text"
+                    value="#6CCFFF"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="secondary-color">Couleur secondaire *</label>
+                <div class="color-field">
+                  <input
+                    id="secondary-color"
+                    name="secondary-color"
+                    type="color"
+                    value="#FFFFFF"
+                  />
+                  <input
+                    id="secondary-hex"
+                    name="secondary-hex"
+                    type="text"
+                    value="#FFFFFF"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Upload image -->
             <div>
-              <label for="primary-color">Couleur primaire *</label>
-              <div class="color-field">
-                <input id="primary-color" name="primary-color" type="color" value="#6CCFFF">
-                <input id="primary-hex" name="primary-hex" type="text" value="#6CCFFF">
+              <label for="design-image"
+                >Image de design (logo ou visuel)
+              </label>
+              <div
+                class="upload"
+                onclick="document.getElementById('design-image').click();"
+              >
+                <p class="upload-title">Importer une image</p>
+                <p class="upload-text">
+                  Formats acceptés : PNG, JPG, SVG. Taille conseillée : 512×512
+                  px.
+                </p>
+                <input
+                  id="design-image"
+                  name="design-image"
+                  type="file"
+                  accept="image/*"
+                />
+                <div id="preview" class="preview">
+                  <img id="preview-img" alt="Aperçu du visuel" />
+                </div>
               </div>
             </div>
 
-            <div>
-              <label for="secondary-color">Couleur secondaire *</label>
-              <div class="color-field">
-                <input id="secondary-color" name="secondary-color" type="color" value="#FFFFFF">
-                <input id="secondary-hex" name="secondary-hex" type="text" value="#FFFFFF">
-              </div>
+            <!-- Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">Suivant</button>
+              <span class="back-link">← Retour</span>
             </div>
-          </div>
+          </form>
+        </div>
+      </section>
+    </main>
 
-          <!-- Upload image -->
-          <div>
-            <label for="design-image">Image de design (logo ou visuel) </label>
-            <div class="upload" onclick="document.getElementById('design-image').click();">
-              <p class="upload-title">Importer une image</p>
-              <p class="upload-text">Formats acceptés : PNG, JPG, SVG. Taille conseillée : 512×512 px.</p>
-              <input id="design-image" name="design-image" type="file" accept="image/*" />
-              <div id="preview" class="preview">
-                <img id="preview-img" alt="Aperçu du visuel">
-              </div>
-            </div>
-          </div>
+    <script>
+      // Sync color picker <-> input texte
+      const primaryColor = document.getElementById("primary-color");
+      const primaryHex = document.getElementById("primary-hex");
+      const secondaryColor = document.getElementById("secondary-color");
+      const secondaryHex = document.getElementById("secondary-hex");
 
-          <!-- Actions -->
-          <div class="form-actions">
-            <button type="submit" class="btn-primary">Suivant</button>
-            <span class="back-link">← Retour</span>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
+      primaryColor.addEventListener(
+        "input",
+        () => (primaryHex.value = primaryColor.value.toUpperCase())
+      );
+      primaryHex.addEventListener("input", () => {
+        if (/^#([0-9A-Fa-f]{6})$/.test(primaryHex.value))
+          primaryColor.value = primaryHex.value;
+      });
 
-  <script>
-    // Sync color picker <-> input texte
-    const primaryColor = document.getElementById('primary-color');
-    const primaryHex   = document.getElementById('primary-hex');
-    const secondaryColor = document.getElementById('secondary-color');
-    const secondaryHex   = document.getElementById('secondary-hex');
+      secondaryColor.addEventListener(
+        "input",
+        () => (secondaryHex.value = secondaryColor.value.toUpperCase())
+      );
+      secondaryHex.addEventListener("input", () => {
+        if (/^#([0-9A-Fa-f]{6})$/.test(secondaryHex.value))
+          secondaryColor.value = secondaryHex.value;
+      });
 
-    primaryColor.addEventListener('input', () => primaryHex.value = primaryColor.value.toUpperCase());
-    primaryHex.addEventListener('input', () => {
-      if(/^#([0-9A-Fa-f]{6})$/.test(primaryHex.value)) primaryColor.value = primaryHex.value;
-    });
+      // Aperçu image
+      const fileInput = document.getElementById("design-image");
+      const preview = document.getElementById("preview");
+      const previewImg = document.getElementById("preview-img");
 
-    secondaryColor.addEventListener('input', () => secondaryHex.value = secondaryColor.value.toUpperCase());
-    secondaryHex.addEventListener('input', () => {
-      if(/^#([0-9A-Fa-f]{6})$/.test(secondaryHex.value)) secondaryColor.value = secondaryHex.value;
-    });
-
-    // Aperçu image
-    const fileInput = document.getElementById('design-image');
-    const preview = document.getElementById('preview');
-    const previewImg = document.getElementById('preview-img');
-
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        previewImg.src = e.target.result;
-        preview.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    });
-  </script>
-</body>
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImg.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      });
+    </script>
+  </body>
 </html>

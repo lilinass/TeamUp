@@ -1,219 +1,240 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TT Global — Connexion</title>
-  <meta name="description" content="Connexion à votre espace TT Global." />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Koordy — Connexion</title>
+    <meta name="description" content="Connexion à votre espace Koordy." />
 
-  <style>
-    :root{
-      --bg:#0b0c0f;
-      --panel:#111319;
-      --elev:#171a21;
-      --text:#e6e7eb;
-      --muted:#9aa3b2;
-      --brand:#6cf;
-      --brand-2:#a8ff60;
-      --line:#232736;
-      --focus:0 0 0 3px rgba(102,204,255,.35);
-      --radius:18px;
-      --shadow:0 18px 40px rgba(0,0,0,.55);
-      --container:min(520px,92vw);
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-    }
+    <style>
+      :root {
+        --bg: #0b0c0f;
+        --panel: #111319;
+        --elev: #171a21;
+        --text: #e6e7eb;
+        --muted: #9aa3b2;
+        --brand: #6cf;
+        --brand-2: #a8ff60;
+        --line: #232736;
+        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+        --radius: 18px;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        --container: min(520px, 92vw);
+        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      }
 
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 10% 0, rgba(108,204,255,.07), transparent 55%),
-        radial-gradient(900px 500px at 90% -10%, rgba(168,255,96,.06), transparent 60%),
-        #05060a;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      display:flex;
-      flex-direction:column;
-    }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        color: var(--text);
+        background: radial-gradient(
+            900px 500px at 10% 0,
+            rgba(108, 204, 255, 0.07),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 90% -10%,
+            rgba(168, 255, 96, 0.06),
+            transparent 60%
+          ),
+          #05060a;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        display: flex;
+        flex-direction: column;
+      }
 
-    img{max-width:100%;height:auto;display:block;}
-    a{text-decoration:none;color:inherit;}
-    .container{width:var(--container);margin-inline:auto;}
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .container {
+        width: var(--container);
+        margin-inline: auto;
+      }
 
-    /* ========= Header ========= */
-    .header-wrap{
-      background:linear-gradient(180deg,#0f141f,#080a10);
-      border-bottom:1px solid #151926;
-      padding:16px 0 12px;
-    }
-    .header{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:10px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .brand__logo{
-      width:40px;
-      height:40px;
-    }
-    .brand__name{
-      font-weight:700;
-      letter-spacing:.3px;
-      font-size:1.05rem;
-    }
+      /* ========= Header ========= */
+      .header-wrap {
+        background: linear-gradient(180deg, #0f141f, #080a10);
+        border-bottom: 1px solid #151926;
+        padding: 16px 0 12px;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand__logo {
+        width: 40px;
+        height: 40px;
+      }
+      .brand__name {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        font-size: 1.05rem;
+      }
 
-    /* ========= Card login ========= */
-    main{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-      padding-top:60px;
-    }
+      /* ========= Card login ========= */
+      main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 60px;
+      }
 
-    .card{
-      background:var(--elev);
-      border-radius:var(--radius);
-      border:1px solid #202636;
-      box-shadow:var(--shadow);
-      padding:30px 26px 30px;
-      width:100%;
-    }
+      .card {
+        background: var(--elev);
+        border-radius: var(--radius);
+        border: 1px solid #202636;
+        box-shadow: var(--shadow);
+        padding: 30px 26px 30px;
+        width: 100%;
+      }
 
-    .title{
-      font-size:1.9rem;
-      text-align:center;
-      margin:0 0 10px;
-    }
+      .title {
+        font-size: 1.9rem;
+        text-align: center;
+        margin: 0 0 10px;
+      }
 
-    .subtitle{
-      text-align:center;
-      color:var(--muted);
-      margin:0 0 26px;
-      font-size:.95rem;
-    }
+      .subtitle {
+        text-align: center;
+        color: var(--muted);
+        margin: 0 0 26px;
+        font-size: 0.95rem;
+      }
 
-    .form{
-      display:grid;
-      gap:18px;
-    }
+      .form {
+        display: grid;
+        gap: 18px;
+      }
 
-    label{
-      display:block;
-      margin-bottom:6px;
-      font-size:.95rem;
-    }
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+      }
 
-    input[type="email"],
-    input[type="password"]{
-      width:100%;
-      background:var(--panel);
-      color:var(--text);
-      border:1px solid #2b3346;
-      padding:12px;
-      border-radius:12px;
-      font-size:1rem;
-    }
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid #2b3346;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
 
-    input:focus{
-      outline:none;
-      box-shadow:var(--focus);
-      border-color:var(--brand);
-    }
+      input:focus {
+        outline: none;
+        box-shadow: var(--focus);
+        border-color: var(--brand);
+      }
 
-    /* Actions */
-    .btn-primary{
-      background:linear-gradient(180deg,#2d9cf0,#0e6ccf);
-      border:1px solid #0e5fb4;
-      padding:14px;
-      width:100%;
-      border-radius:999px;
-      font-weight:600;
-      font-size:1.05rem;
-      cursor:pointer;
-      color:#fff;
-      text-align:center;
-      margin-top:10px;
-    }
-    .btn-primary:hover{
-      filter:brightness(1.06);
-    }
+      /* Actions */
+      .btn-primary {
+        background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+        border: 1px solid #0e5fb4;
+        padding: 14px;
+        width: 100%;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;
+        margin-top: 10px;
+      }
+      .btn-primary:hover {
+        filter: brightness(1.06);
+      }
 
-    .link-row{
-      display:flex;
-      justify-content:space-between;
-      font-size:.9rem;
-      margin-top:12px;
-      color:var(--muted);
-    }
+      .link-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        margin-top: 12px;
+        color: var(--muted);
+      }
 
-    .link-row a{
-      color:var(--brand);
-    }
+      .link-row a {
+        color: var(--brand);
+      }
 
-    .center-link{
-      text-align:center;
-      margin-top:18px;
-      font-size:.9rem;
-      color:var(--muted);
-    }
-    .center-link a{
-      color:var(--brand);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Header -->
-  <div class="header-wrap">
-    <header class="container header">
-      <a href="#" class="brand">
-        <img src="Images/Logo v2.png" alt="TT Global" class="brand__logo">
-        <span class="brand__name">TT Global</span>
-      </a>
-    </header>
-  </div>
-
-  <!-- Login Card -->
-  <main>
-    <div class="container">
-      <div class="card">
-        <h1 class="title">Se connecter</h1>
-        <p class="subtitle">Accédez à votre espace TT Global</p>
-
-        <form class="form" action="#" method="post">
-          <div>
-            <label for="email">Adresse e-mail *</label>
-            <input id="email" type="email" name="email" required />
-          </div>
-
-          <div>
-            <label for="password">Mot de passe *</label>
-            <input id="password" type="password" name="password" required />
-          </div>
-
-          <button class="btn-primary" type="submit">Se connecter</button>
-
-          <div class="link-row">
-            <a href="#">Mot de passe oublié ?</a>
-          </div>
-
-          <div class="center-link">
-            Pas encore de compte ?
-            <a href="#">Créer un compte</a>
-          </div>
-        </form>
-      </div>
+      .center-link {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .center-link a {
+        color: var(--brand);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header-wrap">
+      <header class="container header">
+        <a href="#" class="brand">
+          <img src="Images/Logo v2.png" alt="Koordy" class="brand__logo" />
+          <span class="brand__name">Koordy</span>
+        </a>
+      </header>
     </div>
-  </main>
 
-</body>
+    <!-- Login Card -->
+    <main>
+      <div class="container">
+        <div class="card">
+          <h1 class="title">Se connecter</h1>
+          <p class="subtitle">Accédez à votre espace Koordy</p>
+
+          <form class="form" action="#" method="post">
+            <div>
+              <label for="email">Adresse e-mail *</label>
+              <input id="email" type="email" name="email" required />
+            </div>
+
+            <div>
+              <label for="password">Mot de passe *</label>
+              <input id="password" type="password" name="password" required />
+            </div>
+
+            <button class="btn-primary" type="submit">Se connecter</button>
+
+            <div class="link-row">
+              <a href="#">Mot de passe oublié ?</a>
+            </div>
+
+            <div class="center-link">
+              Pas encore de compte ?
+              <a href="#">Créer un compte</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
