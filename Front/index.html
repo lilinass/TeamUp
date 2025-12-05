@@ -333,5 +333,31 @@
       </nav>
     </div>
   </footer>
+
+    <!-- ton contenu de page ici -->
+
+  <!-- ICI ton script Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5GE48oyvMeFfBvtieddtIc6IgkhlgMdE",
+      authDomain: "koordy-789aa.firebaseapp.com",
+      projectId: "koordy-789aa",
+      storageBucket: "koordy-789aa.firebasestorage.app",
+      messagingSenderId: "139080514540",
+      appId: "1:139080514540:web:a8eb6f8d1f31dd69d89ec9",
+      measurementId: "G-ZWFJ1KFFTB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    console.log("✅ Firebase initialisé");
+  </script>
+</body>
+</html>
+
+  
 </body>
 </html>
