@@ -185,7 +185,14 @@ a:hover {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(
+  background-image: url("./Images/image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1; /* passe derrière le texte */
+  /* opacity: 0.4; optionnel : effet foncé pour lisibilité */
+
+  /* background: radial-gradient(
       1200px 500px at 20% 20%,
       rgba(102, 204, 255, 0.15),
       transparent 60%
@@ -196,8 +203,8 @@ a:hover {
       transparent 60%
     ),
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%230a0c12"/><stop offset="1" stop-color="%23080a0f"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23g)"/></svg>')
-      center/cover no-repeat;
-  opacity: 0.9;
+      center/cover no-repeat; */
+  opacity: 0.3;
 }
 .hero__content {
   padding: 40px 0 30px;

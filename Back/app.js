@@ -16,8 +16,19 @@ app.use(express.static(path.join(__dirname, "../Front")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
 });
-app.get("/inscription_personnelle", (req, res) => {
+app.get("/inscription", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/inscription_personnelle.html"));
+});
+app.get("/connexion", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/login.html"));
+});
+app.get("/Creation_association", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/inscription_association.html"));
+});
+
+app.get("/Formulaire_de_creation", (req, res) => {
+  console.log(path.join(__dirname, "../Front/form-association.html"));
+  res.sendFile(path.join(__dirname, "../Front/form-association.html"));
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

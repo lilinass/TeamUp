@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
     <title>Koordy — Inscrire mon association</title>
     <meta
       name="description"
@@ -174,7 +175,10 @@
       .choice-illustration {
         height: 120px;
         border-radius: 14px;
-        background: radial-gradient(
+        background-image: url("../Images/creation.png");
+        background-size: cover;
+        background-position: center;
+        /* background: radial-gradient(
             circle at 80% 20%,
             rgba(108, 204, 255, 0.48),
             transparent 55%
@@ -184,17 +188,27 @@
             rgba(168, 255, 96, 0.28),
             transparent 55%
           ),
-          linear-gradient(135deg, #101320, #080a10);
+          linear-gradient(135deg, #101320, #080a10); */
         display: flex;
         align-items: flex-end;
-        justify-content: flex-start;
-        padding: 12px 16px;
+        justify-content: flex-end;
+        /* padding: 12px 16px; */
         color: rgba(230, 231, 235, 0.9);
         font-size: 0.9rem;
       }
 
       .choice-illustration--search {
         justify-content: flex-end;
+        background-image: url("../Images/recherche.png");
+      }
+      .floux-texte {
+        backdrop-filter: blur(3px); /* Flou derrière le texte */
+        background-color: rgba(142, 141, 141, 0.25);
+        padding: 0.25rem;
+        border-top-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+        color: #2a6fdb;
+        /* display: inline-block; */
       }
 
       .choice-title {
@@ -271,19 +285,25 @@
       <section class="container choice-section">
         <div class="choices">
           <!-- Carte 1 -->
-          <article class="choice-card">
-            <div class="choice-illustration">
-              <span>Nouvelle plateforme<br />pour votre club</span>
-            </div>
-            <div>
-              <h2 class="choice-title">Créer une nouvelle plateforme</h2>
-              <p class="choice-text">
-                Démarrez la création d’un espace Koordy dédié à votre
-                association. Inscription 100&nbsp;% gratuite.
-              </p>
-            </div>
-            <span class="choice-arrow">›</span>
-          </article>
+          <a href="/Formulaire_de_creation">
+            <article class="choice-card">
+              <div class="choice-illustration">
+                <div class="floux-texte">
+                  <b
+                    ><span>Nouvelle plateforme<br />pour votre club</span></b
+                  >
+                </div>
+              </div>
+              <div>
+                <h2 class="choice-title">Créer une nouvelle plateforme</h2>
+                <p class="choice-text">
+                  Démarrez la création d’un espace Koordy dédié à votre
+                  association. Inscription 100&nbsp;% gratuite.
+                </p>
+              </div>
+              <span class="choice-arrow">›</span>
+            </article>
+          </a>
 
           <!-- Carte 2 -->
           <article class="choice-card">
