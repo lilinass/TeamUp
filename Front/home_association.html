@@ -1,311 +1,331 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
     <title>Koordy – Association</title>
-    <meta
-      name="description"
-      content="Page d’accueil d’une association sportive sur Koordy."
-    />
+    <meta name="description" content="Page d’accueil d’une association sportive sur Koordy." />
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- Topbar -->
     <div class="topbar" role="region" aria-label="Infos rapides">
-      <div class="container topbar__inner">
-        <p class="topbar__note">
-          Prochain entraînement : <strong>Mercredi 19h</strong> – Salle omnisports.
-        </p>
-        <nav class="topbar__links" aria-label="Liens utilitaires">
-          <a href="#" class="link">Billetterie</a>
-          <a href="#" class="link">Boutique</a>
-          <a href="#" class="link">FR</a>
-        </nav>
-      </div>
+        <div class="container topbar__inner">
+            <p class="topbar__note">
+                Prochain entraînement : <strong>Mercredi 19h</strong> – Salle omnisports.
+            </p>
+            <nav class="topbar__links" aria-label="Liens utilitaires">
+                <a href="#" class="link">Billetterie</a>
+                <a href="#" class="link">Boutique</a>
+                <a href="#" class="link">FR</a>
+            </nav>
+        </div>
     </div>
 
     <!-- Header -->
     <header class="site-header" role="banner">
-      <div class="container site-header__inner">
-        <!-- Logo / marque -->
-        <a href="/" class="brand">
-          <img
-            src="./Images/Logo v2.png"
-            alt="Koordy"
-            class="brand__logo"
-          />
-          <span class="brand__name">Koordy</span>
-        </a>
+        <div class="container site-header__inner">
+            <!-- Logo / marque -->
+            <a href="/" class="brand">
+                <img src="./Images/Logo v2.png" alt="Koordy" class="brand__logo" />
+                <span class="brand__name">Koordy</span>
+            </a>
 
-        <!-- Navigation principale de l’asso -->
-        <nav class="nav" aria-label="Navigation principale">
-          <ul class="nav__list">
-            <li>
-              <a class="nav__link is-active" href="#hero">Accueil</a>
-            </li>
-            <li>
-              <a class="nav__link" href="#about">Association</a>
-            </li>
-            <li>
-              <a class="nav__link" href="#teams">Équipes / Activités</a>
-            </li>
-            <li>
-              <a class="nav__link" href="#actus">Actualités</a>
-            </li>
-            <li>
-              <a class="nav__link" href="#contact">Contact</a>
-            </li>
-          </ul>
-        </nav>
+            <!-- Navigation principale de l’asso -->
+            <nav class="nav" aria-label="Navigation principale">
+                <ul class="nav__list">
+                    <li>
+                        <a class="nav__link is-active" href="#hero">Accueil</a>
+                    </li>
+                    <li>
+                        <a class="nav__link" href="#about">Association</a>
+                    </li>
+                    <li>
+                        <a class="nav__link" href="#teams">Équipes / Activités</a>
+                    </li>
+                    <li>
+                        <a class="nav__link" href="#actus">Actualités</a>
+                    </li>
+                    <li>
+                        <a class="nav__link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </nav>
 
-        <!-- Boutons auth -->
-        <div class="auth-buttons">
-          <a href="/connexion" class="btn btn--ghost btn--sm">
-            Se connecter
-          </a>
-          <a href="/inscription" class="btn btn--primary btn--sm">
-            S’inscrire
-          </a>
+            <!-- Boutons auth -->
+            <div class="auth-buttons">
+                <a href="/connexion" class="btn btn--ghost btn--sm">
+                    Se connecter
+                </a>
+                <a href="/inscription" class="btn btn--primary btn--sm">
+                    S’inscrire
+                </a>
+            </div>
         </div>
-      </div>
     </header>
 
     <main>
-      <!-- HERO ASSOCIATION -->
-      <section
-        id="hero"
-        class="hero hero--asso"
-        role="region"
-        aria-label="Présentation de l’association"
-      >
-        <!-- image de fond spécifique à l’asso -->
-        <div
-          class="hero__bg hero__bg--asso"
-          aria-hidden="true"
-          style="background-image: url('./Images/image.png')"
-        ></div>
-
-        <div class="container hero__content hero__content--asso">
-          <div class="hero__eyebrow">Association</div>
-          <h1 class="hero__title hero__title--asso">
-            Handball Club Koordy
-          </h1>
-          <p class="hero__desc">
-            Club de handball convivial basé à Nantes, accueillant des
-            joueuses et joueurs de <strong>tous niveaux</strong>, des
-            plus jeunes aux seniors.
-          </p>
-
-          <div class="hero__meta">
-            <div class="hero-stat">
-              <span class="hero-stat__value">150</span>
-              <span class="hero-stat__label">Licenciés</span>
+        <!-- HERO ASSOCIATION -->
+        <section id="hero" class="hero hero--asso" role="region" aria-label="Présentation de l’association">
+            <!-- image de fond spécifique à l’asso -->
+            <div class="hero__bg hero__bg--asso" aria-hidden="true" style="background-image: url('./Images/image.png')">
             </div>
-            <div class="hero-stat">
-              <span class="hero-stat__value">8</span>
-              <span class="hero-stat__label">Équipes</span>
-            </div>
-            <div class="hero-stat">
-              <span class="hero-stat__value">1953</span>
-              <span class="hero-stat__label">Année de création</span>
-            </div>
-          </div>
 
-          <div class="hero__actions">
-            <a href="/connexion" class="btn btn--primary">
-              Rejoindre l’association
-            </a>
-            <a href="#contact" class="btn btn--ghost">
-              Nous contacter
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- QUI SOMMES-NOUS ? -->
-      <section
-        id="about"
-        class="section section--asso-about"
-        aria-labelledby="about-title"
-      >
-        <div class="container">
-          <h2 id="about-title" class="section__title section__title--line">
-            QUI SOMMES-NOUS ?
-          </h2>
-
-          <div class="asso-about">
-            <p>
-              Le Handball Club Koordy est une association loi 1901 qui
-              accueille aujourd’hui plus de
-              <strong>150 adhérents</strong>, des catégories jeunes
-              jusqu’aux équipes séniors. Notre objectif : permettre à
-              chacun de progresser dans un cadre bienveillant, tout en
-              partageant les valeurs du handball.
-            </p>
-            <p>
-              Encadrés par une équipe d’éducateurs diplômés et de nombreux
-              bénévoles, nos licenciés évoluent dans un environnement
-              sécurisé et structuré. En parallèle de la pratique sportive,
-              le club met en place des actions citoyennes, des stages
-              vacances, ainsi que des événements conviviaux pour faire
-              vivre la communauté Koordy.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ÉQUIPES / ACTIVITÉS (simple teaser pour l’instant) -->
-      <section
-        id="teams"
-        class="section section--asso-teams"
-        aria-labelledby="teams-title"
-      >
-        <div class="container">
-          <h2 id="teams-title" class="section__title section__title--line">
-            NOS ÉQUIPES & ACTIVITÉS
-          </h2>
-
-          <div class="cards cards--news">
-            <article class="card">
-              <div class="card__body">
-                <h3 class="card__title">École de hand</h3>
-                <p class="card__meta">U9 · U11</p>
-                <p class="card__text">
-                  Découverte du handball à travers le jeu, dans une
-                  ambiance ludique et encadrée.
+            <div class="container hero__content hero__content--asso">
+                <div class="hero__eyebrow">Association</div>
+                <h1 class="hero__title hero__title--asso">
+                    Handball Club Koordy
+                </h1>
+                <p class="hero__desc">
+                    Club de handball convivial basé à Nantes, accueillant des
+                    joueuses et joueurs de <strong>tous niveaux</strong>, des
+                    plus jeunes aux seniors.
                 </p>
-              </div>
-            </article>
 
-            <article class="card">
-              <div class="card__body">
-                <h3 class="card__title">Collectifs jeunes</h3>
-                <p class="card__meta">U13 à U18</p>
-                <p class="card__text">
-                  Entraînements réguliers, compétitions de championnat
-                  et tournois régionaux.
-                </p>
-              </div>
-            </article>
+                <div class="hero__meta">
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">150</span>
+                        <span class="hero-stat__label">Licenciés</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">8</span>
+                        <span class="hero-stat__label">Équipes</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat__value">1953</span>
+                        <span class="hero-stat__label">Année de création</span>
+                    </div>
+                </div>
 
-            <article class="card">
-              <div class="card__body">
-                <h3 class="card__title">Section loisirs</h3>
-                <p class="card__meta">Adultes</p>
-                <p class="card__text">
-                  Pratique sans pression du résultat, pour garder la
-                  forme et partager un bon moment chaque semaine.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- DERNIÈRES ACTUALITÉS (style HBC) -->
-      <section
-        id="actus"
-        class="section"
-        aria-labelledby="news-title"
-      >
-        <div class="container section__head">
-          <h2 id="news-title" class="section__title">
-            DERNIÈRES ACTUALITÉS
-          </h2>
-          <a href="#" class="section__cta">
-            Voir toutes les actus du club
-          </a>
-        </div>
-
-        <div class="container cards cards--news">
-          <!-- Carte 1 -->
-          <article class="card card--lead">
-            <a class="card__media" href="#">
-              <div class="media media--16x9"></div>
-            </a>
-            <div class="card__body">
-              <h3 class="card__title">
-                <a href="#">Un week-end contrasté à la Koordy Arena</a>
-              </h3>
-              <p class="card__meta">Publié le 03/11/2025</p>
-              <p class="card__text">
-                Deux rencontres riches en émotions pour nos équipes séniors,
-                avec une belle victoire à domicile et un match serré à
-                l’extérieur.
-              </p>
+                <div class="hero__actions">
+                    <a href="/connexion" class="btn btn--primary">
+                        Rejoindre l’association
+                    </a>
+                    <a href="#contact" class="btn btn--ghost">
+                        Nous contacter
+                    </a>
+                </div>
             </div>
-          </article>
+        </section>
 
-          <!-- Carte 2 -->
-          <article class="card">
-            <a class="card__media" href="#">
-              <div class="media media--16x9"></div>
-            </a>
-            <div class="card__body">
-              <h3 class="card__title">
-                <a href="#">Stage découverte pour les U11/U13</a>
-              </h3>
-              <p class="card__meta">Publié le 28/10/2025</p>
-              <p class="card__text">
-                Une journée dédiée à la découverte du handball pour les plus
-                jeunes, avec ateliers techniques et jeux collectifs.
-              </p>
+        <!-- QUI SOMMES-NOUS ? -->
+        <section id="about" class="section section--asso-about" aria-labelledby="about-title">
+            <div class="container">
+                <h2 id="about-title" class="section__title section__title--line">
+                    QUI SOMMES-NOUS ?
+                </h2>
+
+                <div class="asso-about">
+                    <p>
+                        Le Handball Club Koordy est une association loi 1901 qui
+                        accueille aujourd’hui plus de
+                        <strong>150 adhérents</strong>, des catégories jeunes
+                        jusqu’aux équipes séniors. Notre objectif : permettre à
+                        chacun de progresser dans un cadre bienveillant, tout en
+                        partageant les valeurs du handball.
+                    </p>
+                    <p>
+                        Encadrés par une équipe d’éducateurs diplômés et de nombreux
+                        bénévoles, nos licenciés évoluent dans un environnement
+                        sécurisé et structuré. En parallèle de la pratique sportive,
+                        le club met en place des actions citoyennes, des stages
+                        vacances, ainsi que des événements conviviaux pour faire
+                        vivre la communauté Koordy.
+                    </p>
+                </div>
             </div>
-          </article>
+        </section>
 
-          <!-- Carte 3 -->
-          <article class="card">
-            <a class="card__media" href="#">
-              <div class="media media--16x9"></div>
-            </a>
-            <div class="card__body">
-              <h3 class="card__title">
-                <a href="#">Recherche de nouveaux bénévoles</a>
-              </h3>
-              <p class="card__meta">Publié le 20/10/2025</p>
-              <p class="card__text">
-                Le club recrute des bénévoles pour l’organisation des matchs,
-                la buvette et l’animation des événements.
-              </p>
+        <!-- ÉQUIPES / ACTIVITÉS (simple teaser pour l’instant) -->
+        <section id="teams" class="section section--asso-teams" aria-labelledby="teams-title">
+            <div class="container">
+                <h2 id="teams-title" class="section__title section__title--line">
+                    NOS ÉQUIPES & ACTIVITÉS
+                </h2>
+
+                <div class="cards cards--news">
+                    <article class="card">
+                        <div class="card__body">
+                            <h3 class="card__title">École de hand</h3>
+                            <p class="card__meta">U9 · U11</p>
+                            <p class="card__text">
+                                Découverte du handball à travers le jeu, dans une
+                                ambiance ludique et encadrée.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card__body">
+                            <h3 class="card__title">Collectifs jeunes</h3>
+                            <p class="card__meta">U13 à U18</p>
+                            <p class="card__text">
+                                Entraînements réguliers, compétitions de championnat
+                                et tournois régionaux.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card__body">
+                            <h3 class="card__title">Section loisirs</h3>
+                            <p class="card__meta">Adultes</p>
+                            <p class="card__text">
+                                Pratique sans pression du résultat, pour garder la
+                                forme et partager un bon moment chaque semaine.
+                            </p>
+                        </div>
+                    </article>
+                </div>
             </div>
-          </article>
-        </div>
-      </section>
+        </section>
 
-      <!-- CONTACT / INFOS PRATIQUES -->
-      <section
-        id="contact"
-        class="section section--asso-contact"
-        aria-labelledby="contact-title"
-      >
-        <div class="container contact-grid">
-          <div>
-            <h2 id="contact-title" class="section__title section__title--line">
-              INFOS PRATIQUES
-            </h2>
-            <p><strong>Adresse :</strong> 12 rue des Sports</p>
-            <p><strong>Ville :</strong> 44000 Nantes</p>
-            <p><strong>Gymnase principal :</strong> Salle Koordy Arena</p>
-          </div>
+        <!-- CONSEIL DU CLUB -->
+        <section id="conseil" class="section section--asso-conseil" aria-labelledby="conseil-title">
+            <div class="container">
+                <h2 id="conseil-title" class="section__title section__title--line">
+                    LE CONSEIL DU CLUB
+                </h2>
 
-          <div>
-            <h2 class="section__title section__title--line">CONTACT</h2>
-            <p>
-              <strong>Email :</strong>
-              <a href="mailto:contact@hckoordy.fr">contact@hckoordy.fr</a>
-            </p>
-            <p><strong>Téléphone :</strong> 06 12 34 56 78</p>
+                <div class="conseil-grid">
+                    <!-- Membre 1 -->
+                    <article class="conseil-card">
+                        <div class="conseil-card__avatar">
+                            <img src="./Images/conseil/president.jpg" alt="Photo de la présidente" />
+                        </div>
+                        <h3 class="conseil-card__name">Alexandra Martin</h3>
+                        <p class="conseil-card__role">Présidente du club</p>
+                    </article>
 
-            <div class="asso-socials">
-              <a href="#" target="_blank">Facebook</a>
-              <a href="#" target="_blank">Instagram</a>
-              <a href="#" target="_blank">Site web</a>
+                    <!-- Membre 2 -->
+                    <article class="conseil-card">
+                        <div class="conseil-card__avatar">
+                            <img src="./Images/conseil/directeur_sportif.jpg" alt="Photo du directeur sportif" />
+                        </div>
+                        <h3 class="conseil-card__name">Thomas Lefèvre</h3>
+                        <p class="conseil-card__role">Directeur sportif</p>
+                    </article>
+
+                    <!-- Membre 3 -->
+                    <article class="conseil-card">
+                        <div class="conseil-card__avatar">
+                            <img src="./Images/conseil/respo_jeunes.jpg" alt="Photo de la responsable jeunes" />
+                        </div>
+                        <h3 class="conseil-card__name">Inès Dupont</h3>
+                        <p class="conseil-card__role">Responsable catégorie jeunes</p>
+                    </article>
+
+                    <!-- Membre 4 -->
+                    <article class="conseil-card">
+                        <div class="conseil-card__avatar">
+                            <img src="./Images/conseil/trezorier.jpg" alt="Photo du trésorier" />
+                        </div>
+                        <h3 class="conseil-card__name">Julien Moreau</h3>
+                        <p class="conseil-card__role">Trésorier</p>
+                    </article>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
+
+
+        <!-- DERNIÈRES ACTUALITÉS (style HBC) -->
+        <section id="actus" class="section" aria-labelledby="news-title">
+            <div class="container section__head">
+                <h2 id="news-title" class="section__title">
+                    DERNIÈRES ACTUALITÉS
+                </h2>
+                <a href="#" class="section__cta">
+                    Voir toutes les actus du club
+                </a>
+            </div>
+
+            <div class="container cards cards--news">
+                <!-- Carte 1 -->
+                <article class="card card--lead">
+                    <a class="card__media" href="#">
+                        <div class="media media--16x9"></div>
+                    </a>
+                    <div class="card__body">
+                        <h3 class="card__title">
+                            <a href="#">Un week-end contrasté à la Koordy Arena</a>
+                        </h3>
+                        <p class="card__meta">Publié le 03/11/2025</p>
+                        <p class="card__text">
+                            Deux rencontres riches en émotions pour nos équipes séniors,
+                            avec une belle victoire à domicile et un match serré à
+                            l’extérieur.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Carte 2 -->
+                <article class="card">
+                    <a class="card__media" href="#">
+                        <div class="media media--16x9"></div>
+                    </a>
+                    <div class="card__body">
+                        <h3 class="card__title">
+                            <a href="#">Stage découverte pour les U11/U13</a>
+                        </h3>
+                        <p class="card__meta">Publié le 28/10/2025</p>
+                        <p class="card__text">
+                            Une journée dédiée à la découverte du handball pour les plus
+                            jeunes, avec ateliers techniques et jeux collectifs.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Carte 3 -->
+                <article class="card">
+                    <a class="card__media" href="#">
+                        <div class="media media--16x9"></div>
+                    </a>
+                    <div class="card__body">
+                        <h3 class="card__title">
+                            <a href="#">Recherche de nouveaux bénévoles</a>
+                        </h3>
+                        <p class="card__meta">Publié le 20/10/2025</p>
+                        <p class="card__text">
+                            Le club recrute des bénévoles pour l’organisation des matchs,
+                            la buvette et l’animation des événements.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- CONTACT / INFOS PRATIQUES -->
+        <section id="contact" class="section section--asso-contact" aria-labelledby="contact-title">
+            <div class="container contact-grid">
+                <div>
+                    <h2 id="contact-title" class="section__title section__title--line">
+                        INFOS PRATIQUES
+                    </h2>
+                    <p><strong>Adresse :</strong> 12 rue des Sports</p>
+                    <p><strong>Ville :</strong> 44000 Nantes</p>
+                    <p><strong>Gymnase principal :</strong> Salle Koordy Arena</p>
+                </div>
+
+                <div>
+                    <h2 class="section__title section__title--line">CONTACT</h2>
+                    <p>
+                        <strong>Email :</strong>
+                        <a href="mailto:contact@hckoordy.fr">contact@hckoordy.fr</a>
+                    </p>
+                    <p><strong>Téléphone :</strong> 06 12 34 56 78</p>
+
+                    <div class="asso-socials">
+                        <a href="#" target="_blank">Facebook</a>
+                        <a href="#" target="_blank">Instagram</a>
+                        <a href="#" target="_blank">Site web</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-  </body>
+</body>
+
 </html>
