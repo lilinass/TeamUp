@@ -559,6 +559,65 @@ a:hover {
 
 /* ====== Page association ====== */
 
+.hero__content--asso {
+  padding: 40px 0 40px;
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+/* Bloc identité (logo + nom) */
+
+.hero__identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid #facc15;
+  background: #020617;
+  flex-shrink: 0;
+}
+
+.hero__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__identity-text .hero__eyebrow {
+  margin-bottom: 4px;
+}
+
+.hero__title--asso {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero__desc--small {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* colonne de droite (stats + boutons) */
+
+.hero__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
 .hero--asso {
   position: relative;
 }
@@ -567,11 +626,6 @@ a:hover {
   /* on écrase le background par défaut si besoin via style="" dans le HTML */
   opacity: 0.45;
 }
-
-.hero__content--asso {
-  padding: 40px 0 40px;
-}
-
 .hero__title--asso {
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -659,23 +713,6 @@ a:hover {
   margin-top: 8px;
 }
 
-.conseil-card {
-  text-align: center;
-  padding: 18px 12px 14px;
-  background: rgba(15, 23, 42, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-}
-
-.conseil-card__avatar {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 10px;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 3px solid #facc15; /* même jaune que la ligne de titre */
-}
-
 .conseil-card__avatar img {
   width: 100%;
   height: 100%;
@@ -693,9 +730,244 @@ a:hover {
   color: var(--muted);
 }
 
+.conseil-empty {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 4px 0 16px;
+}
+
+.conseil-card {
+  text-align: center;
+  padding: 18px 12px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.conseil-card__avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid #facc15;
+}
+/*  Section calendrier des evenements */
+/* ====== Événements du club ====== */
+
+.section--asso-events {
+  background: #020617; /* légèrement différent pour bien découper */
+}
+
+/* Header de section (titre + filtres + bouton) */
+
+.section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.events-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.events-filter {
+  background: #020617;
+  border-radius: 999px;
+  border: 1px solid #1f2937;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+/* Ce bouton sera caché par défaut, puis montré en JS si user = admin */
+
+.btn--admin-only {
+  display: none;
+}
+
+/* Layout colonne gauche / colonne droite */
+
+.events-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: 32px;
+  margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+  .events-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .section__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .events-head-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+/* Colonne gauche */
+
+.events-side__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.events-side__text {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.events-legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.events-legend li + li {
+  margin-top: 6px;
+}
+
+.events-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  margin-right: 6px;
+}
+
+.events-dot--match {
+  background: #ef4444;
+}
+.events-dot--training {
+  background: #22c55e;
+}
+.events-dot--meeting {
+  background: #3b82f6;
+}
+.events-dot--other {
+  background: #facc15;
+}
+
+/* Colonne droite (liste d’évènements) */
+
+.events-empty {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Carte événement */
+
+.events-card {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 14px;
+  background: rgba(15, 23, 42, 0.98);
+  border-radius: 16px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+
+.events-card__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #020617;
+  border: 1px solid #1f2937;
+  padding: 10px 4px;
+  text-transform: uppercase;
+}
+
+.events-card__day {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.events-card__month {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.events-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.events-card__meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.events-card__text {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.events-card__tags {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.events-tag {
+  font-size: 0.75rem;
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: #020617;
+  border: 1px solid #1f2937;
+  color: var(--muted);
+}
+
+.events-tag--match {
+  border-color: #ef4444;
+  color: #fecaca;
+}
+.events-tag--training {
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
 
 
 /* ====== Responsive ====== */
+
+@media (max-width: 600px) {
+  .events-card {
+    grid-template-columns: 1fr;
+  }
+
+  .events-card__date {
+    justify-content: flex-start;
+  }
+}
 @media (max-width: 1100px) {
   .cards--news {
     grid-template-columns: 1.5fr 1fr 1fr;

@@ -8,6 +8,7 @@
     <title>Koordy – Association</title>
     <meta name="description" content="Page d’accueil d’une association sportive sur Koordy." />
     <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
@@ -47,6 +48,9 @@
                         <a class="nav__link" href="#teams">Équipes / Activités</a>
                     </li>
                     <li>
+                        <a class="nav__link" href="#events">Évènement</a>
+                    </li>
+                    <li>
                         <a class="nav__link" href="#actus">Actualités</a>
                     </li>
                     <li>
@@ -71,45 +75,58 @@
         <!-- HERO ASSOCIATION -->
         <section id="hero" class="hero hero--asso" role="region" aria-label="Présentation de l’association">
             <!-- image de fond spécifique à l’asso -->
-            <div class="hero__bg hero__bg--asso" aria-hidden="true" style="background-image: url('./Images/image.png')">
-            </div>
+            <div id="asso-cover" class="hero__bg hero__bg--asso" aria-hidden="true"
+                style="background-image: url('./Images/image.png')"></div>
 
             <div class="container hero__content hero__content--asso">
-                <div class="hero__eyebrow">Association</div>
-                <h1 class="hero__title hero__title--asso">
-                    Handball Club Koordy
-                </h1>
-                <p class="hero__desc">
-                    Club de handball convivial basé à Nantes, accueillant des
-                    joueuses et joueurs de <strong>tous niveaux</strong>, des
-                    plus jeunes aux seniors.
-                </p>
+                <div class="hero__top">
+                    <!-- bloc identité avec image de profil -->
+                    <div class="hero__identity">
+                        <div class="hero__avatar">
+                            <img id="asso-avatar" src="./Images/default-asso.png" alt="Logo de l'association" />
+                        </div>
 
-                <div class="hero__meta">
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">150</span>
-                        <span class="hero-stat__label">Licenciés</span>
+                        <div class="hero__identity-text">
+                            <div class="hero__eyebrow">Association</div>
+                            <h1 id="asso-name" class="hero__title hero__title--asso">
+                                Handball Club Koordy
+                            </h1>
+                            <p id="asso-subtitle" class="hero__desc hero__desc--small">
+                                Nantes · Handball
+                            </p>
+                        </div>
                     </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">8</span>
-                        <span class="hero-stat__label">Équipes</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat__value">1953</span>
-                        <span class="hero-stat__label">Année de création</span>
-                    </div>
-                </div>
 
-                <div class="hero__actions">
-                    <a href="/connexion" class="btn btn--primary">
-                        Rejoindre l’association
-                    </a>
-                    <a href="#contact" class="btn btn--ghost">
-                        Nous contacter
-                    </a>
+                    <!-- stats + boutons -->
+                    <div class="hero__side">
+                        <div class="hero__meta">
+                            <div class="hero-stat">
+                                <span id="stat-membres" class="hero-stat__value">150</span>
+                                <span class="hero-stat__label">Licenciés</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span id="stat-equipes" class="hero-stat__value">8</span>
+                                <span class="hero-stat__label">Équipes</span>
+                            </div>
+                            <div class="hero-stat">
+                                <span id="stat-events" class="hero-stat__value">3</span>
+                                <span class="hero-stat__label">Événements ce mois-ci</span>
+                            </div>
+                        </div>
+
+                        <div class="hero__actions">
+                            <a href="/connexion" class="btn btn--primary">
+                                Rejoindre l’association
+                            </a>
+                            <a href="#contact" class="btn btn--ghost">
+                                Nous contacter
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
 
         <!-- QUI SOMMES-NOUS ? -->
         <section id="about" class="section section--asso-about" aria-labelledby="about-title">
@@ -230,72 +247,142 @@
             </div>
         </section>
 
+        <!-- CALENDRIER DES ÉVÉNEMENTS -->
+        <section id="events" class="section section--asso-events" aria-labelledby="events-title">
+            <!-- Titre + actions -->
+            <div class="container section__head">
+                <h2 id="events-title" class="section__title section__title--line">
+                    CALENDRIER DES ÉVÉNEMENTS
+                </h2>
 
-        <!-- DERNIÈRES ACTUALITÉS (style HBC) -->
+                <div class="events-head-actions">
+                    <!-- Filtre mois (pour plus tard, JS) -->
+                    <select id="events-month-filter" class="events-filter">
+                        <option value="all">Tous les mois</option>
+                        <option value="01">Janvier</option>
+                        <option value="02">Février</option>
+                        <option value="03">Mars</option>
+                        <option value="04">Avril</option>
+                        <option value="05">Mai</option>
+                        <option value="06">Juin</option>
+                        <option value="07">Juillet</option>
+                        <option value="08">Août</option>
+                        <option value="09">Septembre</option>
+                        <option value="10">Octobre</option>
+                        <option value="11">Novembre</option>
+                        <option value="12">Décembre</option>
+                    </select>
+
+                    <!-- Bouton visible plus tard uniquement pour les admins via JS -->
+                    <button id="btn-add-event" class="btn btn--primary btn--sm btn--admin-only" type="button">
+                        Ajouter un événement
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layout calendrier / liste d’événements -->
+            <div class="container events-layout">
+                <!-- Colonne gauche : petit résumé / légende -->
+                <aside class="events-side">
+                    <p class="events-side__title">Vue rapide</p>
+                    <p class="events-side__text">
+                        Consultez les prochains matchs, entraînements, réunions
+                        et événements du club. Les membres conviés recevront une notification
+                        (plus tard via ton back).
+                    </p>
+
+                    <ul class="events-legend">
+                        <li><span class="events-dot events-dot--match"></span> Match</li>
+                        <li><span class="events-dot events-dot--training"></span> Entraînement</li>
+                        <li><span class="events-dot events-dot--meeting"></span> Réunion</li>
+                        <li><span class="events-dot events-dot--other"></span> Autre</li>
+                    </ul>
+                </aside>
+
+                <!-- Colonne droite : “calendrier d’événements” sous forme de liste -->
+                <div class="events-main">
+                    <p id="events-empty" class="events-empty">
+                        Aucun événement à venir pour le moment.
+                    </p>
+
+                    <div id="events-list" class="events-list">
+                        <!-- ÉVÉNEMENT EXEMPLE STATIQUE (tu peux le laisser le temps de développer) -->
+                        <article class="events-card" data-date="2025-03-14" data-type="match">
+                            <div class="events-card__date">
+                                <span class="events-card__day">14</span>
+                                <span class="events-card__month">MARS</span>
+                            </div>
+
+                            <div class="events-card__content">
+                                <h3 class="events-card__title">
+                                    HCK – Match à domicile U15
+                                </h3>
+                                <p class="events-card__meta">
+                                    Samedi · 17h00 · Koordy Arena
+                                </p>
+                                <p class="events-card__text">
+                                    Rencontre de championnat régionale, convocation des licenciés U15
+                                    à 16h00 pour l’échauffement.
+                                </p>
+                                <div class="events-card__tags">
+                                    <span class="events-tag events-tag--match">Match</span>
+                                    <span class="events-tag">U15</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="events-card" data-date="2025-03-20" data-type="training">
+                            <div class="events-card__date">
+                                <span class="events-card__day">20</span>
+                                <span class="events-card__month">MARS</span>
+                            </div>
+
+                            <div class="events-card__content">
+                                <h3 class="events-card__title">
+                                    Entraînement collectif séniors
+                                </h3>
+                                <p class="events-card__meta">
+                                    Jeudi · 20h00 · Koordy Arena
+                                </p>
+                                <p class="events-card__text">
+                                    Séance de préparation avant le déplacement du week-end. Présence
+                                    vivement recommandée pour tous les joueurs séniors.
+                                </p>
+                                <div class="events-card__tags">
+                                    <span class="events-tag events-tag--training">Entraînement</span>
+                                    <span class="events-tag">Séniors</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- DERNIÈRES ACTUALITÉS -->
         <section id="actus" class="section" aria-labelledby="news-title">
             <div class="container section__head">
                 <h2 id="news-title" class="section__title">
                     DERNIÈRES ACTUALITÉS
                 </h2>
+
                 <a href="#" class="section__cta">
                     Voir toutes les actus du club
                 </a>
             </div>
 
-            <div class="container cards cards--news">
-                <!-- Carte 1 -->
-                <article class="card card--lead">
-                    <a class="card__media" href="#">
-                        <div class="media media--16x9"></div>
-                    </a>
-                    <div class="card__body">
-                        <h3 class="card__title">
-                            <a href="#">Un week-end contrasté à la Koordy Arena</a>
-                        </h3>
-                        <p class="card__meta">Publié le 03/11/2025</p>
-                        <p class="card__text">
-                            Deux rencontres riches en émotions pour nos équipes séniors,
-                            avec une belle victoire à domicile et un match serré à
-                            l’extérieur.
-                        </p>
-                    </div>
-                </article>
+            <div class="container">
+                <p id="news-empty" class="events-empty">
+                    Aucune actualité pour le moment.
+                </p>
 
-                <!-- Carte 2 -->
-                <article class="card">
-                    <a class="card__media" href="#">
-                        <div class="media media--16x9"></div>
-                    </a>
-                    <div class="card__body">
-                        <h3 class="card__title">
-                            <a href="#">Stage découverte pour les U11/U13</a>
-                        </h3>
-                        <p class="card__meta">Publié le 28/10/2025</p>
-                        <p class="card__text">
-                            Une journée dédiée à la découverte du handball pour les plus
-                            jeunes, avec ateliers techniques et jeux collectifs.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Carte 3 -->
-                <article class="card">
-                    <a class="card__media" href="#">
-                        <div class="media media--16x9"></div>
-                    </a>
-                    <div class="card__body">
-                        <h3 class="card__title">
-                            <a href="#">Recherche de nouveaux bénévoles</a>
-                        </h3>
-                        <p class="card__meta">Publié le 20/10/2025</p>
-                        <p class="card__text">
-                            Le club recrute des bénévoles pour l’organisation des matchs,
-                            la buvette et l’animation des événements.
-                        </p>
-                    </div>
-                </article>
+                <div id="news-list" class="cards cards--news">
+                    <!-- Cartes d’actualités générées en JS -->
+                </div>
             </div>
         </section>
+
 
         <!-- CONTACT / INFOS PRATIQUES -->
         <section id="contact" class="section section--asso-contact" aria-labelledby="contact-title">
