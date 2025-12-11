@@ -4,14 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
-    <title>Koordy — Choisi ton design</title>
+    <title>Koordy — Créez votre compte</title>
     <meta
       name="description"
-      content="Choix du design de votre plateforme Koordy."
+      content="Création de votre compte personnel Koordy."
     />
 
     <style>
-      /* ========= Design tokens ========= */
       :root {
         --bg: #0b0c0f;
         --panel: #111319;
@@ -68,7 +67,7 @@
         margin-inline: auto;
       }
 
-      /* ========= Header ========= */
+      /* Header */
       .form-header-wrap {
         background: linear-gradient(180deg, #0f141f, #080a10);
         border-bottom: 1px solid #151926;
@@ -95,13 +94,13 @@
         font-size: 1.05rem;
       }
 
-      /* ========= Hero ========= */
+      /* Hero */
       main {
         padding: 40px 0 70px;
       }
       .hero {
         text-align: center;
-        margin-bottom: 34px;
+        margin-bottom: 30px;
       }
       .hero__title {
         font-size: 2.1rem;
@@ -113,7 +112,7 @@
         font-size: 1rem;
       }
 
-      /* Steps */
+      /* Steps (ex : 2 barres actives) */
       .steps {
         display: flex;
         justify-content: center;
@@ -133,7 +132,7 @@
         opacity: 1;
       }
 
-      /* ========= Card / Form ========= */
+      /* Card + Form */
       .card {
         background: var(--elev);
         border-radius: var(--radius);
@@ -160,7 +159,9 @@
       }
 
       .tt-form input[type="text"],
-      .tt-form input[type="color"] {
+      .tt-form input[type="email"],
+      .tt-form input[type="date"],
+      .tt-form input[type="password"] {
         width: 100%;
         background: var(--panel);
         color: var(--text);
@@ -170,74 +171,43 @@
         font-size: 1rem;
       }
 
-      .tt-form input[type="text"]:focus {
+      .tt-form input::placeholder {
+        color: #7c8696;
+      }
+
+      .tt-form input:focus {
         outline: none;
         box-shadow: var(--focus);
         border-color: var(--brand);
       }
 
-      /* Couleur + hex côte à côte */
-      .color-field {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .color-field input[type="color"] {
-        width: 46px;
-        padding: 0;
-        border-radius: 10px;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-      }
-      .color-field input[type="text"] {
-        flex: 1;
-      }
-
-      /* Upload image */
-      .upload {
-        border-radius: 16px;
-        border: 1px dashed #2a3143;
-        background: #141823;
-        padding: 18px 16px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.18s border-color, 0.18s background;
-      }
-      .upload:hover {
-        border-color: var(--brand);
-        background: #181c28;
-      }
-      .upload-title {
-        margin: 0 0 4px;
-        font-size: 1rem;
-      }
-      .upload-text {
-        margin: 0;
+      /* Checkbox + texte légal */
+      .legal {
         font-size: 0.9rem;
         color: var(--muted);
+        line-height: 1.5;
+        display: flex;
+        gap: 10px;
       }
-      .upload input[type="file"] {
-        margin-top: 12px;
-        font-size: 0.9rem;
+      .legal input {
+        margin-top: 3px;
       }
-
-      /* Aperçu (optionnel) */
-      .preview {
-        margin-top: 10px;
-        border-radius: 12px;
-        border: 1px solid #252b3a;
-        padding: 10px;
-        display: none;
-      }
-      .preview img {
-        max-height: 120px;
-        margin-inline: auto;
+      .legal a {
+        color: var(--brand);
       }
 
-      /* ========= Actions ========= */
+      .hint-privacy {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .hint-privacy a {
+        color: var(--brand);
+      }
+
+      /* Actions */
       .form-actions {
-        margin-top: 10px;
+        margin-top: 14px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -267,7 +237,6 @@
         color: #fff;
       }
 
-      /* ========= Responsive ========= */
       @media (max-width: 720px) {
         main {
           padding: 30px 0 50px;
@@ -297,97 +266,88 @@
 
     <main>
       <section class="container hero">
-        <h1 class="hero__title">Choisi ton design</h1>
+        <h1 class="hero__title">Créez votre compte Koordy</h1>
         <p class="hero__text">
-          Personnalisez les couleurs de votre plateforme et ajoutez votre logo
-          ou une image de fond.
+          Aucune carte de paiement ne vous sera demandée.<br />
+          Inscription 100&nbsp;% gratuite.
         </p>
 
-        <!-- 3ᵉ page : 3 barrettes actives -->
+        <!-- 2/4 étapes actives, à adapter si besoin -->
         <div class="steps" aria-label="Étapes d’inscription">
           <span class="step is-active"></span>
           <span class="step is-active"></span>
-          <span class="step is-active"></span>
-          <span class="step is-active"></span>
+          <span class="step"></span>
+          <span class="step"></span>
           <span class="step"></span>
         </div>
       </section>
 
-      <!-- Carte formulaire -->
       <section class="container">
         <div class="card">
-          <form
-            class="tt-form"
-            action="#"
-            method="post"
-            enctype="multipart/form-data"
-          >
-            <!-- Couleurs -->
+          <form class="tt-form" action="#" method="post">
             <div class="row">
               <div>
-                <label for="primary-color">Couleur primaire *</label>
-                <div class="color-field">
-                  <input
-                    id="primary-color"
-                    name="primary-color"
-                    type="color"
-                    value="#6CCFFF"
-                  />
-                  <input
-                    id="primary-hex"
-                    name="primary-hex"
-                    type="text"
-                    value="#6CCFFF"
-                  />
-                </div>
+                <label for="last-name">Votre nom *</label>
+                <input id="last-name" name="last-name" type="text" required />
               </div>
-
               <div>
-                <label for="secondary-color">Couleur secondaire *</label>
-                <div class="color-field">
-                  <input
-                    id="secondary-color"
-                    name="secondary-color"
-                    type="color"
-                    value="#FFFFFF"
-                  />
-                  <input
-                    id="secondary-hex"
-                    name="secondary-hex"
-                    type="text"
-                    value="#FFFFFF"
-                  />
-                </div>
+                <label for="first-name">Votre prénom *</label>
+                <input id="first-name" name="first-name" type="text" required />
               </div>
             </div>
 
-            <!-- Upload image -->
-            <div>
-              <label for="design-image"
-                >Image de design (logo ou visuel)
-              </label>
-              <div
-                class="upload"
-                onclick="document.getElementById('design-image').click();"
-              >
-                <p class="upload-title">Importer une image</p>
-                <p class="upload-text">
-                  Formats acceptés : PNG, JPG, SVG. Taille conseillée : 512×512
-                  px.
-                </p>
+            <div class="row">
+              <div>
+                <label for="email">Votre e-mail *</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div>
+                <label for="birthday">Votre date d’anniversaire *</label>
+                <input id="birthday" name="birthday" type="date" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="password">Mot de passe *</label>
                 <input
-                  id="design-image"
-                  name="design-image"
-                  type="file"
-                  accept="image/*"
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  minlength="6"
                 />
-                <div id="preview" class="preview">
-                  <img id="preview-img" alt="Aperçu du visuel" />
-                </div>
+              </div>
+              <div>
+                <label for="password-confirm"
+                  >Confirmer le mot de passe *</label
+                >
+                <input
+                  id="password-confirm"
+                  name="password-confirm"
+                  type="password"
+                  required
+                  minlength="6"
+                />
               </div>
             </div>
 
-            <!-- Actions -->
+            <div class="legal">
+              <input id="consent" name="consent" type="checkbox" required />
+              <label for="consent">
+                En soumettant ce formulaire, j’accepte les
+                <a href="#">Conditions Générales d’Utilisation</a> et j’accepte
+                que les informations saisies soient utilisées pour me
+                recontacter dans le cadre de ma relation avec Koordy.
+              </label>
+            </div>
+
+            <p class="hint-privacy">
+              Koordy ne fait aucune utilisation commerciale des informations
+              personnelles saisies. Pour en savoir plus, consultez la
+              <a href="#">Politique de protection des données</a>.
+            </p>
+
             <div class="form-actions">
               <button type="submit" class="btn-primary">Suivant</button>
               <span class="back-link">← Retour</span>
@@ -396,47 +356,6 @@
         </div>
       </section>
     </main>
-
-    <script>
-      // Sync color picker <-> input texte
-      const primaryColor = document.getElementById("primary-color");
-      const primaryHex = document.getElementById("primary-hex");
-      const secondaryColor = document.getElementById("secondary-color");
-      const secondaryHex = document.getElementById("secondary-hex");
-
-      primaryColor.addEventListener(
-        "input",
-        () => (primaryHex.value = primaryColor.value.toUpperCase())
-      );
-      primaryHex.addEventListener("input", () => {
-        if (/^#([0-9A-Fa-f]{6})$/.test(primaryHex.value))
-          primaryColor.value = primaryHex.value;
-      });
-
-      secondaryColor.addEventListener(
-        "input",
-        () => (secondaryHex.value = secondaryColor.value.toUpperCase())
-      );
-      secondaryHex.addEventListener("input", () => {
-        if (/^#([0-9A-Fa-f]{6})$/.test(secondaryHex.value))
-          secondaryColor.value = secondaryHex.value;
-      });
-
-      // Aperçu image
-      const fileInput = document.getElementById("design-image");
-      const preview = document.getElementById("preview");
-      const previewImg = document.getElementById("preview-img");
-
-      fileInput.addEventListener("change", () => {
-        const file = fileInput.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          previewImg.src = e.target.result;
-          preview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      });
-    </script>
   </body>
+
 </html>

@@ -1,363 +1,502 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TT Global — Tennis de Table</title>
-  <meta name="description" content="Actus, classements, événements et vidéos tennis de table." />
-  <link rel="preconnect" href="/" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Topbar -->
-  <div class="topbar" role="region" aria-label="Infos rapides">
-    <div class="container topbar__inner">
-      <p class="topbar__note">Prochain grand rendez-vous : <strong>Masters de Paris</strong>, 12–15 déc.</p>
-      <nav class="topbar__links" aria-label="Liens utilitaires">
-        <a href="#" class="link">Billetterie</a>
-        <a href="#" class="link">Store</a>
-        <a href="#" class="link">FR</a>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="site-header" role="banner">
-    <div class="container site-header__inner">
-      <a class="brand" href="#" aria-label="TT Global, retour à l’accueil">
-        <!-- Logo minimal en SVG -->
-        <img src="Images/Logo v2.png" alt="">
-        <span class="brand__name">TT Global</span>
-      </a>
-
-      <nav class="nav" aria-label="Navigation principale">
-        <ul class="nav__list">
-          <li><a class="nav__link is-active" href="#">Accueil</a></li>
-          <li><a class="nav__link" href="#news">Actus</a></li>
-          <li><a class="nav__link" href="#events">Événements</a></li>
-          <li><a class="nav__link" href="#statistique">Statistique</a></li>
-          <li><a class="nav__link" href="#documents">Documents</a></li>
-        </ul>
-      </nav>
-
-      <div class="auth-buttons">
-  <a href="#" class="btn btn--ghost btn--sm">Se connecter</a>
-  <a href="#" class="btn btn--primary btn--sm">S’inscrire</a>
-</div>
-
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero" role="region" aria-label="Événement à l’affiche">
-    <div class="hero__bg" aria-hidden="true"></div>
-    <div class="container hero__content">
-      <div class="hero__eyebrow">Événement à l’affiche</div>
-      <h1 class="hero__title">Masters de Paris 2025</h1>
-      <p class="hero__desc">Les meilleurs mondiaux s’affrontent à l’Accor Arena. Intensité. Vitesse. Pure précision.</p>
-      <div class="hero__actions">
-        <a href="#" class="btn btn--primary">Billetterie</a>
-        <a href="#" class="btn btn--ghost">Programme</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
+    <title>Koordy</title>
+    <meta
+      name="description"
+      content="Actus, classements, événements et vidéos tennis de table."
+    />
+    <link rel="preconnect" href="/" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Topbar -->
+    <div class="topbar" role="region" aria-label="Infos rapides">
+      <div class="container topbar__inner">
+        <p class="topbar__note">
+          Prochain grand rendez-vous : <strong>Masters de Paris</strong>, 12–15
+          déc.
+        </p>
+        <nav class="topbar__links" aria-label="Liens utilitaires">
+          <a href="#" class="link">Billetterie</a>
+          <a href="#" class="link">Store</a>
+          <a href="#" class="link">FR</a>
+        </nav>
       </div>
     </div>
-  </section>
 
-  <!-- KPIs / quick info -->
-  <section class="kpis" aria-label="Chiffres clés">
-    <div class="container kpis__grid">
-      <div class="kpi">
-        <span class="kpi__value">32</span>
-        <span class="kpi__label">Pays</span>
-      </div>
-      <div class="kpi">
-        <span class="kpi__value">128</span>
-        <span class="kpi__label">Athlètes</span>
-      </div>
-      <div class="kpi">
-        <span class="kpi__value">4</span>
-        <span class="kpi__label">Jours</span>
-      </div>
-      <div class="kpi">
-        <span class="kpi__value">€25</span>
-        <span class="kpi__label">À partir de</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- News -->
-  <section id="news" class="section" aria-labelledby="news-title">
-    <div class="container section__head">
-      <h2 id="news-title" class="section__title">Actualités</h2>
-      <a href="#" class="section__cta">Voir toutes les actus</a>
-    </div>
-
-    <div class="container cards cards--news">
-      <!-- Carte principale -->
-      <article class="card card--lead">
-        <a class="card__media" href="#">
-          <div class="media media--16x9"></div>
+    <!-- Header -->
+    <header class="site-header" role="banner">
+      <div class="container site-header__inner">
+        <a class="brand" href="#" aria-label="Koordy, retour à l’accueil">
+          <!-- Logo minimal en SVG -->
+          <img src="Images/Logo v2.png" alt="" />
+          <span class="brand__name">Koordy</span>
         </a>
-        <div class="card__body">
-          <a class="chip" href="#">Interview</a>
-          <h3 class="card__title"><a href="#">La préparation mentale de la n°1 européenne</a></h3>
-          <p class="card__excerpt">Entre routines millimétrées et data-coaching, comment elle aborde la saison.</p>
-          <a class="card__more" href="#">Lire</a>
-        </div>
-      </article>
 
-      <!-- Autres cartes -->
-      <article class="card">
-        <a class="card__media" href="#"><div class="media media--16x9"></div></a>
-        <div class="card__body">
-          <a class="chip" href="#">Actu</a>
-          <h3 class="card__title"><a href="#">Têtes de série révélées pour Paris</a></h3>
-          <p class="card__excerpt">Le tirage au sort promet des chocs dès les 1/16e.</p>
-        </div>
-      </article>
+        <nav class="nav" aria-label="Navigation principale">
+          <ul class="nav__list">
+            <li><a class="nav__link is-active" href="#">Accueil</a></li>
+            <li><a class="nav__link" href="#news">Actus</a></li>
+            <li><a class="nav__link" href="#events">Événements</a></li>
+            <li><a class="nav__link" href="#statistique">Statistique</a></li>
+            <li><a class="nav__link" href="#documents">Documents</a></li>
+          </ul>
+        </nav>
 
-      <article class="card">
-        <a class="card__media" href="#"><div class="media media--16x9"></div></a>
-        <div class="card__body">
-          <a class="chip" href="#">Inside</a>
-          <h3 class="card__title"><a href="#">Au cœur du centre d’entraînement</a></h3>
-          <p class="card__excerpt">Immersion dans une séance haute intensité…</p>
+        <div class="auth-buttons">
+          <a href="/connexion" class="btn btn--ghost btn--sm"
+            >Se connecter</a
+          >
+          <a
+            href="/inscription"
+            class="btn btn--primary btn--sm"
+            >S’inscrire</a
+          >
         </div>
-      </article>
+      </div>
+    </header>
 
-      <article class="card">
-        <a class="card__media" href="#"><div class="media media--16x9"></div></a>
-        <div class="card__body">
-          <a class="chip" href="#">Guide</a>
-          <h3 class="card__title"><a href="#">Comment lire une feuille de match</a></h3>
-          <p class="card__excerpt">Les stats clés qui comptent vraiment.</p>
+    <!-- Hero -->
+    <section class="hero" role="region" aria-label="Événement à l’affiche">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <div class="hero__eyebrow">Vos association</div>
+        <h1 class="hero__title">organisation sans faille</h1>
+        <p class="hero__desc">
+          Les meilleurs mondiaux s’affrontent à l’Accor Arena. Intensité.
+          Vitesse. Pure précision.
+        </p>
+        <div class="hero__actions">
+          <a href="/Creation_association" class="btn btn--primary"
+            >J'inscris mon Asso !</a
+          >
+          <a href="/connexion" class="btn btn--ghost"
+            >Je rejoins mon Asso !</a
+          >
         </div>
-      </article>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <!-- Events -->
-  <section id="events" class="section" aria-labelledby="events-title">
-    <div class="container section__head">
-      <h2 id="events-title" class="section__title">Calendrier</h2>
-      <div class="tabs" role="tablist" aria-label="Filtres calendrier">
-        <button class="tab is-active" role="tab" aria-selected="true">Tous</button>
-        <button class="tab" role="tab" aria-selected="false">World Tour</button>
-        <button class="tab" role="tab" aria-selected="false">Challenger</button>
+    <!-- KPIs / quick info -->
+    <section class="kpis" aria-label="Chiffres clés">
+      <div class="container kpis__grid">
+        <div class="kpi">
+          <span class="kpi__label">Déjà</span>
+          <span class="kpi__value">20</span>
+          <span class="kpi__label">Asso nous font confiance</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__label">Plus de</span>
+          <span class="kpi__value">300</span>
+          <span class="kpi__label">Membres</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__label">Une solution</span>
+          <span class="kpi__value">100%</span>
+          <span class="kpi__label">Gratuite</span>
+        </div>
+        <!-- <div class="kpi">
+          <span class="kpi__value">€25</span>
+          <span class="kpi__label">À partir de</span>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- News -->
+    <section id="news" class="section" aria-labelledby="news-title">
+      <div class="container section__head">
+        <h2 id="news-title" class="section__title">Actualités</h2>
+        <a href="#" class="section__cta">Voir toutes les actus</a>
+      </div>
+
+      <div class="container cards cards--news">
+        <!-- Carte principale -->
+        <article class="card card--lead">
+          <a class="card__media" href="#">
+            <div class="media media--16x9"></div>
+          </a>
+          <div class="card__body">
+            <a class="chip" href="#">Interview</a>
+            <h3 class="card__title">
+              <a href="#">La préparation mentale de la n°1 européenne</a>
+            </h3>
+            <p class="card__excerpt">
+              Entre routines millimétrées et data-coaching, comment elle aborde
+              la saison.
+            </p>
+            <a class="card__more" href="#">Lire</a>
+          </div>
+        </article>
+
+        <!-- Autres cartes -->
+        <article class="card">
+          <a class="card__media" href="#"
+            ><div class="media media--16x9"></div
+          ></a>
+          <div class="card__body">
+            <a class="chip" href="#">Actu</a>
+            <h3 class="card__title">
+              <a href="#">Têtes de série révélées pour Paris</a>
+            </h3>
+            <p class="card__excerpt">
+              Le tirage au sort promet des chocs dès les 1/16e.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="card__media" href="#"
+            ><div class="media media--16x9"></div
+          ></a>
+          <div class="card__body">
+            <a class="chip" href="#">Inside</a>
+            <h3 class="card__title">
+              <a href="#">Au cœur du centre d’entraînement</a>
+            </h3>
+            <p class="card__excerpt">
+              Immersion dans une séance haute intensité…
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="card__media" href="#"
+            ><div class="media media--16x9"></div
+          ></a>
+          <div class="card__body">
+            <a class="chip" href="#">Guide</a>
+            <h3 class="card__title">
+              <a href="#">Comment lire une feuille de match</a>
+            </h3>
+            <p class="card__excerpt">Les stats clés qui comptent vraiment.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Events -->
+    <section id="events" class="section" aria-labelledby="events-title">
+      <div class="container section__head">
+        <h2 id="events-title" class="section__title">Calendrier</h2>
+        <div class="tabs" role="tablist" aria-label="Filtres calendrier">
+          <button class="tab is-active" role="tab" aria-selected="true">
+            Tous
+          </button>
+          <button class="tab" role="tab" aria-selected="false">
+            World Tour
+          </button>
+          <button class="tab" role="tab" aria-selected="false">
+            Challenger
+          </button>
+        </div>
+      </div>
+
+      <div class="container schedule">
+        <article class="event">
+          <time class="event__date" datetime="2025-12-12">12–15 déc</time>
+          <div class="event__meta">
+            <h3 class="event__title"><a href="#">Masters de Paris</a></h3>
+            <p class="event__loc">Paris, France</p>
+          </div>
+          <a href="#" class="btn btn--sm btn--primary">Billets</a>
+        </article>
+
+        <article class="event">
+          <time class="event__date" datetime="2026-01-10">10–14 jan</time>
+          <div class="event__meta">
+            <h3 class="event__title"><a href="#">Open d’Osaka</a></h3>
+            <p class="event__loc">Osaka, Japon</p>
+          </div>
+          <a href="#" class="btn btn--sm btn--ghost">Détails</a>
+        </article>
+
+        <article class="event">
+          <time class="event__date" datetime="2026-02-05">5–8 fév</time>
+          <div class="event__meta">
+            <h3 class="event__title"><a href="#">Classic de Düsseldorf</a></h3>
+            <p class="event__loc">Düsseldorf, Allemagne</p>
+          </div>
+          <a href="#" class="btn btn--sm btn--ghost">Détails</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Rankings -->
+    <section id="rankings" class="section" aria-labelledby="rankings-title">
+      <div class="container section__head">
+        <h2 id="rankings-title" class="section__title">Classements</h2>
+        <a href="#" class="section__cta">Classement complet</a>
+      </div>
+
+      <div class="container ranking">
+        <div class="ranking__table" role="table" aria-label="Top 10">
+          <div class="ranking__row ranking__row--head" role="row">
+            <span role="columnheader">#</span>
+            <span role="columnheader">Joueur</span>
+            <span role="columnheader">Pays</span>
+            <span role="columnheader">Points</span>
+            <span role="columnheader">Forme</span>
+          </div>
+
+          <!-- Lignes d’exemple -->
+          <div class="ranking__row" role="row">
+            <span role="cell">1</span>
+            <span role="cell">A. Laurent</span>
+            <span role="cell">FRA</span>
+            <span role="cell">10 240</span>
+            <span role="cell"
+              ><span class="form form--up" aria-label="en hausse">▲</span></span
+            >
+          </div>
+          <div class="ranking__row" role="row">
+            <span role="cell">2</span>
+            <span role="cell">K. Ito</span>
+            <span role="cell">JPN</span>
+            <span role="cell">10 120</span>
+            <span role="cell"
+              ><span class="form form--steady" aria-label="stable"
+                >■</span
+              ></span
+            >
+          </div>
+          <div class="ranking__row" role="row">
+            <span role="cell">3</span>
+            <span role="cell">M. Zhang</span>
+            <span role="cell">CHN</span>
+            <span role="cell">9 980</span>
+            <span role="cell"
+              ><span class="form form--down" aria-label="en baisse"
+                >▼</span
+              ></span
+            >
+          </div>
+        </div>
+        <aside class="ranking__aside">
+          <h3 class="ranking__subtitle">À retenir</h3>
+          <ul class="bullet">
+            <li>5 victoires consécutives pour A. Laurent.</li>
+            <li>Entrée dans le top 10 : S. Meyer (ALL).</li>
+            <li>Course serrée pour la tête avant Paris.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+    <p>
+      Koordy+ aide les <strong>associations</strong>, clubs et collectifs à
+      <strong>centraliser</strong> leurs informations : membres, événements,
+      documents et communications. En quelques clics,
+      <span style="color: var(--accent-dark); font-weight: 700">planifiez</span>
+      une réunion, attribuez des tâches et suivez l’avancement des projets.
+    </p>
+
+    <p>
+      Notre objectif : vous faire gagner du temps pour que vous puissiez vous
+      concentrer sur l'essentiel —
+      <strong>vos missions</strong> et votre communauté.
+    </p>
+
+    <div class="features" aria-hidden="false">
+      <div class="feature">
+        <h3>Gestion membres</h3>
+        <div>Fiches, coordonnées et suivi des cotisations.</div>
+      </div>
+
+      <div class="feature">
+        <h3>Calendrier & événements</h3>
+        <div>Planifiez, invitez et gérez les inscriptions facilement.</div>
+      </div>
+
+      <div class="feature">
+        <h3>Docs & communication</h3>
+        <div>Centralisez vos fichiers et envoyez des messages ciblés.</div>
       </div>
     </div>
 
-    <div class="container schedule">
-      <article class="event">
-        <time class="event__date" datetime="2025-12-12">12–15 déc</time>
-        <div class="event__meta">
-          <h3 class="event__title"><a href="#">Masters de Paris</a></h3>
-          <p class="event__loc">Paris, France</p>
-        </div>
-        <a href="#" class="btn btn--sm btn--primary">Billets</a>
-      </article>
-
-      <article class="event">
-        <time class="event__date" datetime="2026-01-10">10–14 jan</time>
-        <div class="event__meta">
-          <h3 class="event__title"><a href="#">Open d’Osaka</a></h3>
-          <p class="event__loc">Osaka, Japon</p>
-        </div>
-        <a href="#" class="btn btn--sm btn--ghost">Détails</a>
-      </article>
-
-      <article class="event">
-        <time class="event__date" datetime="2026-02-05">5–8 fév</time>
-        <div class="event__meta">
-          <h3 class="event__title"><a href="#">Classic de Düsseldorf</a></h3>
-          <p class="event__loc">Düsseldorf, Allemagne</p>
-        </div>
-        <a href="#" class="btn btn--sm btn--ghost">Détails</a>
-      </article>
+    <div class="cta">
+      <button class="btn" type="button">Découvrir Koordy+</button>
+      <a class="link" href="#contact">Contactez-nous</a>
     </div>
-  </section>
-
-  <!-- Rankings -->
-  <section id="rankings" class="section" aria-labelledby="rankings-title">
-    <div class="container section__head">
-      <h2 id="rankings-title" class="section__title">Classements</h2>
-      <a href="#" class="section__cta">Classement complet</a>
-    </div>
-
-    <div class="container ranking">
-      <div class="ranking__table" role="table" aria-label="Top 10">
-        <div class="ranking__row ranking__row--head" role="row">
-          <span role="columnheader">#</span>
-          <span role="columnheader">Joueur</span>
-          <span role="columnheader">Pays</span>
-          <span role="columnheader">Points</span>
-          <span role="columnheader">Forme</span>
-        </div>
-
-        <!-- Lignes d’exemple -->
-        <div class="ranking__row" role="row">
-          <span role="cell">1</span>
-          <span role="cell">A. Laurent</span>
-          <span role="cell">FRA</span>
-          <span role="cell">10 240</span>
-          <span role="cell"><span class="form form--up" aria-label="en hausse">▲</span></span>
-        </div>
-        <div class="ranking__row" role="row">
-          <span role="cell">2</span>
-          <span role="cell">K. Ito</span>
-          <span role="cell">JPN</span>
-          <span role="cell">10 120</span>
-          <span role="cell"><span class="form form--steady" aria-label="stable">■</span></span>
-        </div>
-        <div class="ranking__row" role="row">
-          <span role="cell">3</span>
-          <span role="cell">M. Zhang</span>
-          <span role="cell">CHN</span>
-          <span role="cell">9 980</span>
-          <span role="cell"><span class="form form--down" aria-label="en baisse">▼</span></span>
-        </div>
-      </div>
-      <aside class="ranking__aside">
-        <h3 class="ranking__subtitle">À retenir</h3>
-        <ul class="bullet">
-          <li>5 victoires consécutives pour A. Laurent.</li>
-          <li>Entrée dans le top 10 : S. Meyer (ALL).</li>
-          <li>Course serrée pour la tête avant Paris.</li>
-        </ul>
-      </aside>
-    </div>
-  </section>
-
-  <!-- Videos -->
-  <section id="videos" class="section" aria-labelledby="videos-title">
-    <div class="container section__head">
-      <h2 id="videos-title" class="section__title">Vidéos</h2>
-      <a href="#" class="section__cta">Toutes les vidéos</a>
-    </div>
-
-    <div class="container cards cards--videos">
-      <article class="card card--video">
-        <a class="card__media" href="#" aria-label="Lire la vidéo: Top 10 rallies">
-          <div class="media media--16x9 media--play"></div>
-        </a>
-        <div class="card__body">
-          <h3 class="card__title"><a href="#">Top 10 rallies — Shanghai</a></h3>
-          <p class="card__excerpt">Des échanges qui défient la gravité.</p>
-        </div>
-      </article>
-
-      <article class="card card--video">
-        <a class="card__media" href="#" aria-label="Lire la vidéo: Mic’d up">
-          <div class="media media--16x9 media--play"></div>
-        </a>
-        <div class="card__body">
-          <h3 class="card__title"><a href="#">Mic’d up — à table avec les coachs</a></h3>
-          <p class="card__excerpt">Stratégie et ajustements en direct.</p>
-        </div>
-      </article>
-
-      <article class="card card--video">
-        <a class="card__media" href="#" aria-label="Lire la vidéo: Slow-mo">
-          <div class="media media--16x9 media--play"></div>
-        </a>
-        <div class="card__body">
-          <h3 class="card__title"><a href="#">Slow-mo — technicité au ralenti</a></h3>
-          <p class="card__excerpt">Le geste parfait, image par image.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Sponsors -->
-  <section class="sponsors" aria-label="Partenaires">
-    <div class="container sponsors__strip">
-      <div class="sponsors__item" aria-label="Partenaire 1"></div>
-      <div class="sponsors__item" aria-label="Partenaire 2"></div>
-      <div class="sponsors__item" aria-label="Partenaire 3"></div>
-      <div class="sponsors__item" aria-label="Partenaire 4"></div>
-      <div class="sponsors__item" aria-label="Partenaire 5"></div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container site-footer__grid">
-      <div class="site-footer__col">
-        <a class="brand brand--footer" href="#">
-          <svg class="brand__logo" viewBox="0 0 64 64" aria-hidden="true">
-            <circle cx="20" cy="32" r="10"></circle>
-            <circle cx="44" cy="28" r="8"></circle>
-            <rect x="28" y="30" width="22" height="4" rx="2"></rect>
-          </svg>
-          <span class="brand__name">TT Global</span>
-        </a>
-        <p class="muted">La plateforme du tennis de table : résultats, infos, événements, vidéo.</p>
+    <!-- Videos -->
+    <section id="videos" class="section" aria-labelledby="videos-title">
+      <div class="container section__head">
+        <h2 id="videos-title" class="section__title">Vidéos</h2>
+        <a href="#" class="section__cta">Toutes les vidéos</a>
       </div>
 
-      <nav class="site-footer__col">
-        <h4 class="site-footer__title">Découvrir</h4>
-        <ul class="list">
-          <li><a href="#">Événements</a></li>
-          <li><a href="#">Classements</a></li>
-          <li><a href="#">Résultats</a></li>
-          <li><a href="#">Joueurs</a></li>
-        </ul>
-      </nav>
+      <div class="container cards cards--videos">
+        <article class="card card--video">
+          <a
+            class="card__media"
+            href="#"
+            aria-label="Lire la vidéo: Top 10 rallies"
+          >
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Top 10 rallies — Shanghai</a>
+            </h3>
+            <p class="card__excerpt">Des échanges qui défient la gravité.</p>
+          </div>
+        </article>
+      <div class="container cards cards--videos">
+        <article class="card card--video">
+          <a
+            class="card__media"
+            href="#"
+            aria-label="Lire la vidéo: Top 10 rallies"
+          >
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Top 10 rallies — Shanghai</a>
+            </h3>
+            <p class="card__excerpt">Des échanges qui défient la gravité.</p>
+          </div>
+        </article>
 
-      <nav class="site-footer__col">
-        <h4 class="site-footer__title">Organisation</h4>
-        <ul class="list">
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Presse</a></li>
-          <li><a href="#">Partenariats</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Mic’d up">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Mic’d up — à table avec les coachs</a>
+            </h3>
+            <p class="card__excerpt">Stratégie et ajustements en direct.</p>
+          </div>
+        </article>
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Mic’d up">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Mic’d up — à table avec les coachs</a>
+            </h3>
+            <p class="card__excerpt">Stratégie et ajustements en direct.</p>
+          </div>
+        </article>
 
-      <div class="site-footer__col">
-        <h4 class="site-footer__title">Newsletter</h4>
-        <form class="newsletter" action="#" method="post">
-          <label class="sr-only" for="email">Votre email</label>
-          <input id="email" class="newsletter__input" type="email" placeholder="Votre email" required />
-          <button class="btn btn--primary btn--block">S’inscrire</button>
-          <p class="micro muted">En vous inscrivant, vous acceptez notre <a href="#">politique de confidentialité</a>.</p>
-        </form>
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Slow-mo">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Slow-mo — technicité au ralenti</a>
+            </h3>
+            <p class="card__excerpt">Le geste parfait, image par image.</p>
+          </div>
+        </article>
       </div>
-    </div>
+    </section>
+        <article class="card card--video">
+          <a class="card__media" href="#" aria-label="Lire la vidéo: Slow-mo">
+            <div class="media media--16x9 media--play"></div>
+          </a>
+          <div class="card__body">
+            <h3 class="card__title">
+              <a href="#">Slow-mo — technicité au ralenti</a>
+            </h3>
+            <p class="card__excerpt">Le geste parfait, image par image.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-    <div class="container site-footer__legal">
-      <p class="micro muted">© 2025 TT Global. Tous droits réservés.</p>
-      <nav aria-label="Mentions légales">
-        <a href="#">Mentions légales</a>
-        <a href="#">Cookies</a>
-        <a href="#">CGU</a>
-      </nav>
-    </div>
-  </footer>
+    <!-- Sponsors -->
+    <section class="sponsors" aria-label="Partenaires">
+      <div class="container sponsors__strip">
+        <div class="sponsors__item" aria-label="Partenaire 1"></div>
+        <div class="sponsors__item" aria-label="Partenaire 2"></div>
+        <div class="sponsors__item" aria-label="Partenaire 3"></div>
+        <div class="sponsors__item" aria-label="Partenaire 4"></div>
+        <div class="sponsors__item" aria-label="Partenaire 5"></div>
+      </div>
+    </section>
+    <!-- Sponsors -->
+    <section class="sponsors" aria-label="Partenaires">
+      <div class="container sponsors__strip">
+        <div class="sponsors__item" aria-label="Partenaire 1"></div>
+        <div class="sponsors__item" aria-label="Partenaire 2"></div>
+        <div class="sponsors__item" aria-label="Partenaire 3"></div>
+        <div class="sponsors__item" aria-label="Partenaire 4"></div>
+        <div class="sponsors__item" aria-label="Partenaire 5"></div>
+      </div>
+    </section>
 
-    <!-- ton contenu de page ici -->
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container site-footer__grid">
+        <div class="site-footer__col">
+          <a class="brand brand--footer" href="#">
+            <svg class="brand__logo" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="20" cy="32" r="10"></circle>
+              <circle cx="44" cy="28" r="8"></circle>
+              <rect x="28" y="30" width="22" height="4" rx="2"></rect>
+            </svg>
+            <span class="brand__name">Koordy</span>
+          </a>
+          <p class="muted">
+            La plateforme du tennis de table : résultats, infos, événements,
+            vidéo.
+          </p>
+        </div>
 
-  <!-- ICI ton script Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        <nav class="site-footer__col">
+          <h4 class="site-footer__title">Découvrir</h4>
+          <ul class="list">
+            <li><a href="#">Événements</a></li>
+            <li><a href="#">Classements</a></li>
+            <li><a href="#">Résultats</a></li>
+            <li><a href="#">Joueurs</a></li>
+          </ul>
+        </nav>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA5GE48oyvMeFfBvtieddtIc6IgkhlgMdE",
-      authDomain: "koordy-789aa.firebaseapp.com",
-      projectId: "koordy-789aa",
-      storageBucket: "koordy-789aa.firebasestorage.app",
-      messagingSenderId: "139080514540",
-      appId: "1:139080514540:web:a8eb6f8d1f31dd69d89ec9",
-      measurementId: "G-ZWFJ1KFFTB"
-    };
+        <nav class="site-footer__col">
+          <h4 class="site-footer__title">Organisation</h4>
+          <ul class="list">
+            <li><a href="#">À propos</a></li>
+            <li><a href="#">Presse</a></li>
+            <li><a href="#">Partenariats</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    console.log("✅ Firebase initialisé");
-  </script>
-</body>
-</html>
+        <div class="site-footer__col">
+          <h4 class="site-footer__title">Newsletter</h4>
+          <form class="newsletter" action="#" method="post">
+            <label class="sr-only" for="email">Votre email</label>
+            <input
+              id="email"
+              class="newsletter__input"
+              type="email"
+              placeholder="Votre email"
+              required
+            />
+            <button class="btn btn--primary btn--block">S’inscrire</button>
+            <p class="micro muted">
+              En vous inscrivant, vous acceptez notre
+              <a href="#">politique de confidentialité</a>.
+            </p>
+          </form>
+        </div>
+      </div>
 
-  
-</body>
+      <div class="container site-footer__legal">
+        <p class="micro muted">© 2025 Koordy. Tous droits réservés.</p>
+        <nav aria-label="Mentions légales">
+          <a href="#">Mentions légales</a>
+          <a href="#">Cookies</a>
+          <a href="#">CGU</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>
