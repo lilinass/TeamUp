@@ -6,7 +6,7 @@ async function initDB() {
       host: "localhost",
       user: "root",
       password: "",
-      database: "koordybdd",
+      database: "koordybdd.sql",
     });
     console.log("Connexion établie");
     return connection;
