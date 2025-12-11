@@ -1,10 +1,11 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import { initDB } from "./connexionBDD.js";
 
 const app = express();
 const port = 8080;
-
+const connection = await initDB();
 // Pour pouvoir utiliser __dirname en ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
