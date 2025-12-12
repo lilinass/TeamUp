@@ -363,9 +363,9 @@
 
             <!-- Upload image -->
             <div>
-              <label for="design-image"
-                >Image de design (logo ou visuel)
-              </label>
+              <label for="design-image">Image de votre association *</label>
+
+
               <div
                 class="upload"
                 onclick="document.getElementById('design-image').click();"
@@ -398,45 +398,75 @@
     </main>
 
     <script>
-      // Sync color picker <-> input texte
-      const primaryColor = document.getElementById("primary-color");
-      const primaryHex = document.getElementById("primary-hex");
-      const secondaryColor = document.getElementById("secondary-color");
-      const secondaryHex = document.getElementById("secondary-hex");
+document.addEventListener("DOMContentLoaded", () => {
 
-      primaryColor.addEventListener(
-        "input",
-        () => (primaryHex.value = primaryColor.value.toUpperCase())
-      );
-      primaryHex.addEventListener("input", () => {
-        if (/^#([0-9A-Fa-f]{6})$/.test(primaryHex.value))
-          primaryColor.value = primaryHex.value;
-      });
+  const form = document.querySelector(".tt-form");
+  const fileInput = document.getElementById("design-image");
 
-      secondaryColor.addEventListener(
-        "input",
-        () => (secondaryHex.value = secondaryColor.value.toUpperCase())
-      );
-      secondaryHex.addEventListener("input", () => {
-        if (/^#([0-9A-Fa-f]{6})$/.test(secondaryHex.value))
-          secondaryColor.value = secondaryHex.value;
-      });
+  function showMessage(text, type = "success") {
+    let msg = document.getElementById("message") || document.createElement("p");
+    msg.id = "message";
+    msg.style.textAlign = "center";
+    msg.style.marginTop = "10px";
+    msg.style.fontSize = "1rem";
+    msg.style.color = type === "error" ? "#ff6b6b" : "#6cff7d";
+    msg.textContent = (type === "error" ? "⚠️ " : "✔️ ") + text;
+    form.appendChild(msg);
+  }
 
-      // Aperçu image
-      const fileInput = document.getElementById("design-image");
-      const preview = document.getElementById("preview");
-      const previewImg = document.getElementById("preview-img");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      fileInput.addEventListener("change", () => {
-        const file = fileInput.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          previewImg.src = e.target.result;
-          preview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      });
-    </script>
+    const primary = document.getElementById("primary-color").value;
+    const secondary = document.getElementById("secondary-color").value;
+    const id_association = localStorage.getItem("id_association");
+
+    if (!id_association) {
+      showMessage("Aucune association trouvée.", "error");
+      return;
+    }
+
+    // ========== IMAGE : ON PREND LE NOM DU FICHIER ==========
+    let imagePath = "";
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const fileName = file.name;  
+      imagePath = "Images/images_asso/" + fileName; 
+    } else {
+      showMessage("Veuillez choisir une image.", "error");
+      return;
+    }
+
+    // ========== ENVOI AU BACKEND ==========
+    const response = await fetch(`http://localhost:8080/api/association/design/${id_association}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        couleur_1: primary,
+        couleur_2: secondary,
+        image: imagePath
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      showMessage("Erreur : " + data.message, "error");
+      return;
+    }
+
+    // ========== SUCCÈS ==========
+    showMessage("Informations enregistrées ✔️", "success");
+
+    setTimeout(() => {
+      window.location.href = "/success_association";
+    }, 1500);
+  });
+
+});
+</script>
+
+    
+
   </body>
 </html>
