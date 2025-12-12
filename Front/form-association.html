@@ -262,89 +262,130 @@
 
         <!-- Carte formulaire -->
         <div class="card">
-          <form class="tt-form" action="#" method="post">
-            <div>
-              <label for="assoc-name"
-                >Nom de votre association
-                <span aria-hidden="true">*</span></label
-              >
-              <input id="assoc-name" name="assoc-name" type="text" required />
-            </div>
+          <form id="form-association" class="tt-form">
 
-            <div class="row">
-              <div>
-                <label for="structure-type"
-                  >Type de structure <span aria-hidden="true">*</span></label
-                >
-                <select id="structure-type" name="structure-type" required>
-                  <option value="">--- Sélectionnez un type ---</option>
-                  <option>Club</option>
-                  <option>Association</option>
-                  <option>Académie</option>
-                  <option>Autre</option>
-                </select>
-              </div>
+  <div>
+    <label for="nom">Nom de votre association *</label>
+    <input id="nom" type="text" required />
+  </div>
 
-              <div>
-                <label for="sport"
-                  >Sport <span aria-hidden="true">*</span></label
-                >
-                <select id="sport" name="sport" required>
-                  <option value="">--- Sélectionnez un sport ---</option>
-                  <option>Tennis de table</option>
-                  <option>Multi-sports</option>
-                </select>
-              </div>
-            </div>
+  <div class="row">
+    <div>
+      <label for="type_structure">Type de structure *</label>
+      <select id="type_structure" required>
+        <option value="">--- Sélectionnez un type ---</option>
+        <option value="Club">Club</option>
+        <option value="Association">Association</option>
+        <option value="Academie">Académie</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
 
-            <div>
-              <label for="addr1"
-                >Adresse 1 <span aria-hidden="true">*</span></label
-              >
-              <input id="addr1" name="addr1" type="text" required />
-            </div>
+    <div>
+      <label for="sport">Sport *</label>
+      <input id="sport" type="text" required />
+    </div>
+  </div>
 
-            <div>
-              <label for="addr2">Adresse 2</label>
-              <input id="addr2" name="addr2" type="text" />
-            </div>
+  <div>
+    <label for="adresse">Adresse 1 *</label>
+    <input id="adresse" type="text" required />
+  </div>
 
-            <div class="row">
-              <div>
-                <label for="zip"
-                  >Code postal <span aria-hidden="true">*</span></label
-                >
-                <input id="zip" name="zip" type="text" required />
-              </div>
-              <div>
-                <label for="city"
-                  >Ville <span aria-hidden="true">*</span></label
-                >
-                <input id="city" name="city" type="text" required />
-              </div>
-            </div>
+  <div>
+    <label for="adresse_2">Adresse 2</label>
+    <input id="adresse_2" type="text" />
+  </div>
 
-            <div>
-              <label for="country"
-                >Pays <span aria-hidden="true">*</span></label
-              >
-              <select id="country" name="country" required>
-                <option value="">--- Sélectionnez un pays ---</option>
-                <option>France</option>
-                <option>Belgique</option>
-                <option>Suisse</option>
-                <option>Autre</option>
-              </select>
-            </div>
+  <div class="row">
+    <div>
+      <label for="code_postal">Code postal *</label>
+      <input id="code_postal" type="text" required />
+    </div>
 
-            <!-- Actions -->
-            <div class="form-actions">
-              <button type="submit" class="btn-primary">Suivant</button>
-              <span class="back-link">← Retour</span>
-            </div>
-          </form>
+    <div>
+      <label for="ville">Ville *</label>
+      <input id="ville" type="text" required />
+    </div>
+  </div>
+
+  <div>
+    <label for="pays">Pays *</label>
+    <input id="pays" type="text" required />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description"></textarea>
+  </div>
+
+  <div>
+    <label for="date_creation">Date de création *</label>
+    <input id="date_creation" type="date" required />
+  </div>
+
+  <p id="message_asso" style="text-align:center; font-size:1rem; margin-top:10px;"></p>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary">Suivant</button>
+    <span class="back-link">← Retour</span>
+  </div>
+
+</form>
+
         </div>
       </section>
     </main>
+    <script>
+  const form = document.getElementById("form-association");
+  const msg = document.getElementById("message_asso");
+
+  function showMsg(text, type="success") {
+    const icon = type === "error" ? "⚠️ " : "✔️ ";
+    msg.style.color = type === "error" ? "#ff6b6b" : "#6cff7d";
+    msg.textContent = icon + text;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      nom: document.getElementById("nom").value,
+      type_structure: document.getElementById("type_structure").value,
+      sport: document.getElementById("sport").value,
+      adresse: document.getElementById("adresse").value,
+      adresse_2: document.getElementById("adresse_2").value,
+      description: document.getElementById("description").value,
+      date_creation: document.getElementById("date_creation").value,
+      code_postal: document.getElementById("code_postal").value,
+      ville: document.getElementById("ville").value,
+      pays: document.getElementById("pays").value,
+      image: "", // pour plus tard upload logo
+    };
+
+    const res = await fetch("http://localhost:8080/api/association", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      showMsg("Erreur : " + data.message, "error");
+      return;
+    }
+
+    showMsg("Informations enregistrées", "success");
+
+    // Sauvegarde de l'ID association pour la page suivante
+    localStorage.setItem("id_association", data.id_association);
+
+    setTimeout(() => {
+      window.location.href = "/design_association";
+    }, 1500);
+  });
+</script>
+
   </body>
 </html>

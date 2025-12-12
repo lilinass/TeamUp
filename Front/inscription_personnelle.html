@@ -251,6 +251,16 @@
           font-size: 1.85rem;
         }
       }
+      .message-error {
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.message-success {
+  color: #6cff7d;
+  font-weight: 600;
+}
+
     </style>
   </head>
   <body>
@@ -284,7 +294,7 @@
 
       <section class="container">
         <div class="card">
-          <form class="tt-form" action="#" method="post">
+          <form class="tt-form">
             <div class="row">
               <div>
                 <label for="last-name">Votre nom *</label>
@@ -351,11 +361,98 @@
             <div class="form-actions">
               <button type="submit" class="btn-primary">Suivant</button>
               <span class="back-link">← Retour</span>
+              
+              <p id="message" style="text-align:center; margin-top:10px; font-size:1rem;"></p>
+
             </div>
           </form>
         </div>
       </section>
     </main>
-  </body>
+    
+<script>
+  const form = document.querySelector(".tt-form");
+  const messageBox = document.getElementById("message");
 
+  function showMessage(text, type) {
+    let icon = "";
+
+    if (type === "error") {
+      icon = "⚠️ ";
+      messageBox.className = "message-error";
+    } else if (type === "success") {
+      icon = "✔️ ";
+      messageBox.className = "message-success";
+    } else {
+      messageBox.className = "";
+    }
+
+    messageBox.textContent = icon + text;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nom = document.getElementById("last-name").value;
+    const prenom = document.getElementById("first-name").value;
+    const email = document.getElementById("email").value;
+    const birthday = document.getElementById("birthday").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
+
+    // Réinitialisation du message
+    showMessage("", "");
+
+    if (password !== passwordConfirm) {
+      showMessage("Les mots de passe ne correspondent pas.", "error");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/inscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nom,
+          prenom,
+          email,
+          password,
+          birthday,
+        }),
+      });
+
+      const data = await response.json();
+
+      // Email existant → ⚠️
+      if (response.status === 409) {
+        showMessage("Utilisateur déjà existant", "error");
+        return;
+      }
+
+      // Autres erreurs backend
+      if (!response.ok) {
+        showMessage("Erreur : " + data.message, "error");
+        return;
+      }
+
+      // Succès → ✔️
+      showMessage("Inscription réussie !", "success");
+
+      // Redirection après 1,5 sec
+      setTimeout(() => {
+      window.location.href = "/inscription_association";
+}, 1500);
+
+
+    } catch (error) {
+      console.error("Erreur fetch :", error);
+      showMessage("Erreur réseau. Réessayer.", "error");
+    }
+  });
+</script>
+
+  
+  </body>
 </html>

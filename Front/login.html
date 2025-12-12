@@ -230,12 +230,60 @@
             </div>
 
             <div class="center-link">
-              Pas encore de compte ?
-              <a href="#">Créer un compte</a>
+  Pas encore de compte ?
+  <a href="/inscription">Créer un compte</a>
+</div>
+
             </div>
           </form>
         </div>
       </div>
     </main>
+
+    <script>
+const form = document.querySelector(".form");
+
+function showMessage(text, type = "error") {
+  let msg = document.getElementById("message") || document.createElement("p");
+  msg.id = "message";
+  msg.style.textAlign = "center";
+  msg.style.marginTop = "10px";
+  msg.style.fontSize = "1rem";
+  msg.style.color = type === "error" ? "#ff6b6b" : "#6cff7d";
+  msg.textContent = (type === "error" ? "⚠️ " : "✔️ ") + text;
+  form.appendChild(msg);
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const response = await fetch("http://localhost:8080/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    showMessage(data.message, "error");
+    return;
+  }
+
+  // Stocker l’ID utilisateur
+  localStorage.setItem("id_membre", data.id_membre);
+
+  showMessage("Connexion réussie ✔️", "success");
+
+  setTimeout(() => {
+    // Vers ton tableau de bord ou page suivante
+    window.location.href = "/index.html";
+  }, 1500);
+});
+</script>
+
   </body>
 </html>
