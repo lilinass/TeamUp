@@ -140,6 +140,7 @@ app.get("/api/associations/:id/events", async (req, res) => {
 app.post("/api/evenements", async (req, res) => {
   const {
     id_association,
+    id_auteur,
     titre_evenement,
     type_evenement,
     description_evenement,
@@ -148,49 +149,74 @@ app.post("/api/evenements", async (req, res) => {
     date_fin_event,
   } = req.body;
 
-  if (!id_association || !titre_evenement || !type_evenement || !date_debut_event) {
+  // ✅ logs utiles
+  console.log("📩 /api/evenements body =", req.body);
+
+  if (!id_association || !id_auteur || !titre_evenement || !type_evenement || !date_debut_event) {
     return res.status(400).json({ message: "Champs obligatoires manquants." });
   }
 
   try {
-    const [result] = await connection.execute(
+    await connection.beginTransaction();
+
+    // 1) INSERT evenement
+    const [evRes] = await connection.execute(
       `INSERT INTO evenement
-     (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+       (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
-        id_association,
+        Number(id_association),
         titre_evenement,
         type_evenement,
         description_evenement || "",
         lieu_event || "",
-        date_debut_event,
+        date_debut_event,         // (format "YYYY-MM-DD HH:mm:ss" ou ISO OK selon colonne)
         date_fin_event || null,
       ]
     );
 
-    const eventId = result.insertId;
-    
+    const id_evenement = evRes.insertId;
 
-// id_auteur: on le récupère depuis le body (membre connecté)
-const { id_auteur } = req.body;
-if (!id_auteur) {
-  return res.status(400).json({ message: "id_auteur manquant (création actu)." });
-}
+    // 2) INSERT actualite liée
+    await connection.execute(
+      `INSERT INTO actualite
+       (id_association, id_auteur, type_actualite, titre, contenu, date_publication, statut, id_evenement, event_date, image_principale)
+       VALUES (?, ?, 'Evenement', ?, ?, NOW(), 'Approuve', ?, ?, NULL)`,
+      [
+        Number(id_association),
+        Number(id_auteur),
+        titre_evenement,
+        description_evenement || "",
+        id_evenement,
+        date_debut_event, // ✅ event_date = début event
+      ]
+    );
 
-await connection.execute(
-  `INSERT INTO actualite
-   (id_association, id_auteur, type_actualite, titre, contenu, date_publication, statut, id_evenement, image_principale)
-   VALUES (?, ?, 'Evenement', ?, ?, NOW(), 'Approuve', ?, NULL)`,
-  [id_association, id_auteur, titre_evenement, description_evenement || "", eventId]
-);
+    await connection.commit();
 
-return res.status(201).json({ success: true, id_evenement: eventId });
+    // ✅ on renvoie l'event créé (pratique pour afficher direct)
+    return res.status(201).json({
+      success: true,
+      id_evenement,
+      event: {
+        id_evenement,
+        id_association: Number(id_association),
+        titre_evenement,
+        type_evenement,
+        description_evenement: description_evenement || "",
+        lieu_event: lieu_event || "",
+        date_debut_event,
+        date_fin_event: date_fin_event || null,
+      },
+    });
 
   } catch (err) {
-    console.error("Erreur création événement:", err);
+    await connection.rollback();
+    console.error("❌ Erreur création event:", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
 
 //
 app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
