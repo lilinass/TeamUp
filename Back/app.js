@@ -169,6 +169,7 @@ app.post("/api/evenements", async (req, res) => {
     );
 
     const eventId = result.insertId;
+    
 
 // id_auteur: on le récupère depuis le body (membre connecté)
 const { id_auteur } = req.body;
@@ -334,6 +335,7 @@ app.post("/api/inscription", async (req, res) => {
 
 app.post("/api/association", async (req, res) => {
   const {
+    id_membre,
     nom,
     type_structure,
     sport,
@@ -377,10 +379,18 @@ app.post("/api/association", async (req, res) => {
         couleur_2
       ]
     );
+    const id_association = result.insertId;
 
-    res.status(201).json({
+    await connection.execute(
+      `INSERT INTO membre_asso (id_membre, id_association, role, conseil_asso)
+       VALUES (?, ?, ?, ?)`,
+      [Number(id_membre), id_association, "Président", 1]
+    );
+
+    return res.status(201).json({
       message: "Informations enregistrées",
       id_association: result.insertId
+
     });
 
   } catch (err) {
