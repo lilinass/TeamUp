@@ -349,20 +349,26 @@ app.post("/api/association", async (req, res) => {
     image
   } = req.body;
 
-  // Couleurs par défaut à modifier à l'étape design
-  const couleur_1 = "#000000";
-  const couleur_2 = "#000000";
+  console.log("📩 /api/association body =", req.body);
 
-  // Vérification des champs obligatoires
+  if (!id_membre) {
+    return res.status(400).json({ message: "id_membre manquant (créateur)." });
+  }
+
   if (!nom || !type_structure || !sport || !adresse || !date_creation || !code_postal || !ville || !pays) {
     return res.status(400).json({ message: "Champs requis manquants." });
   }
 
+  const couleur_1 = "#000000";
+  const couleur_2 = "#000000";
+
   try {
+    await connection.beginTransaction();
+
     const [result] = await connection.execute(
-      `INSERT INTO association 
-      (nom, type_structure, sport, adresse, adresse_2, description, date_creation, image, code_postal, ville, pays, couleur_1, couleur_2)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO association
+       (nom, type_structure, sport, adresse, adresse_2, description, date_creation, image, code_postal, ville, pays, couleur_1, couleur_2)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         nom,
         type_structure,
@@ -379,25 +385,30 @@ app.post("/api/association", async (req, res) => {
         couleur_2
       ]
     );
+
     const id_association = result.insertId;
 
+    // ✅ IMPORTANT : créer le lien membre_asso
     await connection.execute(
       `INSERT INTO membre_asso (id_membre, id_association, role, conseil_asso)
        VALUES (?, ?, ?, ?)`,
       [Number(id_membre), id_association, "Président", 1]
     );
 
-    return res.status(201).json({
-      message: "Informations enregistrées",
-      id_association: result.insertId
+    await connection.commit();
 
+    return res.status(201).json({
+      message: "Association créée + créateur lié",
+      id_association
     });
 
   } catch (err) {
-    console.error("Erreur SQL :", err);
-    res.status(500).json({ message: "Erreur serveur" });
+    await connection.rollback();
+    console.error("❌ Erreur création asso/lien membre_asso:", err);
+    return res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
 
 app.put("/api/association/design/:id", async (req, res) => {
   const { couleur_1, couleur_2, image } = req.body;
