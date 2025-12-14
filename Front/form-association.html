@@ -1,391 +1,419 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
-    <title>Koordy — Votre association</title>
-    <meta
-      name="description"
-      content="Formulaire d’inscription de votre association."
-    />
 
-    <style>
-      /* ========= Design tokens ========= */
-      :root {
-        --bg: #0b0c0f; /* fond sombre */
-        --panel: #111319; /* panneaux */
-        --elev: #171a21; /* cartes */
-        --text: #e6e7eb; /* texte principal */
-        --muted: #9aa3b2; /* texte secondaire */
-        --brand: #6cf; /* accent bleu-cyan */
-        --brand-2: #a8ff60; /* accent secondaire */
-        --line: #232736;
-        --danger: #ff6b6b;
-        --success: #4cd964;
-        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
-        --radius: 16px;
-        --radius-sm: 10px;
-        --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-        --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.25);
-        --container: min(900px, 92vw);
-        --gap: 24px;
-        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
+  <title>Koordy — Votre association</title>
+  <meta name="description" content="Formulaire d’inscription de votre association." />
 
-      /* ========= Reset léger ========= */
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-        font-family: var(--font);
-        color: var(--text);
-        background: linear-gradient(180deg, #08090c, #0b0c0f 20%, #0b0c0f 100%);
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
+  <style>
+    /* ========= Design tokens ========= */
+    :root {
+      --bg: #0b0c0f;
+      /* fond sombre */
+      --panel: #111319;
+      /* panneaux */
+      --elev: #171a21;
+      /* cartes */
+      --text: #e6e7eb;
+      /* texte principal */
+      --muted: #9aa3b2;
+      /* texte secondaire */
+      --brand: #6cf;
+      /* accent bleu-cyan */
+      --brand-2: #a8ff60;
+      /* accent secondaire */
+      --line: #232736;
+      --danger: #ff6b6b;
+      --success: #4cd964;
+      --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.25);
+      --container: min(900px, 92vw);
+      --gap: 24px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
 
-      .container {
-        width: var(--container);
-        margin-inline: auto;
-      }
+    /* ========= Reset léger ========= */
+    * {
+      box-sizing: border-box;
+    }
 
-      /* ========= Header ========= */
-      .form-header-wrap {
-        background: linear-gradient(90deg, #111319, #1b2635);
-        border-bottom: 1px solid #202636;
-        padding: 14px 0;
-      }
-      .form-header {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start; /* essentiel pour aligner à gauche */
-        gap: 10px;
-      }
-      .form-logo {
-        width: 36px;
-        height: auto;
-        margin-right: auto;
-      }
-      .form-brand {
-        font-weight: 700;
-        letter-spacing: 0.3px;
-      }
+    html,
+    body {
+      height: 100%;
+    }
 
-      /* ========= Section centrale ========= */
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background: linear-gradient(180deg, #08090c, #0b0c0f 20%, #0b0c0f 100%);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: var(--container);
+      margin-inline: auto;
+    }
+
+    /* ========= Header ========= */
+    .form-header-wrap {
+      background: linear-gradient(90deg, #111319, #1b2635);
+      border-bottom: 1px solid #202636;
+      padding: 14px 0;
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      /* essentiel pour aligner à gauche */
+      gap: 10px;
+    }
+
+    .form-logo {
+      width: 36px;
+      height: auto;
+      margin-right: auto;
+    }
+
+    .form-brand {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* ========= Section centrale ========= */
+    main {
+      padding: 36px 0 60px;
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 1.9rem;
+      margin: 10px 0 6px;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin: 0 0 26px;
+      font-size: 0.98rem;
+    }
+
+    /* ========= Steps (barre de progression) ========= */
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .step {
+      width: 60px;
+      height: 6px;
+      background: #232736;
+      border-radius: 999px;
+      opacity: 0.7;
+    }
+
+    .step.is-active {
+      background: var(--brand);
+      box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
+      opacity: 1;
+    }
+
+    /* ========= Formulaire ========= */
+    .card {
+      background: var(--elev);
+      border-radius: var(--radius);
+      border: 1px solid #202636;
+      box-shadow: var(--shadow);
+      padding: 24px 22px 26px;
+    }
+
+    .tt-form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tt-form label {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .tt-form small {
+      color: var(--muted);
+    }
+
+    .tt-form input,
+    .tt-form select {
+      width: 100%;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid #2b3346;
+      padding: 11px 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    .tt-form input::placeholder {
+      color: #7c8696;
+    }
+
+    .tt-form input:focus,
+    .tt-form select:focus {
+      outline: none;
+      box-shadow: var(--focus);
+      border-color: var(--brand);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    /* ========= Boutons ========= */
+    .form-actions {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+      border: 1px solid #0e5fb4;
+      padding: 14px;
+      width: 100%;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      color: #fff;
+      text-align: center;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.06);
+    }
+
+    .back-link {
+      font-size: 0.95rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    /* ========= Champs requis en erreur (optionnel) ========= */
+    .is-error {
+      border-color: var(--danger);
+      background: #2a1114;
+    }
+
+    /* ========= Responsive ========= */
+    @media (max-width: 720px) {
       main {
-        padding: 36px 0 60px;
+        padding: 26px 0 40px;
       }
 
-      .form-title {
-        text-align: center;
-        font-size: 1.9rem;
-        margin: 10px 0 6px;
-      }
-      .form-subtitle {
-        text-align: center;
-        color: var(--muted);
-        margin: 0 0 26px;
-        font-size: 0.98rem;
-      }
-
-      /* ========= Steps (barre de progression) ========= */
-      .steps {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 32px;
-      }
-      .step {
-        width: 60px;
-        height: 6px;
-        background: #232736;
-        border-radius: 999px;
-        opacity: 0.7;
-      }
-      .step.is-active {
-        background: var(--brand);
-        box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
-        opacity: 1;
-      }
-
-      /* ========= Formulaire ========= */
       .card {
-        background: var(--elev);
-        border-radius: var(--radius);
-        border: 1px solid #202636;
-        box-shadow: var(--shadow);
-        padding: 24px 22px 26px;
-      }
-
-      .tt-form {
-        display: grid;
-        gap: 18px;
-      }
-
-      .tt-form label {
-        display: block;
-        font-size: 0.95rem;
-        margin-bottom: 6px;
-      }
-
-      .tt-form small {
-        color: var(--muted);
-      }
-
-      .tt-form input,
-      .tt-form select {
-        width: 100%;
-        background: var(--panel);
-        color: var(--text);
-        border: 1px solid #2b3346;
-        padding: 11px 12px;
-        border-radius: 12px;
-        font-size: 1rem;
-      }
-
-      .tt-form input::placeholder {
-        color: #7c8696;
-      }
-
-      .tt-form input:focus,
-      .tt-form select:focus {
-        outline: none;
-        box-shadow: var(--focus);
-        border-color: var(--brand);
+        padding: 20px 16px 22px;
       }
 
       .row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
+        grid-template-columns: 1fr;
       }
+    }
+  </style>
+</head>
 
-      /* ========= Boutons ========= */
-      .form-actions {
-        margin-top: 14px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .btn-primary {
-        background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
-        border: 1px solid #0e5fb4;
-        padding: 14px;
-        width: 100%;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 1.05rem;
-        cursor: pointer;
-        color: #fff;
-        text-align: center;
-      }
-
-      .btn-primary:hover {
-        filter: brightness(1.06);
-      }
-
-      .back-link {
-        font-size: 0.95rem;
-        color: var(--muted);
-        cursor: pointer;
-      }
-      .back-link:hover {
-        color: #fff;
-      }
-
-      /* ========= Champs requis en erreur (optionnel) ========= */
-      .is-error {
-        border-color: var(--danger);
-        background: #2a1114;
-      }
-
-      /* ========= Responsive ========= */
-      @media (max-width: 720px) {
-        main {
-          padding: 26px 0 40px;
-        }
-        .card {
-          padding: 20px 16px 22px;
-        }
-        .row {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <div class="form-header-wrap">
-      <header class="form-header container">
-        <div class="form-header-left">
-          <img src="Images/Logo v2.png" alt="Koordy" class="form-logo" />
-          <span class="form-brand">Koordy</span>
-        </div>
-      </header>
-    </div>
-
-    <!-- Contenu principal -->
-    <main>
-      <section class="container">
-        <h1 class="form-title">Votre association</h1>
-        <p class="form-subtitle">
-          Renseignez les informations de votre structure pour démarrer sur
-          Koordy.
-        </p>
-
-        <!-- Steps -->
-        <div class="steps" aria-label="Étapes du formulaire">
-          <span class="step is-active"></span>
-          <span class="step is-active"></span>
-          <span class="step is-active"></span>
-          <span class="step"></span>
-          <span class="step"></span>
-        </div>
-
-        <!-- Carte formulaire -->
-        <div class="card">
-          <form id="form-association" class="tt-form">
-
-  <div>
-    <label for="nom">Nom de votre association *</label>
-    <input id="nom" type="text" required />
+<body>
+  <!-- Header -->
+  <div class="form-header-wrap">
+    <header class="form-header container">
+      <div class="form-header-left">
+        <img src="Images/Logo v2.png" alt="Koordy" class="form-logo" />
+        <span class="form-brand">Koordy</span>
+      </div>
+    </header>
   </div>
 
-  <div class="row">
-    <div>
-      <label for="type_structure">Type de structure *</label>
-      <select id="type_structure" required>
-        <option value="">--- Sélectionnez un type ---</option>
-        <option value="Club">Club</option>
-        <option value="Association">Association</option>
-        <option value="Academie">Académie</option>
-        <option value="Autre">Autre</option>
-      </select>
-    </div>
+  <!-- Contenu principal -->
+  <main>
+    <section class="container">
+      <h1 class="form-title">Votre association</h1>
+      <p class="form-subtitle">
+        Renseignez les informations de votre structure pour démarrer sur
+        Koordy.
+      </p>
 
-    <div>
-      <label for="sport">Sport *</label>
-      <input id="sport" type="text" required />
-    </div>
-  </div>
+      <!-- Steps -->
+      <div class="steps" aria-label="Étapes du formulaire">
+        <span class="step is-active"></span>
+        <span class="step is-active"></span>
+        <span class="step is-active"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+      </div>
 
-  <div>
-    <label for="adresse">Adresse 1 *</label>
-    <input id="adresse" type="text" required />
-  </div>
+      <!-- Carte formulaire -->
+      <div class="card">
+        <form id="form-association" class="tt-form">
 
-  <div>
-    <label for="adresse_2">Adresse 2</label>
-    <input id="adresse_2" type="text" />
-  </div>
+          <div>
+            <label for="nom">Nom de votre association *</label>
+            <input id="nom" type="text" required />
+          </div>
 
-  <div class="row">
-    <div>
-      <label for="code_postal">Code postal *</label>
-      <input id="code_postal" type="text" required />
-    </div>
+          <div class="row">
+            <div>
+              <label for="type_structure">Type de structure *</label>
+              <select id="type_structure" required>
+                <option value="">--- Sélectionnez un type ---</option>
+                <option value="Club">Club</option>
+                <option value="Association">Association</option>
+                <option value="Academie">Académie</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
 
-    <div>
-      <label for="ville">Ville *</label>
-      <input id="ville" type="text" required />
-    </div>
-  </div>
+            <div>
+              <label for="sport">Sport *</label>
+              <input id="sport" type="text" required />
+            </div>
+          </div>
 
-  <div>
-    <label for="pays">Pays *</label>
-    <input id="pays" type="text" required />
-  </div>
+          <div>
+            <label for="adresse">Adresse 1 *</label>
+            <input id="adresse" type="text" required />
+          </div>
 
-  <div>
-    <label for="description">Description</label>
-    <textarea id="description"></textarea>
-  </div>
+          <div>
+            <label for="adresse_2">Adresse 2</label>
+            <input id="adresse_2" type="text" />
+          </div>
 
-  <div>
-    <label for="date_creation">Date de création *</label>
-    <input id="date_creation" type="date" required />
-  </div>
+          <div class="row">
+            <div>
+              <label for="code_postal">Code postal *</label>
+              <input id="code_postal" type="text" required />
+            </div>
 
-  <p id="message_asso" style="text-align:center; font-size:1rem; margin-top:10px;"></p>
+            <div>
+              <label for="ville">Ville *</label>
+              <input id="ville" type="text" required />
+            </div>
+          </div>
 
-  <div class="form-actions">
-    <button type="submit" class="btn-primary">Suivant</button>
-    <span class="back-link">← Retour</span>
-  </div>
+          <div>
+            <label for="pays">Pays *</label>
+            <input id="pays" type="text" required />
+          </div>
 
-</form>
+          <div>
+            <label for="description">Description</label>
+            <textarea id="description"></textarea>
+          </div>
 
-        </div>
-      </section>
-    </main>
-    <script>
-  const form = document.getElementById("form-association");
-  const msg = document.getElementById("message_asso");
+          <div>
+            <label for="date_creation">Date de création *</label>
+            <input id="date_creation" type="date" required />
+          </div>
 
-  function showMsg(text, type="success") {
-    const icon = type === "error" ? "⚠️ " : "✔️ ";
-    msg.style.color = type === "error" ? "#ff6b6b" : "#6cff7d";
-    msg.textContent = icon + text;
-  }
+          <p id="message_asso" style="text-align:center; font-size:1rem; margin-top:10px;"></p>
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Suivant</button>
+            <span class="back-link">← Retour</span>
+          </div>
 
-    const payload = {
-      nom: document.getElementById("nom").value,
-      type_structure: document.getElementById("type_structure").value,
-      sport: document.getElementById("sport").value,
-      adresse: document.getElementById("adresse").value,
-      adresse_2: document.getElementById("adresse_2").value,
-      description: document.getElementById("description").value,
-      date_creation: document.getElementById("date_creation").value,
-      code_postal: document.getElementById("code_postal").value,
-      ville: document.getElementById("ville").value,
-      pays: document.getElementById("pays").value,
-      image: "", // pour plus tard upload logo
-    };
+        </form>
 
-    const res = await fetch("http://localhost:8080/api/association", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+      </div>
+    </section>
+  </main>
+  <script>
+    const form = document.getElementById("form-association");
+    const msg = document.getElementById("message_asso");
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      showMsg("Erreur : " + data.message, "error");
-      return;
+    function showMsg(text, type = "success") {
+      const icon = type === "error" ? "⚠️ " : "✔️ ";
+      msg.style.color = type === "error" ? "#ff6b6b" : "#6cff7d";
+      msg.textContent = icon + text;
     }
 
-    showMsg("Informations enregistrées", "success");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    // Sauvegarde de l'ID association pour la page suivante
-    localStorage.setItem("id_association", data.id_association);
+      const id_membre = localStorage.getItem("id_membre");
+      if (!id_membre) {
+        showMsg("Membre non trouvé (id_membre). Recommence l'inscription.", "error");
+        return;
+      }
 
-    setTimeout(() => {
-      window.location.href = "/design_association";
-    }, 1500);
-  });
-</script>
+      const payload = {
+        id_membre: Number(id_membre),
+        nom: document.getElementById("nom").value,
+        type_structure: document.getElementById("type_structure").value,
+        sport: document.getElementById("sport").value,
+        adresse: document.getElementById("adresse").value,
+        adresse_2: document.getElementById("adresse_2").value,
+        description: document.getElementById("description").value,
+        date_creation: document.getElementById("date_creation").value,
+        code_postal: document.getElementById("code_postal").value,
+        ville: document.getElementById("ville").value,
+        pays: document.getElementById("pays").value,
+        image: "", // pour plus tard upload logo
+      };
 
-  </body>
+      const res = await fetch("http://localhost:8080/api/association", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showMsg("Erreur : " + data.message, "error");
+        return;
+      }
+
+      showMsg("Informations enregistrées", "success");
+
+      // Sauvegarde de l'ID association pour la page suivante
+      localStorage.setItem("id_association", data.id_association);
+
+      setTimeout(() => {
+        window.location.href = "/design_association";
+      }, 1500);
+    });
+  </script>
+
+</body>
+
 </html>

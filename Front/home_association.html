@@ -8,6 +8,7 @@
     <title>Koordy – Association</title>
     <meta name="description" content="Page d’accueil d’une association sportive sur Koordy." />
     <link rel="stylesheet" href="style.css" />
+    <script src="association.js"></script>
 
 </head>
 
@@ -129,30 +130,12 @@
 
 
         <!-- QUI SOMMES-NOUS ? -->
-        <section id="about" class="section section--asso-about" aria-labelledby="about-title">
+        <section id="about" class="section">
             <div class="container">
-                <h2 id="about-title" class="section__title section__title--line">
-                    QUI SOMMES-NOUS ?
-                </h2>
-
-                <div class="asso-about">
-                    <p>
-                        Le Handball Club Koordy est une association loi 1901 qui
-                        accueille aujourd’hui plus de
-                        <strong>150 adhérents</strong>, des catégories jeunes
-                        jusqu’aux équipes séniors. Notre objectif : permettre à
-                        chacun de progresser dans un cadre bienveillant, tout en
-                        partageant les valeurs du handball.
-                    </p>
-                    <p>
-                        Encadrés par une équipe d’éducateurs diplômés et de nombreux
-                        bénévoles, nos licenciés évoluent dans un environnement
-                        sécurisé et structuré. En parallèle de la pratique sportive,
-                        le club met en place des actions citoyennes, des stages
-                        vacances, ainsi que des événements conviviaux pour faire
-                        vivre la communauté Koordy.
-                    </p>
-                </div>
+                <h2 class="section__title section__title--line">À PROPOS DU CLUB</h2>
+                <p id="asso-description">
+                    <!-- rempli par JS -->
+                </p>
             </div>
         </section>
 
@@ -206,44 +189,12 @@
                 <h2 id="conseil-title" class="section__title section__title--line">
                     LE CONSEIL DU CLUB
                 </h2>
+                <div id="conseil-grid" class="conseil-grid"></div>
 
-                <div class="conseil-grid">
-                    <!-- Membre 1 -->
-                    <article class="conseil-card">
-                        <div class="conseil-card__avatar">
-                            <img src="./Images/conseil/president.jpg" alt="Photo de la présidente" />
-                        </div>
-                        <h3 class="conseil-card__name">Alexandra Martin</h3>
-                        <p class="conseil-card__role">Présidente du club</p>
-                    </article>
-
-                    <!-- Membre 2 -->
-                    <article class="conseil-card">
-                        <div class="conseil-card__avatar">
-                            <img src="./Images/conseil/directeur_sportif.jpg" alt="Photo du directeur sportif" />
-                        </div>
-                        <h3 class="conseil-card__name">Thomas Lefèvre</h3>
-                        <p class="conseil-card__role">Directeur sportif</p>
-                    </article>
-
-                    <!-- Membre 3 -->
-                    <article class="conseil-card">
-                        <div class="conseil-card__avatar">
-                            <img src="./Images/conseil/respo_jeunes.jpg" alt="Photo de la responsable jeunes" />
-                        </div>
-                        <h3 class="conseil-card__name">Inès Dupont</h3>
-                        <p class="conseil-card__role">Responsable catégorie jeunes</p>
-                    </article>
-
-                    <!-- Membre 4 -->
-                    <article class="conseil-card">
-                        <div class="conseil-card__avatar">
-                            <img src="./Images/conseil/trezorier.jpg" alt="Photo du trésorier" />
-                        </div>
-                        <h3 class="conseil-card__name">Julien Moreau</h3>
-                        <p class="conseil-card__role">Trésorier</p>
-                    </article>
+                <div id="conseil-empty" style="display:none;">
+                    Aucun membre du conseil pour le moment.
                 </div>
+
             </div>
         </section>
 
@@ -288,7 +239,6 @@
                     <p class="events-side__text">
                         Consultez les prochains matchs, entraînements, réunions
                         et événements du club. Les membres conviés recevront une notification
-                        (plus tard via ton back).
                     </p>
 
                     <ul class="events-legend">
@@ -306,54 +256,7 @@
                     </p>
 
                     <div id="events-list" class="events-list">
-                        <!-- ÉVÉNEMENT EXEMPLE STATIQUE (tu peux le laisser le temps de développer) -->
-                        <article class="events-card" data-date="2025-03-14" data-type="match">
-                            <div class="events-card__date">
-                                <span class="events-card__day">14</span>
-                                <span class="events-card__month">MARS</span>
-                            </div>
 
-                            <div class="events-card__content">
-                                <h3 class="events-card__title">
-                                    HCK – Match à domicile U15
-                                </h3>
-                                <p class="events-card__meta">
-                                    Samedi · 17h00 · Koordy Arena
-                                </p>
-                                <p class="events-card__text">
-                                    Rencontre de championnat régionale, convocation des licenciés U15
-                                    à 16h00 pour l’échauffement.
-                                </p>
-                                <div class="events-card__tags">
-                                    <span class="events-tag events-tag--match">Match</span>
-                                    <span class="events-tag">U15</span>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="events-card" data-date="2025-03-20" data-type="training">
-                            <div class="events-card__date">
-                                <span class="events-card__day">20</span>
-                                <span class="events-card__month">MARS</span>
-                            </div>
-
-                            <div class="events-card__content">
-                                <h3 class="events-card__title">
-                                    Entraînement collectif séniors
-                                </h3>
-                                <p class="events-card__meta">
-                                    Jeudi · 20h00 · Koordy Arena
-                                </p>
-                                <p class="events-card__text">
-                                    Séance de préparation avant le déplacement du week-end. Présence
-                                    vivement recommandée pour tous les joueurs séniors.
-                                </p>
-                                <div class="events-card__tags">
-                                    <span class="events-tag events-tag--training">Entraînement</span>
-                                    <span class="events-tag">Séniors</span>
-                                </div>
-                            </div>
-                        </article>
                     </div>
                 </div>
             </div>
@@ -391,28 +294,211 @@
                     <h2 id="contact-title" class="section__title section__title--line">
                         INFOS PRATIQUES
                     </h2>
-                    <p><strong>Adresse :</strong> 12 rue des Sports</p>
-                    <p><strong>Ville :</strong> 44000 Nantes</p>
-                    <p><strong>Gymnase principal :</strong> Salle Koordy Arena</p>
+
+                    <p><strong>Adresse :</strong> <span id="asso-adresse">—</span></p>
+                    <p><strong>Ville :</strong> <span id="asso-ville">—</span></p>
+                    <p><strong>Pays :</strong> <span id="asso-pays">—</span></p>
                 </div>
 
                 <div>
                     <h2 class="section__title section__title--line">CONTACT</h2>
+
                     <p>
                         <strong>Email :</strong>
-                        <a href="mailto:contact@hckoordy.fr">contact@hckoordy.fr</a>
+                        <a id="asso-email" href="#">—</a>
                     </p>
-                    <p><strong>Téléphone :</strong> 06 12 34 56 78</p>
 
-                    <div class="asso-socials">
-                        <a href="#" target="_blank">Facebook</a>
-                        <a href="#" target="_blank">Instagram</a>
-                        <a href="#" target="_blank">Site web</a>
-                    </div>
+                    <p>
+                        <strong>Téléphone :</strong>
+                        <span id="asso-telephone">—</span>
+                    </p>
+
+                    <div class="asso-socials" id="asso-socials"></div>
                 </div>
             </div>
         </section>
+
+
     </main>
+
+    <div id="event-modal" class="modal" style="display:none;">
+        <div class="modal__overlay" id="event-modal-close"></div>
+
+        <div class="modal__content">
+            <h3>Ajouter un événement</h3>
+
+            <form id="event-form" class="modal__form">
+                <input id="ev-title" placeholder="Titre*" required />
+
+                <select id="ev-type" required>
+                    <option value="">Type*</option>
+                    <option value="MATCH">Match</option>
+                    <option value="ENTRAINEMENT">Entraînement</option>
+                    <option value="REUNION">Réunion</option>
+                    <option value="AUTRE">Autre</option>
+                </select>
+
+                <input id="ev-lieu" placeholder="Lieu" />
+                <textarea id="ev-desc" placeholder="Description"></textarea>
+
+                <label>Date début*</label>
+                <input id="ev-start" type="datetime-local" required />
+
+                <label>Date fin</label>
+                <input id="ev-end" type="datetime-local" />
+
+                <button type="submit" class="btn btn--primary">Créer</button>
+            </form>
+        </div>
+    </div>
+    <style>
+        /* ===============================
+   MODAL — AJOUT EVENEMENT
+================================ */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Fond sombre */
+        .modal__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 6, 10, 0.75);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Contenu */
+        .modal__content {
+            position: relative;
+            z-index: 1;
+            width: min(520px, 92vw);
+            background: #111319;
+            border-radius: 18px;
+            border: 1px solid #232736;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+            padding: 26px 24px 28px;
+            color: #e6e7eb;
+            animation: modalIn 0.25s ease-out;
+        }
+
+        /* Animation d’apparition */
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Titre */
+        .modal__content h3 {
+            margin: 0 0 18px;
+            text-align: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===============================
+   FORMULAIRE
+================================ */
+
+        .modal__form {
+            display: grid;
+            gap: 14px;
+        }
+
+        .modal__form label {
+            font-size: 0.85rem;
+            color: #9aa3b2;
+            margin-top: 4px;
+        }
+
+        /* Champs */
+        .modal__form input,
+        .modal__form select,
+        .modal__form textarea {
+            width: 100%;
+            background: #171a21;
+            color: #e6e7eb;
+            border: 1px solid #2b3346;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        /* Textarea */
+        .modal__form textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* Focus */
+        .modal__form input:focus,
+        .modal__form select:focus,
+        .modal__form textarea:focus {
+            outline: none;
+            border-color: #6cf;
+            box-shadow: 0 0 0 3px rgba(102, 204, 255, 0.25);
+        }
+
+        /* Bouton */
+        .modal__form button {
+            margin-top: 10px;
+            padding: 14px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn--admin-only {
+            display: none;
+        }
+
+        /*------------css badge actualite------------*/
+        .news-badge {
+            display: inline-block;
+            margin-right: 8px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .news-badge--event {
+            background: #ffe8cc;
+            color: #b45309;
+        }
+
+        .news-badge--article {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        /* ===============================
+   RESPONSIVE
+================================ */
+
+        @media (max-width: 480px) {
+            .modal__content {
+                padding: 22px 18px 24px;
+            }
+        }
+    </style>
+
 </body>
 
 </html>

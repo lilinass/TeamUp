@@ -1,292 +1,317 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
-    <title>Koordy — Association créée</title>
-    <meta
-      name="description"
-      content="Confirmation de création de votre association sur Koordy."
-    />
 
-    <style>
-      :root {
-        --bg: #0b0c0f;
-        --panel: #111319;
-        --elev: #171a21;
-        --text: #e6e7eb;
-        --muted: #9aa3b2;
-        --brand: #6cf;
-        --brand-2: #a8ff60;
-        --line: #232736;
-        --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
-        --radius: 22px;
-        --shadow: 0 22px 50px rgba(0, 0, 0, 0.65);
-        --container: min(800px, 92vw);
-        --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
+  <title>Koordy — Association créée</title>
+  <meta name="description" content="Confirmation de création de votre association sur Koordy." />
 
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-        font-family: var(--font);
-        color: var(--text);
-        background: radial-gradient(
-            900px 500px at 10% 0,
-            rgba(108, 204, 255, 0.08),
-            transparent 55%
-          ),
-          radial-gradient(
-            900px 500px at 90% -10%,
-            rgba(168, 255, 96, 0.06),
-            transparent 60%
-          ),
-          #05060a;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-      }
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
+  <style>
+    :root {
+      --bg: #0b0c0f;
+      --panel: #111319;
+      --elev: #171a21;
+      --text: #e6e7eb;
+      --muted: #9aa3b2;
+      --brand: #6cf;
+      --brand-2: #a8ff60;
+      --line: #232736;
+      --focus: 0 0 0 3px rgba(102, 204, 255, 0.35);
+      --radius: 22px;
+      --shadow: 0 22px 50px rgba(0, 0, 0, 0.65);
+      --container: min(800px, 92vw);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
 
-      .container {
-        width: var(--container);
-        margin-inline: auto;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      /* Header */
-      .form-header-wrap {
-        background: linear-gradient(180deg, #0f141f, #080a10);
-        border-bottom: 1px solid #151926;
-        padding: 16px 0 12px;
-      }
-      .form-header {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 10px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .brand__logo {
-        width: 40px;
-        height: 40px;
-      }
-      .brand__name {
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        font-size: 1.05rem;
-      }
+    html,
+    body {
+      height: 100%;
+    }
 
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background: radial-gradient(900px 500px at 10% 0,
+          rgba(108, 204, 255, 0.08),
+          transparent 55%),
+        radial-gradient(900px 500px at 90% -10%,
+          rgba(168, 255, 96, 0.06),
+          transparent 60%),
+        #05060a;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: var(--container);
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .form-header-wrap {
+      background: linear-gradient(180deg, #0f141f, #080a10);
+      border-bottom: 1px solid #151926;
+      padding: 16px 0 12px;
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand__logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .brand__name {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      font-size: 1.05rem;
+    }
+
+    main {
+      padding: 40px 0 70px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero__title {
+      font-size: 2.1rem;
+      margin: 10px 0 8px;
+    }
+
+    .hero__text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* Steps : 4/4 */
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 24px 0 0;
+    }
+
+    .step {
+      width: 70px;
+      height: 6px;
+      border-radius: 999px;
+      background: #262a37;
+      opacity: 0.7;
+    }
+
+    .step.is-active {
+      background: var(--brand);
+      box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
+      opacity: 1;
+    }
+
+    /* Card */
+    .card {
+      margin-top: 32px;
+      background: var(--elev);
+      border-radius: var(--radius);
+      border: 1px solid #202636;
+      box-shadow: var(--shadow);
+      padding: 30px 26px 30px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      background: radial-gradient(circle at 30% 20%,
+          rgba(255, 255, 255, 0.26),
+          transparent 60%),
+        linear-gradient(135deg, #2dd977, #189b4f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
+    .success-icon::before {
+      content: "";
+      width: 26px;
+      height: 14px;
+      border-radius: 3px;
+      border-left: 3px solid #fff;
+      border-bottom: 3px solid #fff;
+      transform: translateY(-1px) rotate(-45deg);
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      margin: 0 0 8px;
+    }
+
+    .card-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .hint {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Actions */
+    .actions {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+      border: 1px solid #0e5fb4;
+      padding: 14px;
+      width: 100%;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      color: #fff;
+      text-align: center;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.06);
+    }
+
+    .secondary-link {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .secondary-link:hover {
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
       main {
-        padding: 40px 0 70px;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
+        padding: 30px 0 50px;
       }
 
-      .hero {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      .hero__title {
-        font-size: 2.1rem;
-        margin: 10px 0 8px;
-      }
-      .hero__text {
-        margin: 0;
-        color: var(--muted);
-        font-size: 1rem;
-      }
-
-      /* Steps : 4/4 */
-      .steps {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin: 24px 0 0;
-      }
-      .step {
-        width: 70px;
-        height: 6px;
-        border-radius: 999px;
-        background: #262a37;
-        opacity: 0.7;
-      }
-      .step.is-active {
-        background: var(--brand);
-        box-shadow: 0 0 0 1px rgba(102, 204, 255, 0.35);
-        opacity: 1;
-      }
-
-      /* Card */
       .card {
-        margin-top: 32px;
-        background: var(--elev);
-        border-radius: var(--radius);
-        border: 1px solid #202636;
-        box-shadow: var(--shadow);
-        padding: 30px 26px 30px;
-        text-align: center;
+        padding: 24px 18px 26px;
       }
 
-      .success-icon {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        margin: 0 auto 18px;
-        background: radial-gradient(
-            circle at 30% 20%,
-            rgba(255, 255, 255, 0.26),
-            transparent 60%
-          ),
-          linear-gradient(135deg, #2dd977, #189b4f);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
-        position: relative;
+      .hero__title {
+        font-size: 1.85rem;
       }
+    }
+  </style>
+</head>
 
-      .success-icon::before {
-        content: "";
-        width: 26px;
-        height: 14px;
-        border-radius: 3px;
-        border-left: 3px solid #fff;
-        border-bottom: 3px solid #fff;
-        transform: translateY(-1px) rotate(-45deg);
-      }
+<body>
+  <!-- Header -->
+  <div class="form-header-wrap">
+    <header class="container form-header">
+      <a href="#" class="brand" aria-label="Retour à l’accueil Koordy">
+        <img src="Images/Logo v2.png" alt="Koordy" class="brand__logo" />
+        <span class="brand__name">Koordy</span>
+      </a>
+    </header>
+  </div>
 
-      .card-title {
-        font-size: 1.6rem;
-        margin: 0 0 8px;
-      }
-      .card-text {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.98rem;
-      }
+  <main>
+    <section class="container">
+      <div class="hero">
+        <h1 class="hero__title">Votre association</h1>
+        <p class="hero__text">
+          Dernière étape : votre espace Koordy est prêt.
+        </p>
 
-      .hint {
-        margin-top: 10px;
-        font-size: 0.9rem;
-        color: var(--muted);
-      }
-
-      /* Actions */
-      .actions {
-        margin-top: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-      }
-      .btn-primary {
-        background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
-        border: 1px solid #0e5fb4;
-        padding: 14px;
-        width: 100%;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 1.05rem;
-        cursor: pointer;
-        color: #fff;
-        text-align: center;
-      }
-      .btn-primary:hover {
-        filter: brightness(1.06);
-      }
-      .secondary-link {
-        font-size: 0.95rem;
-        color: var(--muted);
-      }
-      .secondary-link:hover {
-        color: #fff;
-      }
-
-      @media (max-width: 720px) {
-        main {
-          padding: 30px 0 50px;
-        }
-        .card {
-          padding: 24px 18px 26px;
-        }
-        .hero__title {
-          font-size: 1.85rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Header -->
-    <div class="form-header-wrap">
-      <header class="container form-header">
-        <a href="#" class="brand" aria-label="Retour à l’accueil Koordy">
-          <img src="Images/Logo v2.png" alt="Koordy" class="brand__logo" />
-          <span class="brand__name">Koordy</span>
-        </a>
-      </header>
-    </div>
-
-    <main>
-      <section class="container">
-        <div class="hero">
-          <h1 class="hero__title">Votre association</h1>
-          <p class="hero__text">
-            Dernière étape : votre espace Koordy est prêt.
-          </p>
-
-          <!-- 4/4 étapes -->
-          <div class="steps" aria-label="Étapes d’inscription">
-            <span class="step is-active"></span>
-            <span class="step is-active"></span>
-            <span class="step is-active"></span>
-            <span class="step is-active"></span>
-            <span class="step is-active"></span>
-          </div>
+        <!-- 4/4 étapes -->
+        <div class="steps" aria-label="Étapes d’inscription">
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
+          <span class="step is-active"></span>
         </div>
+      </div>
 
-        <div class="card">
-          <div class="success-icon" aria-hidden="true"></div>
-          <h2 class="card-title">
-            Bravo, votre association vient d’être créée !
-          </h2>
-          <p class="card-text">
-            Votre plateforme Koordy est maintenant configurée.<br />
-            Vous pouvez y accéder dès maintenant pour gérer vos membres,
-            événements et résultats.
-          </p>
+      <div class="card">
+        <div class="success-icon" aria-hidden="true"></div>
+        <h2 class="card-title">
+          Bravo, votre association vient d’être créée !
+        </h2>
+        <p class="card-text">
+          Votre plateforme Koordy est maintenant configurée.<br />
+          Vous pouvez y accéder dès maintenant pour gérer vos membres,
+          événements et résultats.
+        </p>
 
-          <p class="hint">
-            Un email de confirmation récapitulant les informations de votre
-            association vient de vous être envoyé.
-          </p>
+        <p class="hint">
+          Un email de confirmation récapitulant les informations de votre
+          association vient de vous être envoyé.
+        </p>
 
-          <div class="actions">
-            <!-- Remplace # par l’URL réelle de ton site / dashboard -->
-            <a href="#" class="btn-primary">Accéder à mon espace Koordy</a>
-            <a href="#" class="secondary-link">← Revenir à l’accueil</a>
-          </div>
+        <div class="actions">
+          <!-- Remplace # par l’URL réelle de ton site / dashboard -->
+          <a href="#" id="btn-espace" class="btn-primary">Accéder à mon espace Koordy</a>
+          <a href="#" class="secondary-link">← Revenir à l’accueil</a>
         </div>
-      </section>
-    </main>
-  </body>
+      </div>
+    </section>
+    <script>
+      // On récupère l'id de l'association depuis localStorage
+      const btnEspace = document.getElementById('btn-espace');
+
+        const idAsso = localStorage.getItem("id_association");
+  if (idAsso) {
+    setTimeout(() => {
+      window.location.href = `/home_association.html?id=${idAsso}`;
+    }, 800);
+  }
+    </script>
+
+  </main>
+</body>
+
 </html>
