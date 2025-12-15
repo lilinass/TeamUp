@@ -16,11 +16,6 @@ const __dirname = path.dirname(__filename);
 
 // Servir le dossier Front en statique
 app.use(cors());
-// Permet de lire req.body
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Page d'accueil
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
@@ -50,49 +45,37 @@ app.get("/Formulaire_de_creation", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/form-association.html"));
 });
 
-
-app.get("/api/associations/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const [rows] = await connection.execute(
-      "SELECT * FROM association WHERE id_association = ?",
-      [id]
-    );
-
-    if (rows.length === 0) {
-      return res.status(404).json({ message: "Association introuvable" });
-    }
-
-    res.json(rows[0]);
-  } catch (err) {
-    console.error("Erreur API association:", err);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-});
-
-
 // ===============================
 //  Lancement du serveur
 // ===============================
 
-//app.listen(port, () => {
-//  console.log(`Server is running on http://localhost:${port}`);
-//});
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
 
 // ===============================
 //  ROUTES ASSOCIATION
 // ===============================
 
+// Récupérer une association
+app.get("/api/associations/:id", async (req, res) => {
+  const id = req.params.id;
 
+  const [rows] = await db.query(
+    "SELECT * FROM association WHERE id_association = ?",
+    [id]
+  );
+
+  res.json(rows[0] || {});
+});
 
 // Récupérer le conseil du club
 app.get("/api/associations/:id/conseil", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
-    `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role, ma.conseil_asso
+  const [rows] = await db.query(
+    `SELECT m.id_membre, m.nom, m.prenom, ma.role, ma.conseil_asso
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_association = ? AND ma.conseil_asso = 1`,
@@ -106,8 +89,8 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
 app.get("/api/associations/:id/membres", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
-    `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role
+  const [rows] = await db.query(
+    `SELECT m.id_membre, m.nom, m.prenom, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_asso = ?`,
@@ -125,9 +108,9 @@ app.get("/api/associations/:id/membres", async (req, res) => {
 app.get("/api/associations/:id/events", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
+  const [rows] = await db.query(
     `SELECT * FROM evenement
-     WHERE id_association = ?
+     WHERE id_association = ? AND date_debut_event >= NOW()
      ORDER BY date_debut_event ASC`,
     [id]
   );
@@ -139,115 +122,34 @@ app.get("/api/associations/:id/events", async (req, res) => {
 app.post("/api/evenements", async (req, res) => {
   const {
     id_association,
-    id_auteur,
     titre_evenement,
     type_evenement,
     description_evenement,
     lieu_event,
     date_debut_event,
-    date_fin_event,
+    date_fin_event
   } = req.body;
 
-  // ✅ logs utiles
-  console.log("📩 /api/evenements body =", req.body);
+  // 1. Insérer l'événement
+  const [eventResult] = await db.query(
+    `INSERT INTO evenement 
+     (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event]
+  );
 
-  if (!id_association || !id_auteur || !titre_evenement || !type_evenement || !date_debut_event) {
-    return res.status(400).json({ message: "Champs obligatoires manquants." });
-  }
+  const eventId = eventResult.insertId;
 
-  try {
-    await connection.beginTransaction();
+  // 2. Créer automatiquement une actualité associée
+  await db.query(
+    `INSERT INTO actualite 
+     (id_association, type_actualite, titre, contenu, date_creation, date_publication, statut, id_evenement, event_date)
+     VALUES (?, 'Evenement', ?, ?, NOW(), NOW(), 'Approuve', ?, ?)`,
+    [id_association, titre, description, eventId, date_debut]
+  );
 
-    // 1) INSERT evenement
-    const [evRes] = await connection.execute(
-      `INSERT INTO evenement
-       (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        Number(id_association),
-        titre_evenement,
-        type_evenement,
-        description_evenement || "",
-        lieu_event || "",
-        date_debut_event,         // (format "YYYY-MM-DD HH:mm:ss" ou ISO OK selon colonne)
-        date_fin_event || null,
-      ]
-    );
-
-    const id_evenement = evRes.insertId;
-
-    // 2) INSERT actualite liée
-    await connection.execute(
-      `INSERT INTO actualite
-       (id_association, id_auteur, type_actualite, titre, contenu, date_publication, statut, id_evenement, event_date, image_principale)
-       VALUES (?, ?, 'Evenement', ?, ?, NOW(), 'Approuve', ?, ?, NULL)`,
-      [
-        Number(id_association),
-        Number(id_auteur),
-        titre_evenement,
-        description_evenement || "",
-        id_evenement,
-        date_debut_event, // ✅ event_date = début event
-      ]
-    );
-
-    await connection.commit();
-
-    // ✅ on renvoie l'event créé (pratique pour afficher direct)
-    return res.status(201).json({
-      success: true,
-      id_evenement,
-      event: {
-        id_evenement,
-        id_association: Number(id_association),
-        titre_evenement,
-        type_evenement,
-        description_evenement: description_evenement || "",
-        lieu_event: lieu_event || "",
-        date_debut_event,
-        date_fin_event: date_fin_event || null,
-      },
-    });
-
-  } catch (err) {
-    await connection.rollback();
-    console.error("❌ Erreur création event:", err);
-    return res.status(500).json({ message: "Erreur serveur" });
-  }
+  res.json({ success: true, eventId });
 });
-
-
-//
-app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
-  const { id, id_membre } = req.params;
-
-  try {
-    const [rows] = await connection.execute(
-      `SELECT role FROM membre_asso
-       WHERE id_association = ? AND id_membre = ?
-       LIMIT 1`,
-      [id, id_membre]
-    );
-
-    if (!rows.length) return res.json({ isAdmin: false });
-
-    const rawRole = rows[0].role || "";
-    const role = rawRole.toLowerCase();
-
-    const isAdmin =
-      role.includes("président") || role.includes("president") ||
-      role.includes("secr") ||
-      role.includes("trésorier") || role.includes("tresorier") ||
-      role.includes("admin");
-
-    return res.json({ isAdmin, role: rawRole });
-  } catch (err) {
-    console.error("Erreur is-admin:", err);
-    return res.status(500).json({ message: "Erreur serveur" });
-  }
-});
-
-
 // ===============================
 //  ROUTES ACTUALITÉS
 // ===============================
@@ -256,29 +158,27 @@ app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
 app.get("/api/associations/:id/news", async (req, res) => {
   const id = req.params.id;
 
-  try {
-    const [rows] = await connection.query(
-      `SELECT *
-       FROM actualite
-       WHERE id_association = ?
-         AND statut = 'Approuve'
-       ORDER BY COALESCE(date_publication, date_creation) DESC`,
-      [id]
-    );
+  const [rows] = await db.query(
+    `SELECT *
+     FROM actualite
+     WHERE id_association = ?
+       AND statut = 'Approuve'
+       AND (
+            type_actualite = 'Article'
+            OR (type_actualite = 'Evenement' AND event_date >= NOW())
+           )
+     ORDER BY date_publication DESC`,
+    [id]
+  );
 
-    res.json(rows);
-  } catch (err) {
-    console.error("Erreur news:", err);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
+  res.json(rows);
 });
-
 
 // Membre propose une actualité → statut pending
 app.post("/api/news", async (req, res) => {
   const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
 
-  await connection.query(
+  await db.query(
     `INSERT INTO actualite 
      (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation)
      VALUES (?, ?, 'Article', ?, ?, ?, 'Pending', NOW())`,
@@ -292,7 +192,7 @@ app.post("/api/news", async (req, res) => {
 app.patch("/api/news/:id/approve", async (req, res) => {
   const id = req.params.id;
 
-  await connection.query(
+  await db.query(
     `UPDATE actualite
      SET statut = 'Approuve', date_publication = NOW()
      WHERE id_actualite = ?`,
@@ -306,7 +206,7 @@ app.patch("/api/news/:id/approve", async (req, res) => {
 app.patch("/api/news/:id/refuse", async (req, res) => {
   const id = req.params.id;
 
-  await connection.query(
+  await db.query(
     `UPDATE actualite SET statut = 'Refuse' WHERE id_actualite = ?`,
     [id]
   );
@@ -316,6 +216,9 @@ app.patch("/api/news/:id/refuse", async (req, res) => {
 
 
 //POST INSCRIPTION MEMBRE
+// Permet de lire req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Route d'inscription membre
 // Route d'inscription membre
@@ -360,7 +263,6 @@ app.post("/api/inscription", async (req, res) => {
 
 app.post("/api/association", async (req, res) => {
   const {
-    id_membre,
     nom,
     type_structure,
     sport,
@@ -374,26 +276,20 @@ app.post("/api/association", async (req, res) => {
     image
   } = req.body;
 
-  console.log("📩 /api/association body =", req.body);
+  // Couleurs par défaut à modifier à l'étape design
+  const couleur_1 = "#000000";
+  const couleur_2 = "#000000";
 
-  if (!id_membre) {
-    return res.status(400).json({ message: "id_membre manquant (créateur)." });
-  }
-
+  // Vérification des champs obligatoires
   if (!nom || !type_structure || !sport || !adresse || !date_creation || !code_postal || !ville || !pays) {
     return res.status(400).json({ message: "Champs requis manquants." });
   }
 
-  const couleur_1 = "#000000";
-  const couleur_2 = "#000000";
-
   try {
-    await connection.beginTransaction();
-
     const [result] = await connection.execute(
-      `INSERT INTO association
-       (nom, type_structure, sport, adresse, adresse_2, description, date_creation, image, code_postal, ville, pays, couleur_1, couleur_2)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO association 
+      (nom, type_structure, sport, adresse, adresse_2, description, date_creation, image, code_postal, ville, pays, couleur_1, couleur_2)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         nom,
         type_structure,
@@ -411,29 +307,16 @@ app.post("/api/association", async (req, res) => {
       ]
     );
 
-    const id_association = result.insertId;
-
-    // ✅ IMPORTANT : créer le lien membre_asso
-    await connection.execute(
-      `INSERT INTO membre_asso (id_membre, id_association, role, conseil_asso)
-       VALUES (?, ?, ?, ?)`,
-      [Number(id_membre), id_association, "Président", 1]
-    );
-
-    await connection.commit();
-
-    return res.status(201).json({
-      message: "Association créée + créateur lié",
-      id_association
+    res.status(201).json({
+      message: "Informations enregistrées",
+      id_association: result.insertId
     });
 
   } catch (err) {
-    await connection.rollback();
-    console.error("❌ Erreur création asso/lien membre_asso:", err);
-    return res.status(500).json({ message: "Erreur serveur" });
+    console.error("Erreur SQL :", err);
+    res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 app.put("/api/association/design/:id", async (req, res) => {
   const { couleur_1, couleur_2, image } = req.body;
@@ -483,20 +366,11 @@ app.post("/api/login", async (req, res) => {
       return res.status(401).json({ message: "Mot de passe incorrect." });
     }
 
-    // récupérer l'association du membre (si existante)
-    const [assoRows] = await connection.execute(
-      "SELECT id_association FROM membre_asso WHERE id_membre = ? LIMIT 1",
-      [user.id_membre]
-    );
-
-    const id_association = assoRows.length ? assoRows[0].id_association : null;
-
     return res.status(200).json({
       message: "Connexion réussie",
       id_membre: user.id_membre,
       nom: user.nom_membre,
-      prenom: user.prenom_membre,
-      id_association
+      prenom: user.prenom_membre
     });
 
   } catch (err) {
@@ -504,8 +378,6 @@ app.post("/api/login", async (req, res) => {
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
-
 
 app.get("/api/membre/:id", async (req, res) => {
   const id = req.params.id;
@@ -626,7 +498,3 @@ app.get("/membre", (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, "../Front")));
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});

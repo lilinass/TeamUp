@@ -297,7 +297,11 @@ form.addEventListener("submit", async (e) => {
 
   // Sinon accueil général
   showMessage("Connexion réussie ✔️", "success");
-  window.location.href = "/index.html";
+
+  setTimeout(() => {
+    // Vers ton tableau de bord ou page suivante
+    window.location.href = "/home_association";
+  }, 1500);
 });
 </script>
 
