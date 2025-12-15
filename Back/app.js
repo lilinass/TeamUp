@@ -15,7 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Servir le dossier Front en statique
-app.use(express.static(path.join(__dirname, "../Front")));
 app.use(cors());
 // Page d'accueil
 app.get("/", (req, res) => {
@@ -379,3 +378,123 @@ app.post("/api/login", async (req, res) => {
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
+app.get("/api/membre/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const [info] = await connection.execute(
+    `SELECT m.*, ma.role AS role_asso, ma.date_adhesion, e.nom_equipe
+     FROM membre m
+     LEFT JOIN membre_asso ma ON m.id_membre = ma.id_membre
+     LEFT JOIN membre_activite a ON ma.id_membre_asso = a.id_membre_asso
+     LEFT JOIN equipe e ON a.id_equipe = e.id_equipe
+     WHERE m.id_membre = ?`,
+    [id]
+  );
+
+  res.json(info[0] || {});
+});
+
+app.put("/api/membre/:id", async (req, res) => {
+  const id = req.params.id;
+  const { nom, prenom, email, birthday } = req.body;
+
+  try {
+    // recalcul de l’âge si la date change
+    let age = null;
+    if (birthday) {
+      age = new Date().getFullYear() - new Date(birthday).getFullYear();
+    }
+
+    const [result] = await connection.execute(
+      `UPDATE membre SET 
+        nom_membre = ?, 
+        prenom_membre = ?, 
+        mail_membre = ?, 
+        date_naissance = ?, 
+        age = ?
+       WHERE id_membre = ?`,
+      [nom, prenom, email, birthday, age, id]
+    );
+
+    res.json({ message: "Profil mis à jour", result });
+
+  } catch (err) {
+    console.error("Erreur SQL lors du PUT membre :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+app.get("/api/membre/:id/equipes", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const [rows] = await connection.execute(
+      `SELECT 
+          e.nom_equipe, 
+          a.role_activite AS role
+       FROM membre_activite a
+       JOIN equipe e ON a.id_equipe = e.id_equipe
+       JOIN membre_asso ma ON ma.id_membre_asso = a.id_membre_asso
+       WHERE ma.id_membre = ?`,
+      [id]
+    );
+
+    res.json(rows);
+
+  } catch (error) {
+    console.error("Erreur SQL GET équipes :", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+app.get("/api/membre/:id/presences", async (req, res) => {
+  const id = req.params.id;
+
+  const [rows] = await connection.execute(
+    `SELECT a.nom_activite, p.statut, p.date_presence
+     FROM presence p 
+     JOIN activite a ON p.id_activite = a.id_activite
+     WHERE p.id_membre = ?`,
+    [id]
+  );
+
+  res.json(rows);
+});
+
+app.get("/home_association", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/home_association.html"));
+});
+
+// Association du membre
+app.get("/api/membre/:id/association", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const [rows] = await connection.execute(
+      `SELECT a.*
+       FROM membre_asso ma
+       JOIN association a ON ma.id_asso = a.id_association
+       WHERE ma.id_membre = ?`,
+      [id]
+    );
+
+    res.json(rows[0] || {});
+    
+  } catch (err) {
+    console.error("Erreur SQL association du membre :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+app.get("/events_page", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/events_page.html"));
+});
+
+app.get("/membre", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/membre.html"));
+});
+
+app.use(express.static(path.join(__dirname, "../Front")));
