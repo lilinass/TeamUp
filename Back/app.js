@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Page d'accueil
 
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
 });
@@ -41,7 +40,6 @@ app.get("/recherche_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/recherche_association.html"));
 });
 
-
 app.get("/design_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/design.association.html"));
 });
@@ -50,12 +48,10 @@ app.get("/success_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/success.association.html"));
 });
 
-
 app.get("/Formulaire_de_creation", (req, res) => {
   console.log(path.join(__dirname, "../Front/form-association.html"));
   res.sendFile(path.join(__dirname, "../Front/form-association.html"));
 });
-
 
 app.get("/api/associations/:id", async (req, res) => {
   const id = req.params.id;
@@ -73,19 +69,13 @@ app.get("/api/associations/:id", async (req, res) => {
   }
 });
 
-
-
 // ===============================
 //  Lancement du serveur
 // ===============================
 
-
-
 // ===============================
 //  ROUTES ASSOCIATION
 // ===============================
-
-
 
 // Récupérer le conseil du club
 app.get("/api/associations/:id/conseil", async (req, res) => {
@@ -151,19 +141,25 @@ app.post("/api/evenements", async (req, res) => {
   // ✅ logs utiles
   console.log("📩 /api/evenements body =", req.body);
 
-  if (!id_association || !id_auteur || !titre_evenement || !type_evenement || !date_debut_event) {
+  if (
+    !id_association ||
+    !id_auteur ||
+    !titre_evenement ||
+    !type_evenement ||
+    !date_debut_event
+  ) {
     return res.status(400).json({ message: "Champs obligatoires manquants." });
   }
 
   try {
     await connection.beginTransaction();
-  // 2. Créer automatiquement une actualité associée
-  await connection.execute(
-    `INSERT INTO actualite 
+    // 2. Créer automatiquement une actualité associée
+    await connection.execute(
+      `INSERT INTO actualite 
      (id_association, type_actualite, titre, contenu, date_creation, date_publication, statut, id_evenement, event_date)
      VALUES (?, 'Evenement', ?, ?, NOW(), NOW(), 'Approuve', ?, ?)`,
-    [id_association, titre, description, eventId, date_debut]
-  );
+      [id_association, titre, description, eventId, date_debut]
+    );
 
     // 1) INSERT evenement
     const [evRes] = await connection.execute(
@@ -176,7 +172,7 @@ app.post("/api/evenements", async (req, res) => {
         type_evenement,
         description_evenement || "",
         lieu_event || "",
-        date_debut_event,         // (format "YYYY-MM-DD HH:mm:ss" ou ISO OK selon colonne)
+        date_debut_event, // (format "YYYY-MM-DD HH:mm:ss" ou ISO OK selon colonne)
         date_fin_event || null,
       ]
     );
@@ -215,14 +211,12 @@ app.post("/api/evenements", async (req, res) => {
         date_fin_event: date_fin_event || null,
       },
     });
-
   } catch (err) {
     await connection.rollback();
     console.error("❌ Erreur création event:", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 //
 app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
@@ -242,9 +236,11 @@ app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
     const role = rawRole.toLowerCase();
 
     const isAdmin =
-      role.includes("président") || role.includes("president") ||
+      role.includes("président") ||
+      role.includes("president") ||
       role.includes("secr") ||
-      role.includes("trésorier") || role.includes("tresorier") ||
+      role.includes("trésorier") ||
+      role.includes("tresorier") ||
       role.includes("admin");
 
     return res.json({ isAdmin, role: rawRole });
@@ -253,7 +249,6 @@ app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 // ===============================
 //  ROUTES ACTUALITÉS
@@ -280,10 +275,10 @@ app.get("/api/associations/:id/news", async (req, res) => {
   }
 });
 
-
 // Membre propose une actualité → statut pending
 app.post("/api/news", async (req, res) => {
-  const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
+  const { id_association, id_auteur, titre, contenu, image_principale } =
+    req.body;
 
   await connection.execute(
     `INSERT INTO actualite 
@@ -321,9 +316,7 @@ app.patch("/api/news/:id/refuse", async (req, res) => {
   res.json({ success: true });
 });
 
-
 //POST INSCRIPTION MEMBRE
-
 
 // Route d'inscription membre
 // Route d'inscription membre
@@ -359,7 +352,6 @@ app.post("/api/inscription", async (req, res) => {
       message: "Utilisateur créé",
       id: result.insertId,
     });
-
   } catch (err) {
     console.error("Erreur SQL :", err);
     return res.status(500).json({ message: "Erreur serveur" });
@@ -379,8 +371,7 @@ app.post("/api/association", async (req, res) => {
     code_postal,
     ville,
     pays,
-    image
-    
+    image,
   } = req.body;
 
   console.log("📩 /api/association body =", req.body);
@@ -389,7 +380,16 @@ app.post("/api/association", async (req, res) => {
     return res.status(400).json({ message: "id_membre manquant (créateur)." });
   }
 
-  if (!nom || !type_structure || !sport || !adresse || !date_creation || !code_postal || !ville || !pays) {
+  if (
+    !nom ||
+    !type_structure ||
+    !sport ||
+    !adresse ||
+    !date_creation ||
+    !code_postal ||
+    !ville ||
+    !pays
+  ) {
     return res.status(400).json({ message: "Champs requis manquants." });
   }
 
@@ -416,20 +416,18 @@ app.post("/api/association", async (req, res) => {
         ville,
         pays,
         couleur_1,
-        couleur_2
+        couleur_2,
       ]
     );
 
-   
-const idAssociation = result.insertId;
-const idMembre = req.body.id_membre; // à envoyer depuis le front
-if (!idMembre) {
-  return res.status(400).json({ message: "Utilisateur non identifié" });
-}
+    const idAssociation = result.insertId;
+    const idMembre = req.body.id_membre; // à envoyer depuis le front
+    if (!idMembre) {
+      return res.status(400).json({ message: "Utilisateur non identifié" });
+    }
 
-
-await connection.execute(
-  `
+    await connection.execute(
+      `
  
     INSERT INTO membre_asso (
     role,
@@ -440,26 +438,19 @@ await connection.execute(
   )
   VALUES (?, CURDATE(), ?, ?, ?)
   `,
-  [
-    "membre",
-    idAssociation,
-    idMembre,
-    "membre"
-  ]
-);
+      ["membre", idAssociation, idMembre, "membre"]
+    );
 
     res.status(201).json({
       message: "Informations enregistrées",
-      id_association: result.insertId
+      id_association: result.insertId,
     });
-
   } catch (err) {
     await connection.rollback();
     console.error("❌ Erreur création asso/lien membre_asso:", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 app.put("/api/association/design/:id", async (req, res) => {
   const { couleur_1, couleur_2, image } = req.body;
@@ -478,7 +469,6 @@ app.put("/api/association/design/:id", async (req, res) => {
     );
 
     return res.status(200).json({ message: "Design mis à jour." });
-
   } catch (err) {
     console.error("Erreur SQL :", err);
     return res.status(500).json({ message: "Erreur serveur." });
@@ -500,7 +490,9 @@ app.post("/api/login", async (req, res) => {
     );
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: "Aucun compte trouvé avec cet email." });
+      return res
+        .status(404)
+        .json({ message: "Aucun compte trouvé avec cet email." });
     }
 
     const user = rows[0];
@@ -522,16 +514,13 @@ app.post("/api/login", async (req, res) => {
       id_membre: user.id_membre,
       nom: user.nom_membre,
       prenom: user.prenom_membre,
-      id_association
+      id_association,
     });
-
   } catch (err) {
     console.error("Erreur SQL :", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
-
 
 app.get("/api/membre/:id", async (req, res) => {
   const id = req.params.id;
@@ -576,8 +565,6 @@ app.get("/api/association/search", async (req, res) => {
   }
 });
 
-
-
 app.put("/api/membre/:id", async (req, res) => {
   const id = req.params.id;
   const { nom, prenom, email, birthday } = req.body;
@@ -601,13 +588,11 @@ app.put("/api/membre/:id", async (req, res) => {
     );
 
     res.json({ message: "Profil mis à jour", result });
-
   } catch (err) {
     console.error("Erreur SQL lors du PUT membre :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 app.get("/api/membre/:id/equipes", async (req, res) => {
   const id = req.params.id;
@@ -625,13 +610,11 @@ app.get("/api/membre/:id/equipes", async (req, res) => {
     );
 
     res.json(rows);
-
   } catch (error) {
     console.error("Erreur SQL GET équipes :", error);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
 
 app.get("/api/membre/:id/presences", async (req, res) => {
   const id = req.params.id;
@@ -665,15 +648,11 @@ app.get("/api/membre/:id/association", async (req, res) => {
     );
 
     res.json(rows[0] || {});
-    
   } catch (err) {
     console.error("Erreur SQL association du membre :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
-
-
-
 
 app.get("/events_page", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/events_page.html"));
