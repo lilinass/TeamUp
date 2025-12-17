@@ -22,6 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Page d'accueil
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
 });
@@ -317,6 +321,7 @@ app.patch("/api/news/:id/refuse", async (req, res) => {
 
 //POST INSCRIPTION MEMBRE
 
+
 // Route d'inscription membre
 // Route d'inscription membre
 app.post("/api/inscription", async (req, res) => {
@@ -372,6 +377,7 @@ app.post("/api/association", async (req, res) => {
     ville,
     pays,
     image
+    
   } = req.body;
 
   console.log("📩 /api/association body =", req.body);
@@ -411,20 +417,33 @@ app.post("/api/association", async (req, res) => {
       ]
     );
 
-    const id_association = result.insertId;
+   
+const idAssociation = result.insertId;
+const idMembre = req.body.id_membre; // à envoyer depuis le front
 
-    // ✅ IMPORTANT : créer le lien membre_asso
-    await connection.execute(
-      `INSERT INTO membre_asso (id_membre, id_association, role, conseil_asso)
-       VALUES (?, ?, ?, ?)`,
-      [Number(id_membre), id_association, "Président", 1]
-    );
+await connection.execute(
+  `
+ 
+    INSERT INTO membre_asso (
+    role,
+    date_adhesion,
+    id_association,
+    id_membre,
+    conseil_asso
+  )
+  VALUES (?, CURDATE(), ?, ?, ?)
+  `,
+  [
+    "membre",
+    idAssociation,
+    idMembre,
+    "membre"
+  ]
+);
 
-    await connection.commit();
-
-    return res.status(201).json({
-      message: "Association créée + créateur lié",
-      id_association
+    res.status(201).json({
+      message: "Informations enregistrées",
+      id_association: result.insertId
     });
 
   } catch (err) {

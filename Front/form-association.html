@@ -351,7 +351,21 @@
             <span class="back-link">← Retour</span>
           </div>
 
-        </form>
+    const payload = {
+      nom: document.getElementById("nom").value,
+      type_structure: document.getElementById("type_structure").value,
+      sport: document.getElementById("sport").value,
+      adresse: document.getElementById("adresse").value,
+      adresse_2: document.getElementById("adresse_2").value,
+      description: document.getElementById("description").value,
+      date_creation: document.getElementById("date_creation").value,
+      code_postal: document.getElementById("code_postal").value,
+      ville: document.getElementById("ville").value,
+      pays: document.getElementById("pays").value,
+      image: "",
+      id_membre: localStorage.getItem("id_membre")
+ // pour plus tard upload logo
+    };
 
       </div>
     </section>
