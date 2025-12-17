@@ -424,6 +424,9 @@
       });
 
       const data = await response.json();
+  
+localStorage.setItem("id_membre", data.id);
+
 
       // Email existant → ⚠️
       if (response.status === 409) {

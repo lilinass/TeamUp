@@ -17,6 +17,10 @@ const __dirname = path.dirname(__filename);
 // Servir le dossier Front en statique
 app.use(cors());
 // Page d'accueil
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
 });
@@ -93,7 +97,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
     `SELECT m.id_membre, m.nom, m.prenom, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
-     WHERE ma.id_asso = ?`,
+     WHERE ma.id_association = ?`,
     [id]
   );
 
@@ -215,10 +219,7 @@ app.patch("/api/news/:id/refuse", async (req, res) => {
 });
 
 
-//POST INSCRIPTION MEMBRE
-// Permet de lire req.body
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 
 // Route d'inscription membre
 // Route d'inscription membre
@@ -274,6 +275,7 @@ app.post("/api/association", async (req, res) => {
     ville,
     pays,
     image
+    
   } = req.body;
 
   // Couleurs par défaut à modifier à l'étape design
@@ -306,6 +308,29 @@ app.post("/api/association", async (req, res) => {
         couleur_2
       ]
     );
+
+    const idAssociation = result.insertId;
+const idMembre = req.body.id_membre; // à envoyer depuis le front
+
+await connection.execute(
+  `
+ 
+    INSERT INTO membre_asso (
+    role,
+    date_adhesion,
+    id_association,
+    id_membre,
+    conseil_asso
+  )
+  VALUES (?, CURDATE(), ?, ?, ?)
+  `,
+  [
+    "membre",
+    idAssociation,
+    idMembre,
+    "membre"
+  ]
+);
 
     res.status(201).json({
       message: "Informations enregistrées",

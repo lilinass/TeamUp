@@ -360,7 +360,9 @@
       code_postal: document.getElementById("code_postal").value,
       ville: document.getElementById("ville").value,
       pays: document.getElementById("pays").value,
-      image: "", // pour plus tard upload logo
+      image: "",
+      id_membre: localStorage.getItem("id_membre")
+ // pour plus tard upload logo
     };
 
     const res = await fetch("http://localhost:8080/api/association", {
