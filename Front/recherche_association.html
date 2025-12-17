@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Koordy — Rechercher mon association</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="./Images/Logo v2.png" />
+
+  <style>
+    :root {
+      --bg: #0b0c0f;
+      --panel: #111319;
+      --elev: #171a21;
+      --text: #e6e7eb;
+      --muted: #9aa3b2;
+      --brand: #6cf;
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(0,0,0,.55);
+      --container: min(900px, 92vw);
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #05060a;
+      color: var(--text);
+    }
+
+    .container {
+      width: var(--container);
+      margin: auto;
+      padding: 50px 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #2b3346;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(180deg, #2d9cf0, #0e6ccf);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .results {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--elev);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border: 1px solid var(--brand);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Rechercher mon association</h1>
+    <p class="subtitle">
+      Retrouvez votre association déjà présente sur Koordy
+    </p>
+
+    <div class="search-box">
+      <input id="searchInput" placeholder="Nom de votre association" />
+      <button onclick="search()">Rechercher</button>
+    </div>
+
+    <div id="results" class="results"></div>
+  </div>
+
+<script>
+async function search() {
+  const nom = document.getElementById("searchInput").value.trim();
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  if (!nom) {
+    results.innerHTML =
+      "<p class='muted'>Veuillez saisir un nom d’association.</p>";
+    return;
+  }
+
+  const res = await fetch(
+    `http://localhost:8080/api/association/search?nom=${encodeURIComponent(nom)}`
+  );
+
+  const data = await res.json();
+
+  if (data.length === 0) {
+    results.innerHTML =
+      "<p class='muted'>Association non existante.</p>";
+    return;
+  }
+
+  data.forEach(asso => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${asso.nom}</h3>
+      <p class="muted">${asso.type_structure} — ${asso.sport} — ${asso.ville}</p>
+    `;
+
+    card.onclick = () => {
+      localStorage.setItem("id_association", asso.id_association);
+      window.location.href = "/home_association";
+    };
+
+    results.appendChild(card);
+  });
+}
+</script>
+
+ 
+</body>
+</html>

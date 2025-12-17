@@ -34,6 +34,10 @@ app.get("/connexion", (req, res) => {
 app.get("/inscription_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/inscription_association.html"));
 });
+app.get("/recherche_association", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/recherche_association.html"));
+});
+
 
 app.get("/design_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/design.association.html"));
@@ -53,9 +57,6 @@ app.get("/Formulaire_de_creation", (req, res) => {
 //  Lancement du serveur
 // ===============================
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
 
 
 // ===============================
@@ -66,7 +67,7 @@ app.listen(port, () => {
 app.get("/api/associations/:id", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await db.query(
+  const [rows] = await connection.execute(
     "SELECT * FROM association WHERE id_association = ?",
     [id]
   );
@@ -78,7 +79,7 @@ app.get("/api/associations/:id", async (req, res) => {
 app.get("/api/associations/:id/conseil", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await db.query(
+  const [rows] = await connection.execute(
     `SELECT m.id_membre, m.nom, m.prenom, ma.role, ma.conseil_asso
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
@@ -93,7 +94,7 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
 app.get("/api/associations/:id/membres", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await db.query(
+  const [rows] = await connection.execute(
     `SELECT m.id_membre, m.nom, m.prenom, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
@@ -112,7 +113,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
 app.get("/api/associations/:id/events", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await db.query(
+  const [rows] = await connection.execute(
     `SELECT * FROM evenement
      WHERE id_association = ? AND date_debut_event >= NOW()
      ORDER BY date_debut_event ASC`,
@@ -135,7 +136,7 @@ app.post("/api/evenements", async (req, res) => {
   } = req.body;
 
   // 1. Insérer l'événement
-  const [eventResult] = await db.query(
+  const [eventResult] = await connection.execute(
     `INSERT INTO evenement 
      (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
      VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -145,7 +146,7 @@ app.post("/api/evenements", async (req, res) => {
   const eventId = eventResult.insertId;
 
   // 2. Créer automatiquement une actualité associée
-  await db.query(
+  await connection.execute(
     `INSERT INTO actualite 
      (id_association, type_actualite, titre, contenu, date_creation, date_publication, statut, id_evenement, event_date)
      VALUES (?, 'Evenement', ?, ?, NOW(), NOW(), 'Approuve', ?, ?)`,
@@ -162,7 +163,7 @@ app.post("/api/evenements", async (req, res) => {
 app.get("/api/associations/:id/news", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await db.query(
+  const [rows] = await connection.execute(
     `SELECT *
      FROM actualite
      WHERE id_association = ?
@@ -182,7 +183,7 @@ app.get("/api/associations/:id/news", async (req, res) => {
 app.post("/api/news", async (req, res) => {
   const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
 
-  await db.query(
+  await connection.execute(
     `INSERT INTO actualite 
      (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation)
      VALUES (?, ?, 'Article', ?, ?, ?, 'Pending', NOW())`,
@@ -196,7 +197,7 @@ app.post("/api/news", async (req, res) => {
 app.patch("/api/news/:id/approve", async (req, res) => {
   const id = req.params.id;
 
-  await db.query(
+  await connection.execute(
     `UPDATE actualite
      SET statut = 'Approuve', date_publication = NOW()
      WHERE id_actualite = ?`,
@@ -210,7 +211,7 @@ app.patch("/api/news/:id/approve", async (req, res) => {
 app.patch("/api/news/:id/refuse", async (req, res) => {
   const id = req.params.id;
 
-  await db.query(
+  await connection.execute(
     `UPDATE actualite SET statut = 'Refuse' WHERE id_actualite = ?`,
     [id]
   );
@@ -424,6 +425,35 @@ app.get("/api/membre/:id", async (req, res) => {
   res.json(info[0] || {});
 });
 
+app.get("/api/association/search", async (req, res) => {
+  const nom = req.query.nom?.trim();
+
+  if (!nom) {
+    return res.json([]);
+  }
+
+  try {
+    const [rows] = await connection.execute(
+      `SELECT 
+         id_association,
+         nom,
+         sport,
+         ville,
+         type_structure
+       FROM association
+       WHERE LOWER(nom) LIKE LOWER(?)`,
+      [`%${nom}%`]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error("Erreur recherche association :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+
 app.put("/api/membre/:id", async (req, res) => {
   const id = req.params.id;
   const { nom, prenom, email, birthday } = req.body;
@@ -519,6 +549,8 @@ app.get("/api/membre/:id/association", async (req, res) => {
 });
 
 
+
+
 app.get("/events_page", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/events_page.html"));
 });
@@ -528,3 +560,7 @@ app.get("/membre", (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, "../Front")));
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
