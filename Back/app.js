@@ -110,7 +110,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
     `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
-     WHERE ma.id_asso = ?`,
+     WHERE ma.id_association = ?`,
     [id]
   );
 
