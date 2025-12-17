@@ -629,8 +629,6 @@ if (already.length > 0) {
       ]
     );
 
-<<<<<<< HEAD
-=======
    
 const idAssociation = result.insertId;
 const idMembre = req.body.id_membre; // à envoyer depuis le front
@@ -638,10 +636,7 @@ if (!idMembre) {
   return res.status(400).json({ message: "Utilisateur non identifié" });
 }
 
->>>>>>> dcaf735abf7cf37ad8e8a610fb535758158e34ef
 
-    const idAssociation = result.insertId;
-    const idMembre = req.body.id_membre;
 
     await connection.execute(
       `INSERT INTO membre_asso (role, date_adhesion, id_association, id_membre, conseil_asso)
@@ -865,12 +860,8 @@ app.get("/api/membre/:id/association", async (req, res) => {
       `SELECT a.*
        FROM membre_asso ma
        JOIN association a ON ma.id_association = a.id_association
-<<<<<<< HEAD
        WHERE ma.id_membre = ?
    LIMIT 1`,
-=======
-       WHERE ma.id_membre = ?`,
->>>>>>> dcaf735abf7cf37ad8e8a610fb535758158e34ef
       [id]
     );
 
