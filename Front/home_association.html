@@ -497,7 +497,7 @@
    🔵 1) Charger les informations de l'association du membre
    ============================================================ */
 async function loadAssociation() {
-  const id_membre = localStorage.getItem("id_membre");
+
 
   if (!id_membre) {
     console.warn("Aucun membre connecté.");
@@ -549,7 +549,7 @@ async function loadUser() {
   const id_membre = localStorage.getItem("id_membre");
   const badge = document.getElementById("user-badge");
 
-  // 🟥 Utilisateur non connecté → montrer "Se connecter / S’inscrire"
+  // pas connecté
   if (!id_membre) {
     badge.innerHTML = `
       <a href="/connexion" class="btn btn--ghost btn--sm">Se connecter</a>
@@ -558,53 +558,53 @@ async function loadUser() {
     return;
   }
 
-  // Charger les infos depuis la BDD
+  // connecté → récupérer infos
   const res = await fetch(`http://localhost:8080/api/membre/${id_membre}`);
   const user = await res.json();
 
-  // 🟦 Injecter le menu déroulant dans le header
   badge.innerHTML = `
-  <div class="user-dropdown">
-    <button id="userDropdownBtn" class="user-dropdown-btn">
-      Bienvenue, ${user.prenom_membre} ▼
-    </button>
+    <div class="user-dropdown">
+      <button id="userDropdownBtn" class="user-dropdown-btn">
+        Bienvenue, ${user.prenom_membre} ▼
+      </button>
 
-    <div id="userDropdownMenu" class="user-dropdown-menu">
-      <a href="/membre">Mon profil</a>
-      <a href="/events_page">Mes évènements</a>
-      <button id="logoutBtn">Se déconnecter</button>
+      <div id="userDropdownMenu" class="user-dropdown-menu">
+        <a href="/membre">Mon profil</a>
+        <a href="#" id="logoutBtn">Déconnexion</a>
+      </div>
     </div>
-  </div>
-`;
+  `;
+
   const btn = document.getElementById("userDropdownBtn");
   const menu = document.getElementById("userDropdownMenu");
+  const logout = document.getElementById("logoutBtn");
 
-  // Ouvrir / fermer le menu ▼
   btn.addEventListener("click", () => {
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
   });
 
-  // Déconnexion
-  document.getElementById("logoutBtn").addEventListener("click", () => {
+  logout.addEventListener("click", (e) => {
+    e.preventDefault();
     localStorage.removeItem("id_membre");
+    localStorage.removeItem("id_association");
     window.location.href = "/";
   });
 
-  // Fermer le menu quand on clique ailleurs
   document.addEventListener("click", (e) => {
-    if (!badge.contains(e.target)) {
-      menu.style.display = "none";
-    }
+    if (!badge.contains(e.target)) menu.style.display = "none";
   });
 }
+
 
 
 
 /* ============================================================
    🚀 3) Lancer les deux fonctions au chargement de la page
    ============================================================ */
-loadAssociation();
-loadUser();
+document.addEventListener("DOMContentLoaded", () => {
+  loadUser();
+  loadAssociation(); // ta fonction existante
+});
 </script>
 
 

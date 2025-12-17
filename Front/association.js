@@ -36,12 +36,13 @@ async function loadAssociationPage() {
   }
 
   try {
-    const [asso, conseil, events, news] = await Promise.all([
-      apiGet(`${API_BASE}/api/associations/${assoId}`),
-      apiGet(`${API_BASE}/api/associations/${assoId}/conseil`),
-      apiGet(`${API_BASE}/api/associations/${assoId}/events`),
-      apiGet(`${API_BASE}/api/associations/${assoId}/news`),
-    ]);
+    const [asso, membres, events, news] = await Promise.all([
+  apiGet(`${API_BASE}/api/associations/${assoId}`),
+  apiGet(`${API_BASE}/api/associations/${assoId}/membres`), // ✅ on récupère tout
+  apiGet(`${API_BASE}/api/associations/${assoId}/events`),
+  apiGet(`${API_BASE}/api/associations/${assoId}/news`),
+]);
+
 
     console.log("✅ asso:", asso);
     console.log("✅ conseil:", conseil);
@@ -56,7 +57,7 @@ console.log("Téléphone:", asso.telephone);
 
     renderAssociationHero(asso);
     renderAssociationInfos(asso);
-    renderConseil(conseil);
+    renderConseil(membres);
     renderEvents(events);
     renderNews(news);
 
@@ -84,14 +85,21 @@ function renderAssociationHero(asso) {
     avatar.src = asso.image || "./Images/default-asso.png";
   }
 }
-function renderConseil(conseil) {
+function renderConseil(membres) {
   const grid = document.getElementById("conseil-grid");
   const empty = document.getElementById("conseil-empty");
   if (!grid || !empty) return;
 
   grid.innerHTML = "";
 
-  if (!conseil || conseil.length === 0) {
+  // Conseil = tous les membres avec rôle != MEMBRE
+  const conseil = (membres || []).filter(m => (m.role || "").toUpperCase() !== "MEMBRE");
+
+  // tri : OWNER > PRESIDENT > SECRETAIRE > TRESORIER
+  const order = { OWNER: 1, PRESIDENT: 2, SECRETAIRE: 3, TRESORIER: 4 };
+  conseil.sort((a, b) => (order[(a.role || "").toUpperCase()] || 99) - (order[(b.role || "").toUpperCase()] || 99));
+
+  if (!conseil.length) {
     empty.style.display = "block";
     return;
   }
@@ -111,6 +119,7 @@ function renderConseil(conseil) {
     grid.appendChild(card);
   });
 }
+
 
 
 
@@ -225,24 +234,25 @@ async function setupAdminEventButton(assoId) {
   const btn = document.getElementById("btn-add-event");
   if (!btn) return;
 
-// cache par défaut
-btn.style.display = "none";
-btn.classList.add("btn--admin-only");
+  // caché par défaut
+  btn.style.display = "none";
 
   const id_membre = localStorage.getItem("id_membre");
-  if (!id_membre) {
-    btn.style.display = "none";
-    return;
-  }
+  if (!id_membre) return;
 
   try {
-    const r = await apiGet(`${API_BASE}/api/associations/${assoId}/is-admin/${id_membre}`);
-    btn.style.display = r.isAdmin ? "inline-flex" : "none";
+    const perms = await apiGet(
+      `${API_BASE}/api/associations/${assoId}/permissions/${id_membre}`
+    );
+
+    // 🔥 règle : afficher si on peut créer un event
+    btn.style.display = perms.canCreateEvent ? "inline-flex" : "none";
   } catch (e) {
-    console.error(e);
+    console.error("Erreur permissions:", e);
     btn.style.display = "none";
   }
 }
+
 /* -----Modal submit evenement -----*/
 
 function setupEventModal(assoId) {
