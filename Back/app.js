@@ -10,6 +10,78 @@ const port = 8080;
 
 const connection = await initDB();
 
+
+// ===============================
+// ROLES + PERMISSIONS
+// ===============================
+const ALLOWED_ROLES = ["OWNER", "PRESIDENT", "SECRETAIRE", "TRESORIER", "MEMBRE"];
+
+const ROLE_PERMISSIONS = {
+  OWNER: {
+    canCreateEvent: true,
+    canEditEvent: true,
+    canDeleteEvent: true,
+    canInviteMember: true,
+    canApproveMember: true,
+    canEditMemberRole: true,
+  },
+  PRESIDENT: {
+    canCreateEvent: true,
+    canEditEvent: true,
+    canDeleteEvent: true,
+    canInviteMember: true,
+    canApproveMember: true,
+    canEditMemberRole: true, // si tu veux limiter, mets false
+  },
+  SECRETAIRE: {
+    canCreateEvent: true,
+    canEditEvent: true,
+    canDeleteEvent: false,
+    canInviteMember: true,
+    canApproveMember: false,
+    canEditMemberRole: false,
+  },
+  TRESORIER: {
+    canCreateEvent: true,
+    canEditEvent: true,
+    canDeleteEvent: false,
+    canInviteMember: false,
+    canApproveMember: false,
+    canEditMemberRole: false,
+  },
+  MEMBRE: {
+    canCreateEvent: false,
+    canEditEvent: false,
+    canDeleteEvent: false,
+    canInviteMember: false,
+    canApproveMember: false,
+    canEditMemberRole: false,
+  },
+};
+
+function normalizeRole(role) {
+  const r = (role || "").toUpperCase().trim();
+  return ALLOWED_ROLES.includes(r) ? r : "MEMBRE";
+}
+
+async function getRoleInAssociation(id_association, id_membre) {
+  const [rows] = await connection.execute(
+    `SELECT role FROM membre_asso
+     WHERE id_association = ? AND id_membre = ?
+     LIMIT 1`,
+    [Number(id_association), Number(id_membre)]
+  );
+  if (!rows.length) return null;
+  return normalizeRole(rows[0].role);
+}
+
+async function getPermissions(id_association, id_membre) {
+  const role = await getRoleInAssociation(id_association, id_membre);
+  if (!role) return { role: null, permissions: ROLE_PERMISSIONS.MEMBRE };
+  return { role, permissions: ROLE_PERMISSIONS[role] || ROLE_PERMISSIONS.MEMBRE };
+}
+
+
 // Pour pouvoir utiliser __dirname en ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -158,6 +230,11 @@ app.post("/api/evenements", async (req, res) => {
   if (!id_association || !id_auteur || !titre_evenement || !type_evenement || !date_debut_event) {
     return res.status(400).json({ message: "Champs obligatoires manquants." });
   }
+  // ✅ Sécurité : seul un rôle autorisé peut créer un event
+  const { permissions } = await getPermissions(id_association, id_auteur);
+  if (!permissions.canCreateEvent) {
+    return res.status(403).json({ message: "Droits insuffisants pour créer un événement." });
+  }
 
   try {
     await connection.beginTransaction();
@@ -213,6 +290,7 @@ app.post("/api/evenements", async (req, res) => {
       },
     });
 
+
   } catch (err) {
     await connection.rollback();
     console.error("❌ Erreur création event:", err);
@@ -220,36 +298,155 @@ app.post("/api/evenements", async (req, res) => {
   }
 });
 
-
 //
-app.get("/api/associations/:id/is-admin/:id_membre", async (req, res) => {
+// Permissions d'un membre dans une association
+//
+app.get("/api/associations/:id/permissions/:id_membre", async (req, res) => {
   const { id, id_membre } = req.params;
 
   try {
-    const [rows] = await connection.execute(
-      `SELECT role FROM membre_asso
-       WHERE id_association = ? AND id_membre = ?
-       LIMIT 1`,
-      [id, id_membre]
-    );
-
-    if (!rows.length) return res.json({ isAdmin: false });
-
-    const rawRole = rows[0].role || "";
-    const role = rawRole.toLowerCase();
-
-    const isAdmin =
-      role.includes("président") || role.includes("president") ||
-      role.includes("secr") ||
-      role.includes("trésorier") || role.includes("tresorier") ||
-      role.includes("admin");
-
-    return res.json({ isAdmin, role: rawRole });
+    const data = await getPermissions(id, id_membre);
+    return res.json({
+      role: data.role,                 // ex: "OWNER"
+      ...data.permissions              // canCreateEvent, canInviteMember, etc.
+    });
   } catch (err) {
-    console.error("Erreur is-admin:", err);
+    console.error("Erreur permissions:", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
+
+// Changer le rôle d'un membre dans l'association
+app.put("/api/associations/:id_association/membres/:id_membre/role", async (req, res) => {
+  const { id_association, id_membre } = req.params;
+  const { role, id_membre_actor } = req.body; // celui qui fait l'action (connecté)
+
+  if (!id_membre_actor) {
+    return res.status(400).json({ message: "id_membre_actor manquant." });
+  }
+
+  const newRole = normalizeRole(role);
+
+  try {
+    // 1) vérifier droits de l'acteur
+    const actor = await getPermissions(id_association, id_membre_actor);
+    if (!actor.permissions.canEditMemberRole) {
+      return res.status(403).json({ message: "Droits insuffisants pour modifier les rôles." });
+    }
+
+    // 2) vérifier que le membre cible existe dans l'asso
+    const targetRole = await getRoleInAssociation(id_association, id_membre);
+    if (!targetRole) {
+      return res.status(404).json({ message: "Membre non trouvé dans cette association." });
+    }
+
+    // 3) empêcher de retirer le dernier OWNER
+    if (targetRole === "OWNER" && newRole !== "OWNER") {
+      const [owners] = await connection.execute(
+        `SELECT COUNT(*) AS c FROM membre_asso
+         WHERE id_association = ? AND UPPER(role) = 'OWNER'`,
+        [Number(id_association)]
+      );
+      if ((owners[0]?.c || 0) <= 1) {
+        return res.status(400).json({ message: "Impossible : il doit rester au moins un OWNER." });
+      }
+    }
+
+    // 4) update
+    await connection.execute(
+      `UPDATE membre_asso SET role = ?
+       WHERE id_association = ? AND id_membre = ?`,
+      [newRole, Number(id_association), Number(id_membre)]
+    );
+
+    return res.json({ message: "Rôle mis à jour", role: newRole });
+
+  } catch (err) {
+    console.error("Erreur update role:", err);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+//----------------------
+//Route invite
+//-------------------
+
+app.post("/api/associations/:id_association/invite", async (req, res) => {
+  const { id_association } = req.params;
+  const { email, role, id_membre_actor } = req.body;
+
+  if (!id_membre_actor || !email) {
+    return res.status(400).json({ message: "Champs manquants (id_membre_actor, email)." });
+  }
+
+  try {
+    // 1) Vérifier droits de celui qui invite
+    const actor = await getPermissions(id_association, id_membre_actor);
+    if (!actor.permissions.canInviteMember) {
+      return res.status(403).json({ message: "Droits insuffisants pour inviter des membres." });
+    }
+
+    // 2) Vérifier que le compte existe
+    const [users] = await connection.execute(
+      `SELECT id_membre FROM membre WHERE mail_membre = ? LIMIT 1`,
+      [email.trim()]
+    );
+
+    if (!users.length) {
+      return res.status(404).json({
+        message: "Ce mail n'a pas encore de compte. La personne doit s'inscrire avant d'être ajoutée."
+      });
+    }
+
+    const id_membre_invite = users[0].id_membre;
+
+    // ✅ 1 membre = 1 asso : si déjà dans une asso → refus
+    const [alreadyInOne] = await connection.execute(
+      `SELECT id_association FROM membre_asso WHERE id_membre = ? LIMIT 1`,
+      [Number(id_membre_invite)]
+    );
+
+    if (alreadyInOne.length > 0) {
+      return res.status(409).json({
+        message: "Ce membre appartient déjà à une association. Il doit d'abord quitter son association actuelle."
+      });
+    }
+
+    // 3) Vérifier qu'il n'est pas déjà dans cette asso (normalement inutile avec règle 1 asso, mais ok)
+    const [exists] = await connection.execute(
+      `SELECT id_membre_asso FROM membre_asso
+       WHERE id_association = ? AND id_membre = ?
+       LIMIT 1`,
+      [Number(id_association), Number(id_membre_invite)]
+    );
+
+    if (exists.length) {
+      return res.status(409).json({ message: "Ce membre est déjà dans l'association." });
+    }
+
+    const invitedRole = normalizeRole(role || "MEMBRE");
+
+    await connection.execute(
+      `INSERT INTO membre_asso (role, date_adhesion, id_association, id_membre, conseil_asso)
+       VALUES (?, CURDATE(), ?, ?, 0)`,
+      [invitedRole, Number(id_association), Number(id_membre_invite)]
+    );
+
+    return res.json({
+      message: "Membre ajouté à l'association.",
+      id_membre: id_membre_invite,
+      role: invitedRole
+    });
+
+  } catch (err) {
+    console.error("Erreur invite:", err);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
 
 
 // ===============================
@@ -286,7 +483,7 @@ app.post("/api/news", async (req, res) => {
     `INSERT INTO actualite 
      (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation)
      VALUES (?, ?, 'Article', ?, ?, ?, 'Pending', NOW())`,
-    [id_asso, id_auteur, titre, contenu, image_principale]
+    [id_association, id_auteur, titre, contenu, image_principale]
   );
 
   res.json({ success: true });
@@ -377,7 +574,7 @@ app.post("/api/association", async (req, res) => {
     ville,
     pays,
     image
-    
+
   } = req.body;
 
   console.log("📩 /api/association body =", req.body);
@@ -392,6 +589,18 @@ app.post("/api/association", async (req, res) => {
 
   const couleur_1 = "#000000";
   const couleur_2 = "#000000";
+
+
+  const [already] = await connection.execute(
+  `SELECT id_association FROM membre_asso WHERE id_membre = ? LIMIT 1`,
+  [Number(id_membre)]
+);
+
+if (already.length > 0) {
+  return res.status(409).json({
+    message: "Vous êtes déjà membre d'une association. Quittez-la avant d'en créer une autre."
+  });
+}
 
   try {
     await connection.beginTransaction();
@@ -417,34 +626,24 @@ app.post("/api/association", async (req, res) => {
       ]
     );
 
-   
-const idAssociation = result.insertId;
-const idMembre = req.body.id_membre; // à envoyer depuis le front
 
-await connection.execute(
-  `
- 
-    INSERT INTO membre_asso (
-    role,
-    date_adhesion,
-    id_association,
-    id_membre,
-    conseil_asso
-  )
-  VALUES (?, CURDATE(), ?, ?, ?)
-  `,
-  [
-    "membre",
-    idAssociation,
-    idMembre,
-    "membre"
-  ]
-);
+    const idAssociation = result.insertId;
+    const idMembre = req.body.id_membre;
 
-    res.status(201).json({
+    await connection.execute(
+      `INSERT INTO membre_asso (role, date_adhesion, id_association, id_membre, conseil_asso)
+   VALUES (?, CURDATE(), ?, ?, ?)`,
+      ["OWNER", idAssociation, idMembre, 0]
+    );
+
+    // ✅ COMMIT obligatoire
+    await connection.commit();
+
+    return res.status(201).json({
       message: "Informations enregistrées",
-      id_association: result.insertId
+      id_association: idAssociation
     });
+
 
   } catch (err) {
     await connection.rollback();
@@ -597,20 +796,20 @@ app.get("/api/membre/:id/equipes", async (req, res) => {
 });
 
 
-app.get("/api/membre/:id/presences", async (req, res) => {
-  const id = req.params.id;
+//app.get("/api/membre/:id/presences", async (req, res) => {
+//  const id = req.params.id;
 
-  const [rows] = await connection.execute(
-    `SELECT a.nom_activite, p.statut, p.date_presence
-     FROM presence p 
-     JOIN activite a ON p.id_activite = a.id_activite
-     WHERE p.id_membre = ?`,
-    [id]
-  );
+//  const [rows] = await connection.execute(
+//    `SELECT a.nom_activite, p.statut, p.date_presence
+//    FROM presence p 
+//     JOIN activite a ON p.id_activite = a.id_activite
+//     WHERE p.id_membre = ?`,
+//    [id]
+//  );
 
-  res.json(rows);
-});
-
+  //res.json(rows);
+//});
+//
 app.get("/home_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/home_association.html"));
 });
@@ -623,13 +822,14 @@ app.get("/api/membre/:id/association", async (req, res) => {
     const [rows] = await connection.execute(
       `SELECT a.*
        FROM membre_asso ma
-       JOIN association a ON ma.id_asso = a.id_association
-       WHERE ma.id_membre = ?`,
+       JOIN association a ON ma.id_association = a.id_association
+       WHERE ma.id_membre = ?
+   LIMIT 1`,
       [id]
     );
 
     res.json(rows[0] || {});
-    
+
   } catch (err) {
     console.error("Erreur SQL association du membre :", err);
     res.status(500).json({ message: "Erreur serveur" });
