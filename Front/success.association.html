@@ -292,26 +292,28 @@
           association vient de vous être envoyé.
         </p>
 
-        <div class="actions">
-          <!-- Remplace # par l’URL réelle de ton site / dashboard -->
-          <a href="#" id="btn-espace" class="btn-primary">Accéder à mon espace Koordy</a>
-          <a href="#" class="secondary-link">← Revenir à l’accueil</a>
+          <div class="actions">
+  <button class="btn-primary" id="goToSpace">
+    Accéder à mon espace Koordy
+  </button>
+
+  <button class="secondary-link" id="goHome">
+    ← Revenir à l’accueil
+  </button>
+</div>
+
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
     <script>
-      // On récupère l'id de l'association depuis localStorage
-      const btnEspace = document.getElementById('btn-espace');
+  document.getElementById("goToSpace").addEventListener("click", () => {
+    window.location.href = "/home_association";
+  });
 
-        const idAsso = localStorage.getItem("id_association");
-  if (idAsso) {
-    setTimeout(() => {
-      window.location.href = `/home_association.html?id=${idAsso}`;
-    }, 800);
-  }
-    </script>
+  document.getElementById("goHome").addEventListener("click", () => {
+    window.location.href = "/";
+  });
+</script>
 
-  </main>
-</body>
-
+  </body>
 </html>

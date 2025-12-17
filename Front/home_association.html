@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <div id="asso-container"></div>
+
     <!-- Topbar -->
     <div class="topbar" role="region" aria-label="Infos rapides">
         <div class="container topbar__inner">
@@ -494,49 +496,72 @@
     </style>
 <script>
 /* ============================================================
-   🔵 1) Charger les informations de l'association du membre
+   🔵 1) Charger les informations de l'association
+   - priorité : association sélectionnée (recherche)
+   - fallback : association du membre connecté
    ============================================================ */
 async function loadAssociation() {
-  const id_membre = localStorage.getItem("id_membre");
+  const idAssociation = localStorage.getItem("id_association");
+  const idMembre = localStorage.getItem("id_membre");
 
-  if (!id_membre) {
-    console.warn("Aucun membre connecté.");
-    return;
-  }
+  let asso = null;
 
-  const res = await fetch(`http://localhost:8080/api/membre/${id_membre}/association`);
-  const asso = await res.json();
+  try {
+    // 🟢 CAS 1 : on arrive depuis la recherche d’association
+    if (idAssociation) {
+      const res = await fetch(
+        `http://localhost:8080/api/associations/${idAssociation}`
+      );
+      asso = await res.json();
+    }
 
-  console.log("Association chargée :", asso);
+    // 🟡 CAS 2 : fallback → association liée au membre
+    if ((!asso || !asso.id_association) && idMembre) {
+      const res = await fetch(
+        `http://localhost:8080/api/membre/${idMembre}/association`
+      );
+      asso = await res.json();
+    }
 
-  if (!asso || !asso.id_association) {
-    console.warn("Aucune association trouvée pour ce membre.");
-    return;
-  }
+    if (!asso || !asso.id_association) {
+      console.warn("Aucune association trouvée.");
+      return;
+    }
 
-  // Nom de l'association (H1 du hero)
-  if (asso.nom) {
-    document.getElementById("asso-name").textContent = asso.nom;
-  }
+    console.log("Association chargée :", asso);
 
-  // Sous-titre ville + sport
-  const subtitle = `${asso.ville || ""} · ${asso.sport || ""}`.trim();
-  document.getElementById("asso-subtitle").textContent = subtitle;
+    /* ===== Injection dans le DOM ===== */
 
-  // Logo / avatar
-  if (asso.image) {
-    document.getElementById("asso-avatar").src = asso.image;
-  }
+    // Nom de l'association
+    if (asso.nom && document.getElementById("asso-name")) {
+      document.getElementById("asso-name").textContent = asso.nom;
+    }
 
-  // Image de couverture
-  if (asso.image) {
-    document.getElementById("asso-cover").style.backgroundImage = `url('${asso.image}')`;
-  }
+    // Sous-titre : ville · sport
+    const subtitle = `${asso.ville || ""} · ${asso.sport || ""}`.trim();
+    if (document.getElementById("asso-subtitle")) {
+      document.getElementById("asso-subtitle").textContent = subtitle;
+    }
 
-  // Couleurs personnalisées
-  if (asso.couleur_1 && asso.couleur_2) {
-    document.documentElement.style.setProperty("--brand", asso.couleur_1);
-    document.documentElement.style.setProperty("--brand-2", asso.couleur_2);
+    // Avatar / logo
+    if (asso.image && document.getElementById("asso-avatar")) {
+      document.getElementById("asso-avatar").src = asso.image;
+    }
+
+    // Image de couverture
+    if (asso.image && document.getElementById("asso-cover")) {
+      document.getElementById("asso-cover").style.backgroundImage =
+        `url('${asso.image}')`;
+    }
+
+    // Couleurs personnalisées
+    if (asso.couleur_1 && asso.couleur_2) {
+      document.documentElement.style.setProperty("--brand", asso.couleur_1);
+      document.documentElement.style.setProperty("--brand-2", asso.couleur_2);
+    }
+
+  } catch (error) {
+    console.error("Erreur chargement association :", error);
   }
 }
 
@@ -549,7 +574,9 @@ async function loadUser() {
   const id_membre = localStorage.getItem("id_membre");
   const badge = document.getElementById("user-badge");
 
-  // 🟥 Utilisateur non connecté → montrer "Se connecter / S’inscrire"
+  if (!badge) return;
+
+  // 🟥 Utilisateur non connecté
   if (!id_membre) {
     badge.innerHTML = `
       <a href="/connexion" class="btn btn--ghost btn--sm">Se connecter</a>
@@ -558,50 +585,56 @@ async function loadUser() {
     return;
   }
 
-  // Charger les infos depuis la BDD
-  const res = await fetch(`http://localhost:8080/api/membre/${id_membre}`);
-  const user = await res.json();
+  try {
+    const res = await fetch(
+      `http://localhost:8080/api/membre/${id_membre}`
+    );
+    const user = await res.json();
 
-  // 🟦 Injecter le menu déroulant dans le header
-  badge.innerHTML = `
-  <div class="user-dropdown">
-    <button id="userDropdownBtn" class="user-dropdown-btn">
-      Bienvenue, ${user.prenom_membre} ▼
-    </button>
+    badge.innerHTML = `
+      <div class="user-dropdown">
+        <button id="userDropdownBtn" class="user-dropdown-btn">
+          Bienvenue, ${user.prenom_membre} ▼
+        </button>
 
-    <div id="userDropdownMenu" class="user-dropdown-menu">
-      <a href="/membre">Mon profil</a>
-      <a href="/events_page">Mes évènements</a>
-      <button id="logoutBtn">Se déconnecter</button>
-    </div>
-  </div>
-`;
-  const btn = document.getElementById("userDropdownBtn");
-  const menu = document.getElementById("userDropdownMenu");
+        <div id="userDropdownMenu" class="user-dropdown-menu">
+          <a href="/membre">Mon profil</a>
+          <a href="/events_page">Mes évènements</a>
+          <button id="logoutBtn">Se déconnecter</button>
+        </div>
+      </div>
+    `;
 
-  // Ouvrir / fermer le menu ▼
-  btn.addEventListener("click", () => {
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-  });
+    const btn = document.getElementById("userDropdownBtn");
+    const menu = document.getElementById("userDropdownMenu");
 
-  // Déconnexion
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("id_membre");
-    window.location.href = "/";
-  });
+    // Ouvrir / fermer le menu
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    });
 
-  // Fermer le menu quand on clique ailleurs
-  document.addEventListener("click", (e) => {
-    if (!badge.contains(e.target)) {
+    // Déconnexion
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("id_membre");
+      localStorage.removeItem("id_association");
+      window.location.href = "/";
+    });
+
+    // Fermer le menu si clic ailleurs
+    document.addEventListener("click", () => {
       menu.style.display = "none";
-    }
-  });
+    });
+
+  } catch (error) {
+    console.error("Erreur chargement utilisateur :", error);
+  }
 }
 
 
 
 /* ============================================================
-   🚀 3) Lancer les deux fonctions au chargement de la page
+   🚀 3) Lancer au chargement de la page
    ============================================================ */
 loadAssociation();
 loadUser();

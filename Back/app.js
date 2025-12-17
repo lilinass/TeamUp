@@ -23,8 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Page d'accueil
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/index.html"));
@@ -39,6 +37,10 @@ app.get("/connexion", (req, res) => {
 app.get("/inscription_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/inscription_association.html"));
 });
+app.get("/recherche_association", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Front/recherche_association.html"));
+});
+
 
 app.get("/design_association", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/design.association.html"));
@@ -64,25 +66,19 @@ app.get("/api/associations/:id", async (req, res) => {
       [id]
     );
 
-    if (rows.length === 0) {
-      return res.status(404).json({ message: "Association introuvable" });
-    }
-
-    res.json(rows[0]);
+    res.json(rows[0] || {});
   } catch (err) {
-    console.error("Erreur API association:", err);
+    console.error(err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
 
 
 // ===============================
 //  Lancement du serveur
 // ===============================
 
-//app.listen(port, () => {
-//  console.log(`Server is running on http://localhost:${port}`);
-//});
 
 
 // ===============================
@@ -95,8 +91,8 @@ app.get("/api/associations/:id", async (req, res) => {
 app.get("/api/associations/:id/conseil", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
-    `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role, ma.conseil_asso
+  const [rows] = await connection.execute(
+    `SELECT m.id_membre, m.nom, m.prenom, ma.role, ma.conseil_asso
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_association = ? AND ma.conseil_asso = 1`,
@@ -110,8 +106,8 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
 app.get("/api/associations/:id/membres", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
-    `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role
+  const [rows] = await connection.execute(
+    `SELECT m.id_membre, m.nom, m.prenom, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_association = ?`,
@@ -129,7 +125,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
 app.get("/api/associations/:id/events", async (req, res) => {
   const id = req.params.id;
 
-  const [rows] = await connection.query(
+  const [rows] = await connection.execute(
     `SELECT * FROM evenement
      WHERE id_association = ?
      ORDER BY date_debut_event ASC`,
@@ -161,6 +157,13 @@ app.post("/api/evenements", async (req, res) => {
 
   try {
     await connection.beginTransaction();
+  // 2. Créer automatiquement une actualité associée
+  await connection.execute(
+    `INSERT INTO actualite 
+     (id_association, type_actualite, titre, contenu, date_creation, date_publication, statut, id_evenement, event_date)
+     VALUES (?, 'Evenement', ?, ?, NOW(), NOW(), 'Approuve', ?, ?)`,
+    [id_association, titre, description, eventId, date_debut]
+  );
 
     // 1) INSERT evenement
     const [evRes] = await connection.execute(
@@ -261,7 +264,7 @@ app.get("/api/associations/:id/news", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const [rows] = await connection.query(
+    const [rows] = await connection.execute(
       `SELECT *
        FROM actualite
        WHERE id_association = ?
@@ -282,7 +285,7 @@ app.get("/api/associations/:id/news", async (req, res) => {
 app.post("/api/news", async (req, res) => {
   const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
 
-  await connection.query(
+  await connection.execute(
     `INSERT INTO actualite 
      (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation)
      VALUES (?, ?, 'Article', ?, ?, ?, 'Pending', NOW())`,
@@ -296,7 +299,7 @@ app.post("/api/news", async (req, res) => {
 app.patch("/api/news/:id/approve", async (req, res) => {
   const id = req.params.id;
 
-  await connection.query(
+  await connection.execute(
     `UPDATE actualite
      SET statut = 'Approuve', date_publication = NOW()
      WHERE id_actualite = ?`,
@@ -310,7 +313,7 @@ app.patch("/api/news/:id/approve", async (req, res) => {
 app.patch("/api/news/:id/refuse", async (req, res) => {
   const id = req.params.id;
 
-  await connection.query(
+  await connection.execute(
     `UPDATE actualite SET statut = 'Refuse' WHERE id_actualite = ?`,
     [id]
   );
@@ -420,6 +423,10 @@ app.post("/api/association", async (req, res) => {
    
 const idAssociation = result.insertId;
 const idMembre = req.body.id_membre; // à envoyer depuis le front
+if (!idMembre) {
+  return res.status(400).json({ message: "Utilisateur non identifié" });
+}
+
 
 await connection.execute(
   `
@@ -542,6 +549,35 @@ app.get("/api/membre/:id", async (req, res) => {
   res.json(info[0] || {});
 });
 
+app.get("/api/association/search", async (req, res) => {
+  const nom = req.query.nom?.trim();
+
+  if (!nom) {
+    return res.json([]);
+  }
+
+  try {
+    const [rows] = await connection.execute(
+      `SELECT 
+         id_association,
+         nom,
+         sport,
+         ville,
+         type_structure
+       FROM association
+       WHERE LOWER(nom) LIKE LOWER(?)`,
+      [`%${nom}%`]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error("Erreur recherche association :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+
 app.put("/api/membre/:id", async (req, res) => {
   const id = req.params.id;
   const { nom, prenom, email, birthday } = req.body;
@@ -623,7 +659,7 @@ app.get("/api/membre/:id/association", async (req, res) => {
     const [rows] = await connection.execute(
       `SELECT a.*
        FROM membre_asso ma
-       JOIN association a ON ma.id_asso = a.id_association
+       JOIN association a ON ma.id_association = a.id_association
        WHERE ma.id_membre = ?`,
       [id]
     );
@@ -635,6 +671,9 @@ app.get("/api/membre/:id/association", async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
+
+
 
 app.get("/events_page", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/events_page.html"));
