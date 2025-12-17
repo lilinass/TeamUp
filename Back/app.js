@@ -311,6 +311,10 @@ app.post("/api/association", async (req, res) => {
 
     const idAssociation = result.insertId;
 const idMembre = req.body.id_membre; // à envoyer depuis le front
+if (!idMembre) {
+  return res.status(400).json({ message: "Utilisateur non identifié" });
+}
+
 
 await connection.execute(
   `
@@ -501,7 +505,7 @@ app.get("/api/membre/:id/association", async (req, res) => {
     const [rows] = await connection.execute(
       `SELECT a.*
        FROM membre_asso ma
-       JOIN association a ON ma.id_asso = a.id_association
+       JOIN association a ON ma.id_association = a.id_association
        WHERE ma.id_membre = ?`,
       [id]
     );
@@ -513,6 +517,7 @@ app.get("/api/membre/:id/association", async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
 
 app.get("/events_page", (req, res) => {
   res.sendFile(path.join(__dirname, "../Front/events_page.html"));
