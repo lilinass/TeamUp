@@ -11,7 +11,7 @@
 
 <body>
 
-  <!-- 🔵 HEADER identique à home_association -->
+
   <header class="site-header">
     <div class="container site-header__inner">
 
@@ -87,6 +87,15 @@
       Chargement des activités...
     </div>
 
+    <section class="section">
+  <div class="container">
+    <h2>Mes convocations</h2>
+
+    <div id="my-invitations"></div>
+  </div>
+</section>
+
+
   </main>
 
   <!-- MODAL EDIT -->
@@ -119,12 +128,7 @@
 
   <script>
 
-    /* ===========================================================
-       🔵 Charger le profil du membre
-    =========================================================== */
-    /* ===========================================================
-       🔵 Helpers rôles / gestion membres (GLOBAL)
-    =========================================================== */
+    
     async function getAssociationIdForCurrentUser(id_membre) {
       const res = await fetch(`http://localhost:8080/api/membre/${id_membre}/association`);
       if (!res.ok) return null;
@@ -177,7 +181,7 @@
         info.style.flex = "1";
         div.appendChild(info);
 
-        // Si le connecté peut modifier les rôles → select + bouton
+        
         if (perms.canEditMemberRole) {
           const select = document.createElement("select");
           ["OWNER", "PRESIDENT", "SECRETAIRE", "TRESORIER", "MEMBRE"].forEach((r) => {
@@ -249,7 +253,7 @@
 
           if (invRes.ok) {
             document.getElementById("invite-email").value = "";
-            await loadGestionMembres(); // refresh liste
+            await loadGestionMembres();
           }
         };
 
@@ -257,7 +261,7 @@
     }
 
     /* ===========================================================
-       🔵 Profil (SANS doublons)
+       Profil
     =========================================================== */
     async function loadProfil() {
       const id = localStorage.getItem("id_membre");
@@ -309,7 +313,7 @@
     loadProfil();
     loadGestionMembres();
     /* ===========================================================
-       🔵 Charger l’association du membre
+      Charger l’association du membre
     =========================================================== */
     async function loadAssociationForProfile() {
       const id = localStorage.getItem("id_membre");
@@ -334,7 +338,7 @@
 
 
     /* ===========================================================
-       🔵 Modifier mon profil — PUT
+      Modifier mon profil — PUT
     =========================================================== */
     document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -362,7 +366,7 @@
 
 
     /* ===========================================================
-       🔵 Préremplir le modal
+       Préremplir le modal
     =========================================================== */
     function populateModal(data) {
       document.getElementById("edit-prenom").value = data.prenom_membre;
@@ -374,7 +378,7 @@
 
 
     /* ===========================================================
-       🔵 Dashboard activités
+       Dashboard activités
     =========================================================== */
     async function loadDashboard() {
       const id = localStorage.getItem("id_membre");
@@ -410,7 +414,7 @@
         return;
       }
 
-      const e = equipes[0]; // première équipe trouvée
+      const e = equipes[0]; 
 
       section.innerHTML = `
     <p><strong>Équipe :</strong> ${e.nom_equipe}</p>
@@ -421,8 +425,8 @@
 
 
 
-    /* ===========================================================
-       🔵 Gérer l'ouverture / fermeture du modal
+    /* ========================================
+       Gérer l'ouverture / fermeture du modal
     =========================================================== */
     document.getElementById("editProfileBtn").addEventListener("click", () => {
       document.getElementById("editModal").classList.remove("hidden");
@@ -432,9 +436,7 @@
     });
 
 
-    /* ===========================================================
-       🚀 Charger la totalité de la page
-    =========================================================== */
+    /*  Chargerla page */
 
     loadAssociationForProfile();
     loadTeamForProfile();

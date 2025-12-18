@@ -1,4 +1,4 @@
-console.log("📌 association.js chargé");
+console.log(" association.js chargé");
 
 const API_BASE = "http://localhost:8080";
 let ASSO_MEMBRES = [];
@@ -31,10 +31,10 @@ async function apiGet(url) {
 
 async function loadAssociationPage() {
   const assoId = getAssociationId();
-  console.log("🆔 ID association:", assoId);
+  console.log(" ID association:", assoId);
 
   if (!assoId) {
-    console.error("❌ Aucun ID d'association dans l'URL");
+    console.error("!!! Aucun ID d'association dans l'URL");
     return;
   }
 
@@ -55,11 +55,11 @@ ASSO_MEMBRES = membres || [];
 
 
 
-    console.log("✅ asso:", asso);
-console.log("✅ membres:", membres);
-console.log("✅ events:", events);
-console.log("✅ news:", news);
-console.log("✅ perms:", perms);
+    console.log(" asso:", asso);
+console.log(" membres:", membres);
+console.log(" events:", events);
+console.log(" news:", news);
+console.log(" perms:", perms);
 
     console.log("Adresse:", asso.adresse);
 console.log("Ville:", asso.ville);
@@ -77,7 +77,7 @@ console.log("Téléphone:", asso.telephone);
     setupEventModal(assoId);
 
   } catch (err) {
-    console.error("❌ loadAssociationPage error:", err);
+    console.error("!!! loadAssociationPage error:", err);
   }
 }
 
@@ -143,7 +143,7 @@ function renderEvents(events) {
   const now = new Date();
   
 
-  // 1️⃣ On garde uniquement les événements à venir
+  // uniquement les événements à venir
   const upcomingEvents = (events || []).filter(ev => {
     return new Date(ev.date_debut_event) >= now;
   });
@@ -273,7 +273,7 @@ function setupEventModal(assoId) {
   const form = document.getElementById("event-form");
   if (!btn || !modal || !close || !form) return;
 
-  const open = () => (modal.style.display = "flex"); // mieux avec ton CSS modal
+  const open = () => (modal.style.display = "flex");
   const hide = () => (modal.style.display = "none");
 
   btn.addEventListener("click", open);
@@ -290,7 +290,7 @@ function setupEventModal(assoId) {
 
     const payload = {
       id_association: Number(assoId),
-      id_auteur, // ✅ IMPORTANT
+      id_auteur, // IMPORTANT
       titre_evenement: document.getElementById("ev-title").value.trim(),
       type_evenement: document.getElementById("ev-type").value,
       lieu_event: document.getElementById("ev-lieu").value.trim(),
@@ -342,7 +342,7 @@ function openConvocationModal({ assoId, id_evenement, id_membre_actor }) {
   const search = document.getElementById("convocation-search");
   const selectAll = document.getElementById("convocation-select-all");
   if (!modal || !close || !form || !list) {
-  console.log("❌ convocation DOM missing", { modal, close, form, list, search, selectAll });
+  console.log("!!! convocation DOM missing", { modal, close, form, list, search, selectAll });
   return;
 }
 
@@ -402,7 +402,7 @@ function openConvocationModal({ assoId, id_evenement, id_membre_actor }) {
       return;
     }
 
-    // 🔥 appel API convocations
+    // appel API convocations
     const res = await fetch(`${API_BASE}/api/evenements/${id_evenement}/convocations`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -420,7 +420,7 @@ function openConvocationModal({ assoId, id_evenement, id_membre_actor }) {
     }
 
     hide();
-    alert("Convocations envoyées ✅");
+    alert("Convocations envoyées ");
   };
 }
 
@@ -591,7 +591,7 @@ async function reply(id_evenement, presence) {
     }
   );
 
-  loadInvitations(); // refresh
+  loadInvitations();
 }
 
 async function loadInvitations() {

@@ -112,7 +112,7 @@
         font-size: 1rem;
       }
 
-      /* Steps (ex : 2 barres actives) */
+
       .steps {
         display: flex;
         justify-content: center;
@@ -282,7 +282,7 @@
           Inscription 100&nbsp;% gratuite.
         </p>
 
-        <!-- 2/4 étapes actives, à adapter si besoin -->
+
         <div class="steps" aria-label="Étapes d’inscription">
           <span class="step is-active"></span>
           <span class="step is-active"></span>
@@ -393,69 +393,64 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nom = document.getElementById("last-name").value;
-    const prenom = document.getElementById("first-name").value;
-    const email = document.getElementById("email").value;
+    const nom = document.getElementById("last-name").value.trim();
+    const prenom = document.getElementById("first-name").value.trim();
+    const email = document.getElementById("email").value.trim();
     const birthday = document.getElementById("birthday").value;
     const password = document.getElementById("password").value;
     const passwordConfirm = document.getElementById("password-confirm").value;
 
-    // Réinitialisation du message
+
     showMessage("", "");
 
+    // Vérification mots de passe
     if (password !== passwordConfirm) {
       showMessage("Les mots de passe ne correspondent pas.", "error");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/inscription", {
+      const response = await fetch("/api/inscription", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nom,
           prenom,
           email,
           password,
-          birthday,
+          birthday
         }),
       });
 
       const data = await response.json();
-      // ✅ Stocker l'id du membre créé
-  
-showMessage("Inscription réussie !", "success");
 
-setTimeout(() => {
-  window.location.href = "/connexion"; // 👈 la personne doit se connecter
-}, 1500);
 
-      // Email existant → ⚠️
+      // Email déjà existant
       if (response.status === 409) {
-        showMessage("Utilisateur déjà existant", "error");
+        showMessage("Utilisateur déjà existant.", "error");
         return;
       }
 
-      // Autres erreurs backend
+      // Autre erreur backend
       if (!response.ok) {
-        showMessage("Erreur : " + data.message, "error");
+        showMessage(data.message || "Erreur lors de l’inscription.", "error");
         return;
       }
 
-      // Succès → ✔️
+      // SUCCÈS
       showMessage("Inscription réussie !", "success");
 
-      // Redirection après 1,5 sec
-      setTimeout(() => {
-      window.location.href = "/inscription_association";
-}, 1500);
+      // Stocker le membre pour la suite du parcours
+      localStorage.setItem("id_membre", data.id);
 
+      // REDIRECTION FORCÉE
+      setTimeout(() => {
+        window.location.href = "/inscription_association";
+      }, 1200);
 
     } catch (error) {
-      console.error("Erreur fetch :", error);
-      showMessage("Erreur réseau. Réessayer.", "error");
+      console.error("Erreur réseau :", error);
+      showMessage("Erreur réseau. Réessayez.", "error");
     }
   });
 </script>

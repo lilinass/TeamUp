@@ -137,7 +137,7 @@
             </div>
         </section>
 
-        <!-- ÉQUIPES / ACTIVITÉS (simple teaser pour l’instant) -->
+        <!-- ÉQUIPES / ACTIVITÉS -->
         <section id="teams" class="section section--asso-teams" aria-labelledby="teams-title">
             <div class="container">
                 <h2 id="teams-title" class="section__title section__title--line">
@@ -205,7 +205,7 @@
                 </h2>
 
                 <div class="events-head-actions">
-                    <!-- Filtre mois (pour plus tard, JS) -->
+                    <!-- Filtre mois -->
                     <select id="events-month-filter" class="events-filter">
                         <option value="all">Tous les mois</option>
                         <option value="01">Janvier</option>
@@ -222,7 +222,7 @@
                         <option value="12">Décembre</option>
                     </select>
 
-                    <!-- Bouton visible plus tard uniquement pour les admins via JS -->
+                    <!-- Bouton visible uniquement pour les admins via JS -->
                     <button id="btn-add-event" class="btn btn--primary btn--sm btn--admin-only" type="button">
                         Ajouter un événement
                     </button>
@@ -247,7 +247,7 @@
                     </ul>
                 </aside>
 
-                <!-- Colonne droite : “calendrier d’événements” sous forme de liste -->
+                <!-- Colonne droite : “calendrier d’événements” -->
                 <div class="events-main">
                     <p id="events-empty" class="events-empty">
                         Aucun événement à venir pour le moment.
@@ -278,7 +278,7 @@
                     Aucune actualité pour le moment.
                 </p>
                 <div class="news-header">
-                    <!-- Visible seulement si canCreateNews === true -->
+                    <!-- Visible seulement si l'utilisateur à les droits -->
                     <button id="btn-add-news" class="btn-create-news" type="button">
                         + Créer une actualité
                     </button>
@@ -355,7 +355,7 @@
             </form>
         </div>
     </div>
-    <!-- ✅ MODAL CONVOCATION -->
+    <!-- MODAL CONVOCATION -->
 <div id="convocation-modal" class="modal" style="display:none;">
   <div class="modal__overlay" id="convocation-modal-close"></div>
 
@@ -380,11 +380,25 @@
   </div>
 </div>
 
+<!-- MODAL ÉTAT DES CONVOCATIONS -->
+<div id="participants-modal" class="modal" style="display:none;">
+  <div class="modal__overlay" onclick="closeParticipantsModal()"></div>
+
+  <div class="modal__content">
+    <h3>État des convocations</h3>
+
+    <div id="participants-list"
+         style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+    </div>
+
+    <button class="btn btn--ghost" onclick="closeParticipantsModal()">
+      Fermer
+    </button>
+  </div>
+</div>
 
     <style>
-        /* ===============================
-   MODAL — AJOUT EVENEMENT
-================================ */
+
 
         .modal {
             position: fixed;
@@ -443,6 +457,12 @@
         }
 
 
+        .presence--PRESENT { color: #22c55e; }
+.presence--ABSENT { color: #ef4444; }
+.presence--PEUT_ETRE { color: #f59e0b; }
+.presence--EN_ATTENTE { color: #9ca3af; }
+
+
         /* Fond sombre */
         .modal__overlay {
             position: absolute;
@@ -487,9 +507,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* ===============================
-   FORMULAIRE
-================================ */
+        
 
         .modal__form {
             display: grid;
