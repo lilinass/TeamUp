@@ -21,6 +21,7 @@ const ROLE_PERMISSIONS = {
     canCreateEvent: true,
     canEditEvent: true,
     canDeleteEvent: true,
+    canCreateNews: true,
     canInviteMember: true,
     canApproveMember: true,
     canEditMemberRole: true,
@@ -29,6 +30,7 @@ const ROLE_PERMISSIONS = {
     canCreateEvent: true,
     canEditEvent: true,
     canDeleteEvent: true,
+    canCreateNews: true,
     canInviteMember: true,
     canApproveMember: true,
     canEditMemberRole: true, // si tu veux limiter, mets false
@@ -37,6 +39,7 @@ const ROLE_PERMISSIONS = {
     canCreateEvent: true,
     canEditEvent: true,
     canDeleteEvent: false,
+    canCreateNews: true,
     canInviteMember: true,
     canApproveMember: false,
     canEditMemberRole: false,
@@ -45,6 +48,7 @@ const ROLE_PERMISSIONS = {
     canCreateEvent: true,
     canEditEvent: true,
     canDeleteEvent: false,
+    canCreateNews: true,
     canInviteMember: false,
     canApproveMember: false,
     canEditMemberRole: false,
@@ -53,6 +57,7 @@ const ROLE_PERMISSIONS = {
     canCreateEvent: false,
     canEditEvent: false,
     canDeleteEvent: false,
+    canCreateNews: false,
     canInviteMember: false,
     canApproveMember: false,
     canEditMemberRole: false,
@@ -164,7 +169,7 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
   const id = req.params.id;
 
   const [rows] = await connection.execute(
-    `SELECT m.id_membre, m.nom, m.prenom, ma.role, ma.conseil_asso
+    `SELECT m.id_membre, m.nom_membre, m.prenom_membre, ma.role, ma.conseil_asso
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_association = ? AND ma.conseil_asso = 1`,
@@ -179,7 +184,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
   const id = req.params.id;
 
   const [rows] = await connection.execute(
-    `SELECT m.id_membre, m.nom, m.prenom, ma.role
+    `SELECT m.id_membre, m.nom_membre, m.prenom_membre, ma.role
      FROM membre_asso ma
      JOIN membre m ON ma.id_membre = m.id_membre
      WHERE ma.id_association = ?`,
@@ -234,26 +239,19 @@ app.post("/api/evenements", async (req, res) => {
 
   try {
     await connection.beginTransaction();
-  // 2. Créer automatiquement une actualité associée
-  await connection.execute(
-    `INSERT INTO actualite 
-     (id_association, type_actualite, titre, contenu, date_creation, date_publication, statut, id_evenement, event_date)
-     VALUES (?, 'Evenement', ?, ?, NOW(), NOW(), 'Approuve', ?, ?)`,
-    [id_association, titre, description, eventId, date_debut]
-  );
-
+ 
     // 1) INSERT evenement
     const [evRes] = await connection.execute(
       `INSERT INTO evenement
-       (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+     (id_association, titre_evenement, type_evenement, description_evenement, lieu_event, date_debut_event, date_fin_event)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         Number(id_association),
         titre_evenement,
         type_evenement,
         description_evenement || "",
         lieu_event || "",
-        date_debut_event,         // (format "YYYY-MM-DD HH:mm:ss" ou ISO OK selon colonne)
+        date_debut_event,
         date_fin_event || null,
       ]
     );
@@ -263,15 +261,15 @@ app.post("/api/evenements", async (req, res) => {
     // 2) INSERT actualite liée
     await connection.execute(
       `INSERT INTO actualite
-       (id_association, id_auteur, type_actualite, titre, contenu, date_publication, statut, id_evenement, event_date, image_principale)
-       VALUES (?, ?, 'Evenement', ?, ?, NOW(), 'Approuve', ?, ?, NULL)`,
+     (id_association, id_auteur, type_actualite, titre, contenu, date_publication, statut, id_evenement, event_date, image_principale)
+     VALUES (?, ?, 'Evenement', ?, ?, NOW(), 'Approuve', ?, ?, NULL)`,
       [
         Number(id_association),
         Number(id_auteur),
         titre_evenement,
         description_evenement || "",
         id_evenement,
-        date_debut_event, // ✅ event_date = début event
+        date_debut_event,
       ]
     );
 
@@ -299,6 +297,7 @@ app.post("/api/evenements", async (req, res) => {
     console.error("❌ Erreur création event:", err);
     return res.status(500).json({ message: "Erreur serveur" });
   }
+
 });
 
 //
@@ -482,15 +481,37 @@ app.get("/api/associations/:id/news", async (req, res) => {
 app.post("/api/news", async (req, res) => {
   const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
 
-  await connection.execute(
-    `INSERT INTO actualite 
-     (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation)
-     VALUES (?, ?, 'Article', ?, ?, ?, 'Pending', NOW())`,
-    [id_association, id_auteur, titre, contenu, image_principale]
-  );
+  if (!id_association || !id_auteur || !titre || !contenu) {
+    return res.status(400).json({ message: "Champs obligatoires manquants." });
+  }
 
-  res.json({ success: true });
+  // ✅ Sécurité : seul un rôle autorisé peut créer une actu
+  const { permissions } = await getPermissions(id_association, id_auteur);
+  if (!permissions.canCreateNews) {
+    return res.status(403).json({ message: "Droits insuffisants pour créer une actualité." });
+  }
+
+  try {
+    const [result] = await connection.execute(
+      `INSERT INTO actualite
+       (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation, date_publication)
+       VALUES (?, ?, 'Article', ?, ?, ?, 'Approuve', NOW(), NOW())`,
+      [
+        Number(id_association),
+        Number(id_auteur),
+        titre,
+        contenu,
+        image_principale || null,
+      ]
+    );
+
+    return res.status(201).json({ success: true, id_actualite: result.insertId });
+  } catch (err) {
+    console.error("Erreur création actu:", err);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
 });
+
 
 // Admin valide une actu
 app.patch("/api/news/:id/approve", async (req, res) => {
@@ -595,15 +616,15 @@ app.post("/api/association", async (req, res) => {
 
 
   const [already] = await connection.execute(
-  `SELECT id_association FROM membre_asso WHERE id_membre = ? LIMIT 1`,
-  [Number(id_membre)]
-);
+    `SELECT id_association FROM membre_asso WHERE id_membre = ? LIMIT 1`,
+    [Number(id_membre)]
+  );
 
-if (already.length > 0) {
-  return res.status(409).json({
-    message: "Vous êtes déjà membre d'une association. Quittez-la avant d'en créer une autre."
-  });
-}
+  if (already.length > 0) {
+    return res.status(409).json({
+      message: "Vous êtes déjà membre d'une association. Quittez-la avant d'en créer une autre."
+    });
+  }
 
   try {
     await connection.beginTransaction();
@@ -629,12 +650,12 @@ if (already.length > 0) {
       ]
     );
 
-   
-const idAssociation = result.insertId;
-const idMembre = req.body.id_membre; // à envoyer depuis le front
-if (!idMembre) {
-  return res.status(400).json({ message: "Utilisateur non identifié" });
-}
+
+    const idAssociation = result.insertId;
+    const idMembre = req.body.id_membre; // à envoyer depuis le front
+    if (!idMembre) {
+      return res.status(400).json({ message: "Utilisateur non identifié" });
+    }
 
 
 
@@ -844,7 +865,7 @@ app.get("/api/membre/:id/equipes", async (req, res) => {
 //    [id]
 //  );
 
-  //res.json(rows);
+//res.json(rows);
 //});
 //
 app.get("/home_association", (req, res) => {
@@ -872,6 +893,135 @@ app.get("/api/membre/:id/association", async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
+
+//-----------Convocation des membres -----------//
+app.post("/api/evenements/:id_evenement/convocations", async (req, res) => {
+  const { id_evenement } = req.params;
+  const { id_association, id_membre_actor, membres } = req.body;
+
+  if (!id_association || !id_membre_actor || !Array.isArray(membres) || membres.length === 0) {
+    return res.status(400).json({ message: "Champs manquants (id_association, id_membre_actor, membres[])." });
+  }
+
+  const { permissions } = await getPermissions(id_association, id_membre_actor);
+  if (!permissions.canCreateEvent) {
+    return res.status(403).json({ message: "Droits insuffisants." });
+  }
+
+  try {
+    await connection.beginTransaction();
+
+    // ✅ vérifier que l'event appartient à l'asso
+    const [ev] = await connection.execute(
+      `SELECT id_association FROM evenement WHERE id_evenement = ? LIMIT 1`,
+      [Number(id_evenement)]
+    );
+
+    if (!ev.length || Number(ev[0].id_association) !== Number(id_association)) {
+      await connection.rollback();
+      return res.status(404).json({ message: "Événement introuvable pour cette association." });
+    }
+
+    // ids uniques
+    const ids = [...new Set(membres.map(Number))].filter(Boolean);
+
+    // ✅ vérifier que les membres appartiennent à l'asso
+    const [valid] = await connection.execute(
+      `SELECT id_membre FROM membre_asso
+       WHERE id_association = ? AND id_membre IN (${ids.map(() => "?").join(",")})`,
+      [Number(id_association), ...ids]
+    );
+
+    const validSet = new Set(valid.map(r => Number(r.id_membre)));
+
+    for (const id_membre of ids) {
+      if (!validSet.has(id_membre)) continue;
+
+      await connection.execute(
+        `INSERT INTO participation (id_evenement, id_membre, presence)
+         VALUES (?, ?, 'EN_ATTENTE')
+         ON DUPLICATE KEY UPDATE presence = presence`,
+        [Number(id_evenement), id_membre]
+      );
+    }
+
+    await connection.commit();
+    return res.json({ success: true });
+
+  } catch (err) {
+    await connection.rollback();
+    console.error("❌ convocations error:", err);
+    return res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+//
+app.get("/api/membre/:id_membre/invitations", async (req, res) => {
+  const { id_membre } = req.params;
+
+  const [rows] = await connection.execute(
+    `SELECT 
+        e.id_evenement,
+        e.titre_evenement,
+        e.date_debut_event,
+        a.nom AS nom_association,
+        p.presence
+     FROM participation p
+     JOIN evenement e ON p.id_evenement = e.id_evenement
+     JOIN association a ON e.id_association = a.id_association
+     WHERE p.id_membre = ?
+     ORDER BY e.date_debut_event ASC`,
+    [Number(id_membre)]
+  );
+
+  res.json(rows);
+});
+
+
+//-----Voir les participants d'un evenement--------
+app.get("/api/evenements/:id_evenement/participants", async (req, res) => {
+  const { id_evenement } = req.params;
+
+  const [rows] = await connection.execute(
+    `SELECT 
+        m.id_membre,
+        m.prenom_membre,
+        m.nom_membre,
+        p.presence
+     FROM participation p
+     JOIN membre m ON m.id_membre = p.id_membre
+     WHERE p.id_evenement = ?
+     ORDER BY m.prenom_membre`,
+    [Number(id_evenement)]
+  );
+
+  res.json(rows);
+});
+const PRESENCE_STATES = ["PRESENT", "ABSENT", "PEUT_ETRE"];
+//Routes
+
+app.patch("/api/evenements/:id_evenement/presence", async (req, res) => {
+  const { id_evenement } = req.params;
+  const { id_membre, presence } = req.body;
+
+  if (!id_membre || !PRESENCE_STATES.includes(presence)) {
+    return res.status(400).json({ message: "Statut invalide." });
+  }
+
+  const [r] = await connection.execute(
+    `UPDATE participation
+     SET presence = ?
+     WHERE id_evenement = ? AND id_membre = ?`,
+    [presence, Number(id_evenement), Number(id_membre)]
+  );
+
+  if (r.affectedRows === 0) {
+    return res.status(404).json({ message: "Convocation introuvable." });
+  }
+
+  res.json({ success: true });
+});
+
 
 
 
