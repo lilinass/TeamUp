@@ -956,6 +956,65 @@ a:hover {
   color: #bbf7d0;
 }
 
+/*------invite--------- */
+/* =========================
+   Gestion des membres (profil)
+========================= */
+
+#gestion-membres{
+  margin-top: 24px;
+}
+
+#gestion-membres h2{
+  margin: 18px 0 12px;
+}
+
+#invite-box{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+#invite-email,
+#invite-role,
+#gestion-membres select{
+  background: #141820;
+  color: #e8eaed;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+#invite-email{
+  min-width: 240px;
+}
+
+#gestion-membres button{
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+#gestion-membres button:hover{
+  background: rgba(255,255,255,0.12);
+}
+
+#membres-list > div{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
 
 /* ====== Responsive ====== */
 

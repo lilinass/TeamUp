@@ -144,9 +144,8 @@ async function search() {
     `;
 
     card.onclick = () => {
-      localStorage.setItem("id_association", asso.id_association);
-      window.location.href = "/home_association";
-    };
+  window.location.href = `/home_association?id=${asso.id_association}`;
+};
 
     results.appendChild(card);
   });
