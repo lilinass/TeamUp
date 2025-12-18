@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,283 +11,437 @@
 
 <body>
 
-<!-- 🔵 HEADER identique à home_association -->
-<header class="site-header">
-  <div class="container site-header__inner">
+  <!-- 🔵 HEADER identique à home_association -->
+  <header class="site-header">
+    <div class="container site-header__inner">
 
-    <a href="/" class="brand">
-      <img src="./Images/Logo v2.png" class="brand__logo" />
-      <span class="brand__name">Koordy</span>
-    </a>
+      <a href="/" class="brand">
+        <img src="./Images/Logo v2.png" class="brand__logo" />
+        <span class="brand__name">Koordy</span>
+      </a>
 
-    <nav class="nav">
-      <ul class="nav__list">
-        <li><a href="/home_association" class="nav__link">Accueil</a></li>
-        <li><a href="/association" class="nav__link">Association</a></li>
-        <li><a href="/events_page" class="nav__link">Évènements</a></li>
-        <li><a href="#" class="nav__link">Actualités</a></li>
-        <li><a href="#" class="nav__link">Contact</a></li>
-      </ul>
-    </nav>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li><a href="/home_association" class="nav__link">Accueil</a></li>
+          <li><a href="/association" class="nav__link">Association</a></li>
+          <li><a href="/events_page" class="nav__link">Évènements</a></li>
+          <li><a href="#" class="nav__link">Actualités</a></li>
+          <li><a href="#" class="nav__link">Contact</a></li>
+        </ul>
+      </nav>
 
-    <div id="user-badge" class="nav__btns"></div>
+      <div id="user-badge" class="nav__btns"></div>
 
+    </div>
+  </header>
+
+  <main class="container" style="padding: 50px 0;">
+
+    <h1 class="section__title section__title--line">Mon Profil</h1>
+
+    <!-- BOUTON MODIFICATION -->
+    <div style="display:flex; justify-content:flex-end; margin:10px 0;">
+      <button id="editProfileBtn" class="btn btn--primary">Modifier mon profil</button>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="card" style="padding: 28px;">
+      <div id="profil-content">Chargement du profil...</div>
+    </div>
+
+    <!-- ASSOCIATION -->
+    <h2 class="section__title" style="margin-top:40px;">Mon Association</h2>
+    <div id="association-section" class="card" style="padding:22px;">
+      Chargement de l'association...
+    </div>
+    <h2 class="section__title" style="margin-top:40px;">Mon équipe</h2>
+    <div id="team-section" class="card" style="padding:22px;">
+      Chargement de l'équipe...
+    </div>
+
+    <!-- Gestion des droits -->
+    <section id="gestion-membres" style="display:none; margin-top: 24px;">
+      <h2>Gestion des membres</h2>
+
+      <div id="invite-box" style="display:none; margin: 12px 0;">
+        <h3>Inviter un membre</h3>
+        <input id="invite-email" type="email" placeholder="Email du membre" />
+        <select id="invite-role">
+          <option value="MEMBRE">MEMBRE</option>
+          <option value="SECRETAIRE">SECRETAIRE</option>
+          <option value="TRESORIER">TRESORIER</option>
+          <option value="PRESIDENT">PRESIDENT</option>
+          <option value="OWNER">OWNER</option>
+        </select>
+        <button id="btn-invite">Inviter</button>
+        <p id="invite-msg"></p>
+      </div>
+
+      <h3>Liste des membres</h3>
+      <div id="membres-list"></div>
+    </section>
+
+    <!-- ACTIVITÉS -->
+    <h2 class="section__title" style="margin-top:40px;">Mes activités</h2>
+    <div id="dashboard" class="card" style="padding:22px;">
+      Chargement des activités...
+    </div>
+
+  </main>
+
+  <!-- MODAL EDIT -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Modifier mon profil</h2>
+
+      <form id="editProfileForm" class="tt-form">
+
+        <label>Prénom</label>
+        <input id="edit-prenom" type="text" />
+
+        <label>Nom</label>
+        <input id="edit-nom" type="text" />
+
+        <label>Email</label>
+        <input id="edit-email" type="email" />
+
+        <label>Date de naissance</label>
+        <input id="edit-birth" type="date" />
+
+        <button type="submit" class="btn btn--primary">Enregistrer</button>
+        <button type="button" class="btn btn--ghost" id="closeModal">Annuler</button>
+
+      </form>
+    </div>
   </div>
-</header>
-
-<main class="container" style="padding: 50px 0;">
-
-  <h1 class="section__title section__title--line">Mon Profil</h1>
-
-  <!-- BOUTON MODIFICATION -->
-  <div style="display:flex; justify-content:flex-end; margin:10px 0;">
-    <button id="editProfileBtn" class="btn btn--primary">Modifier mon profil</button>
-  </div>
-
-  <!-- PROFIL -->
-  <div class="card" style="padding: 28px;">
-    <div id="profil-content">Chargement du profil...</div>
-  </div>
-
-  <!-- ASSOCIATION -->
-  <h2 class="section__title" style="margin-top:40px;">Mon Association</h2>
-  <div id="association-section" class="card" style="padding:22px;">
-    Chargement de l'association...
-  </div>
-  <h2 class="section__title" style="margin-top:40px;">Mon équipe</h2>
-<div id="team-section" class="card" style="padding:22px;">
-    Chargement de l'équipe...
-</div>
-
-
-  <!-- ACTIVITÉS -->
-  <h2 class="section__title" style="margin-top:40px;">Mes activités</h2>
-  <div id="dashboard" class="card" style="padding:22px;">
-    Chargement des activités...
-  </div>
-
-</main>
-
-<!-- MODAL EDIT -->
-<div id="editModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>Modifier mon profil</h2>
-
-    <form id="editProfileForm" class="tt-form">
-
-      <label>Prénom</label>
-      <input id="edit-prenom" type="text"/>
-
-      <label>Nom</label>
-      <input id="edit-nom" type="text"/>
-
-      <label>Email</label>
-      <input id="edit-email" type="email"/>
-
-      <label>Date de naissance</label>
-      <input id="edit-birth" type="date"/>
-
-      <button type="submit" class="btn btn--primary">Enregistrer</button>
-      <button type="button" class="btn btn--ghost" id="closeModal">Annuler</button>
-
-    </form>
-  </div>
-</div>
 
 
 
-<script>
+  <script>
 
-/* ===========================================================
-   🔵 Charger le profil du membre
-=========================================================== */
-async function loadProfil() {
-  const id = localStorage.getItem("id_membre");
+    /* ===========================================================
+       🔵 Charger le profil du membre
+    =========================================================== */
+    /* ===========================================================
+       🔵 Helpers rôles / gestion membres (GLOBAL)
+    =========================================================== */
+    async function getAssociationIdForCurrentUser(id_membre) {
+      const res = await fetch(`http://localhost:8080/api/membre/${id_membre}/association`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data?.id_association || null;
+    }
 
-  if (!id) {
-    document.getElementById("profil-content").innerHTML =
-      "<p>Aucun utilisateur connecté.</p>";
-    return;
-  }
+    async function loadGestionMembres() {
+      const id_membre = localStorage.getItem("id_membre");
+      if (!id_membre) return;
 
-  const res = await fetch(`http://localhost:8080/api/membre/${id}`);
-  const data = await res.json();
+      const id_association = await getAssociationIdForCurrentUser(id_membre);
+      if (!id_association) return;
 
-  /* ================================================================
-      🔵 FORMATTAGE DE LA DATE (remet juste JJ/MM/AAAA)
-  ================================================================= */
-  let formattedBirth = "—";
-  if (data.date_naissance) {
-    const d = new Date(data.date_naissance);
-    formattedBirth = d.toLocaleDateString("fr-FR");  // EX : 20/05/1999
-  }
+      // 1) récupérer permissions du connecté
+      const permRes = await fetch(
+        `http://localhost:8080/api/associations/${id_association}/permissions/${id_membre}`
+      );
+      if (!permRes.ok) return;
+      const perms = await permRes.json();
 
-  /* ================================================================
-      🔵 RECALCUL DE L'ÂGE CÔTÉ FRONT (pour être sûr)
-  ================================================================= */
-  let age = "—";
-  if (data.date_naissance) {
-    const birthYear = new Date(data.date_naissance).getFullYear();
-    age = new Date().getFullYear() - birthYear;
-  }
+      // afficher la section si on peut au moins inviter OU changer rôle
+      const gestionSection = document.getElementById("gestion-membres");
+      const inviteBox = document.getElementById("invite-box");
+      const canSee = perms.canInviteMember || perms.canEditMemberRole;
 
-  // 🔵 Affichage du prénom en haut
-  document.getElementById("user-badge").innerHTML =
-    `<span class="btn btn--ghost">Bienvenue, ${data.prenom_membre}</span>`;
+      if (gestionSection) gestionSection.style.display = canSee ? "block" : "none";
+      if (inviteBox) inviteBox.style.display = perms.canInviteMember ? "block" : "none";
 
-  // 🔵 Remplir le profil
-  document.getElementById("profil-content").innerHTML = `
-    <p><strong>Nom :</strong> ${data.nom_membre}</p>
-    <p><strong>Prénom :</strong> ${data.prenom_membre}</p>
-    <p><strong>Email :</strong> ${data.mail_membre}</p>
+      if (!canSee) return;
+
+      // 2) charger la liste des membres
+      const res = await fetch(`http://localhost:8080/api/associations/${id_association}/membres`);
+      if (!res.ok) return;
+      const membres = await res.json();
+
+      const container = document.getElementById("membres-list");
+      if (!container) return;
+      container.innerHTML = "";
+
+      membres.forEach((m) => {
+        const div = document.createElement("div");
+        div.style.display = "flex";
+        div.style.gap = "12px";
+        div.style.alignItems = "center";
+        div.style.margin = "8px 0";
+
+        const info = document.createElement("div");
+        info.textContent = `${m.prenom} ${m.nom} — ${m.role}`;
+        info.style.flex = "1";
+        div.appendChild(info);
+
+        // Si le connecté peut modifier les rôles → select + bouton
+        if (perms.canEditMemberRole) {
+          const select = document.createElement("select");
+          ["OWNER", "PRESIDENT", "SECRETAIRE", "TRESORIER", "MEMBRE"].forEach((r) => {
+            const opt = document.createElement("option");
+            opt.value = r;
+            opt.textContent = r;
+            if ((m.role || "").toUpperCase() === r) opt.selected = true;
+            select.appendChild(opt);
+          });
+
+          const btn = document.createElement("button");
+          btn.textContent = "Changer";
+          btn.onclick = async () => {
+            const newRole = select.value;
+
+            const upRes = await fetch(
+              `http://localhost:8080/api/associations/${id_association}/membres/${m.id_membre}/role`,
+              {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  role: newRole,
+                  id_membre_actor: Number(id_membre),
+                }),
+              }
+            );
+
+            const upData = await upRes.json();
+            if (!upRes.ok) {
+              alert(upData.message || "Erreur changement rôle");
+              return;
+            }
+
+            await loadGestionMembres(); // refresh
+          };
+
+          div.appendChild(select);
+          div.appendChild(btn);
+        }
+
+        container.appendChild(div);
+      });
+
+      // 3) bouton inviter
+      const btnInvite = document.getElementById("btn-invite");
+      if (btnInvite && perms.canInviteMember) {
+        btnInvite.onclick = async () => {
+          const email = document.getElementById("invite-email").value.trim();
+          const role = document.getElementById("invite-role").value;
+
+          const msg = document.getElementById("invite-msg");
+          msg.textContent = "";
+          msg.style.opacity = "1";
+
+          const invRes = await fetch(`http://localhost:8080/api/associations/${id_association}/invite`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              role,
+              id_membre_actor: Number(id_membre),
+            }),
+          });
+
+          const invData = await invRes.json();
+
+          msg.textContent = invData.message || (invRes.ok ? "Membre ajouté !" : "Erreur");
+          msg.style.color = invRes.ok ? "#7CFC9A" : "#FF6B6B";
+
+          if (invRes.ok) {
+            document.getElementById("invite-email").value = "";
+            await loadGestionMembres(); // refresh liste
+          }
+        };
+
+      }
+    }
+
+    /* ===========================================================
+       🔵 Profil (SANS doublons)
+    =========================================================== */
+    async function loadProfil() {
+      const id = localStorage.getItem("id_membre");
+
+      if (!id) {
+        document.getElementById("profil-content").innerHTML = "<p>Aucun utilisateur connecté.</p>";
+        return;
+      }
+
+      const res = await fetch(`http://localhost:8080/api/membre/${id}`);
+      if (!res.ok) {
+        document.getElementById("profil-content").innerHTML = "<p>Erreur chargement profil.</p>";
+        return;
+      }
+
+      const data = await res.json();
+
+      // format date
+      let formattedBirth = "—";
+      if (data.date_naissance) {
+        const d = new Date(data.date_naissance);
+        formattedBirth = d.toLocaleDateString("fr-FR");
+      }
+
+      // âge
+      let age = "—";
+      if (data.date_naissance) {
+        const birthYear = new Date(data.date_naissance).getFullYear();
+        age = new Date().getFullYear() - birthYear;
+      }
+
+      document.getElementById("user-badge").innerHTML =
+        `<span class="btn btn--ghost">Bienvenue, ${data.prenom_membre}</span>`;
+
+      document.getElementById("profil-content").innerHTML = `
+    <p><strong>Nom :</strong> ${data.nom_membre || ""}</p>
+    <p><strong>Prénom :</strong> ${data.prenom_membre || ""}</p>
+    <p><strong>Email :</strong> ${data.mail_membre || ""}</p>
     <p><strong>Date de naissance :</strong> ${formattedBirth}</p>
     <p><strong>Âge :</strong> ${age} ans</p>
     <p><strong>Rôle dans l'association :</strong> ${data.role_asso || "Membre"}</p>
-    <p><strong>Date d’adhésion :</strong> ${
-      data.date_adhesion
-        ? new Date(data.date_adhesion).toLocaleDateString("fr-FR")
-        : "—"
-    }</p>
+    <p><strong>Date d’adhésion :</strong> ${data.date_adhesion ? new Date(data.date_adhesion).toLocaleDateString("fr-FR") : "—"
+        }</p>
   `;
 
-  populateModal(data);
-}
+      populateModal(data);
+    }
 
+    loadProfil();
+    loadGestionMembres();
+    /* ===========================================================
+       🔵 Charger l’association du membre
+    =========================================================== */
+    async function loadAssociationForProfile() {
+      const id = localStorage.getItem("id_membre");
 
+      const res = await fetch(`http://localhost:8080/api/membre/${id}/association`);
+      const data = await res.json();
 
-/* ===========================================================
-   🔵 Charger l’association du membre
-=========================================================== */
-async function loadAssociationForProfile() {
-  const id = localStorage.getItem("id_membre");
+      const section = document.getElementById("association-section");
 
-  const res = await fetch(`http://localhost:8080/api/membre/${id}/association`);
-  const data = await res.json();
+      if (!data.nom) {
+        section.innerHTML = "<p>Aucune association trouvée.</p>";
+        return;
+      }
 
-  const section = document.getElementById("association-section");
-
-  if (!data.nom) {
-    section.innerHTML = "<p>Aucune association trouvée.</p>";
-    return;
-  }
-
-  section.innerHTML = `
+      section.innerHTML = `
     <p><strong>Nom :</strong> ${data.nom}</p>
     <p><strong>Sport :</strong> ${data.sport}</p>
     <p><strong>Ville :</strong> ${data.ville}</p>
   `;
-}
+    }
 
 
 
-/* ===========================================================
-   🔵 Modifier mon profil — PUT
-=========================================================== */
-document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+    /* ===========================================================
+       🔵 Modifier mon profil — PUT
+    =========================================================== */
+    document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  const id = localStorage.getItem("id_membre");
+      const id = localStorage.getItem("id_membre");
 
-  const payload = {
-    prenom: document.getElementById("edit-prenom").value,
-    nom: document.getElementById("edit-nom").value,
-    email: document.getElementById("edit-email").value,
-    birthday: document.getElementById("edit-birth").value
-  };
+      const payload = {
+        prenom: document.getElementById("edit-prenom").value,
+        nom: document.getElementById("edit-nom").value,
+        email: document.getElementById("edit-email").value,
+        birthday: document.getElementById("edit-birth").value
+      };
 
-  const res = await fetch(`http://localhost:8080/api/membre/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+      const res = await fetch(`http://localhost:8080/api/membre/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-  if (!res.ok) return alert("Erreur lors de la mise à jour");
+      if (!res.ok) return alert("Erreur lors de la mise à jour");
 
-  alert("✔ Profil mis à jour !");
-  location.reload();
-});
-
-
-/* ===========================================================
-   🔵 Préremplir le modal
-=========================================================== */
-function populateModal(data) {
-  document.getElementById("edit-prenom").value = data.prenom_membre;
-  document.getElementById("edit-nom").value = data.nom_membre;
-  document.getElementById("edit-email").value = data.mail_membre;
-  document.getElementById("edit-birth").value = data.date_naissance || "";
-}
+      alert("✔ Profil mis à jour !");
+      location.reload();
+    });
 
 
+    /* ===========================================================
+       🔵 Préremplir le modal
+    =========================================================== */
+    function populateModal(data) {
+      document.getElementById("edit-prenom").value = data.prenom_membre;
+      document.getElementById("edit-nom").value = data.nom_membre;
+      document.getElementById("edit-email").value = data.mail_membre;
+      document.getElementById("edit-birth").value = data.date_naissance || "";
+    }
 
-/* ===========================================================
-   🔵 Dashboard activités
-=========================================================== */
-async function loadDashboard() {
-  const id = localStorage.getItem("id_membre");
-  const res = await fetch(`http://localhost:8080/api/membre/${id}/presences`);
-  const data = await res.json();
 
-  if (!data.length) {
-    document.getElementById("dashboard").innerHTML = "<p>Aucune activité.</p>";
-    return;
-  }
 
-  let presents = data.filter(d => d.statut === "présent").length;
-  let taux = Math.round((presents / data.length) * 100);
+    /* ===========================================================
+       🔵 Dashboard activités
+    =========================================================== */
+    async function loadDashboard() {
+      const id = localStorage.getItem("id_membre");
+      const res = await fetch(`http://localhost:8080/api/membre/${id}/presences`);
+      const data = await res.json();
 
-  let html = `<p><strong>Taux de présence :</strong> ${taux}%</p><ul>`;
-  data.forEach(a => {
-    html += `<li><strong>${a.nom_activite}</strong> — ${a.statut} — ${a.date_presence}</li>`;
-  });
-  html += "</ul>";
+      if (!data.length) {
+        document.getElementById("dashboard").innerHTML = "<p>Aucune activité.</p>";
+        return;
+      }
 
-  document.getElementById("dashboard").innerHTML = html;
-}
-async function loadTeamForProfile() {
-  const id = localStorage.getItem("id_membre");
+      let presents = data.filter(d => d.statut === "présent").length;
+      let taux = Math.round((presents / data.length) * 100);
 
-  const res = await fetch(`http://localhost:8080/api/membre/${id}/equipes`);
-  const equipes = await res.json();
+      let html = `<p><strong>Taux de présence :</strong> ${taux}%</p><ul>`;
+      data.forEach(a => {
+        html += `<li><strong>${a.nom_activite}</strong> — ${a.statut} — ${a.date_presence}</li>`;
+      });
+      html += "</ul>";
 
-  const section = document.getElementById("team-section");
+      document.getElementById("dashboard").innerHTML = html;
+    }
+    async function loadTeamForProfile() {
+      const id = localStorage.getItem("id_membre");
 
-  if (!equipes || equipes.length === 0) {
-    section.innerHTML = "<p>Aucune équipe trouvée.</p>";
-    return;
-  }
+      const res = await fetch(`http://localhost:8080/api/membre/${id}/equipes`);
+      const equipes = await res.json();
 
-  const e = equipes[0]; // première équipe trouvée
+      const section = document.getElementById("team-section");
 
-  section.innerHTML = `
+      if (!equipes || equipes.length === 0) {
+        section.innerHTML = "<p>Aucune équipe trouvée.</p>";
+        return;
+      }
+
+      const e = equipes[0]; // première équipe trouvée
+
+      section.innerHTML = `
     <p><strong>Équipe :</strong> ${e.nom_equipe}</p>
     <p><strong>Rôle :</strong> ${e.role}</p>
   `;
-}
+    }
 
 
 
 
-/* ===========================================================
-   🔵 Gérer l'ouverture / fermeture du modal
-=========================================================== */
-document.getElementById("editProfileBtn").addEventListener("click", () => {
-  document.getElementById("editModal").classList.remove("hidden");
-});
-document.getElementById("closeModal").addEventListener("click", () => {
-  document.getElementById("editModal").classList.add("hidden");
-});
+    /* ===========================================================
+       🔵 Gérer l'ouverture / fermeture du modal
+    =========================================================== */
+    document.getElementById("editProfileBtn").addEventListener("click", () => {
+      document.getElementById("editModal").classList.remove("hidden");
+    });
+    document.getElementById("closeModal").addEventListener("click", () => {
+      document.getElementById("editModal").classList.add("hidden");
+    });
 
 
-/* ===========================================================
-   🚀 Charger la totalité de la page
-=========================================================== */
-loadProfil();
-loadAssociationForProfile();
-loadTeamForProfile();
-loadDashboard();
+    /* ===========================================================
+       🚀 Charger la totalité de la page
+    =========================================================== */
 
-</script>
+    loadAssociationForProfile();
+    loadTeamForProfile();
+    loadDashboard();
+
+  </script>
 
 </body>
+
 </html>
